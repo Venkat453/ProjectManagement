@@ -1,0 +1,425 @@
+﻿<script>
+    $('#divTopBar').show();
+    $('#sidebar-wrapper').show();
+    $('#divSideBar').show();
+</script>
+<div>
+    <div class="panel-group">
+        <div class="panel panel-default" ng-show="showGrid">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-lg-10 col-md-10 col-xs-10">
+                        <h3 class="panel-title" style="height: 30px;line-height: 30px;">Project Information</h3>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-xs-2" style="text-align: right;">
+                        <button class="btn btn-sm btn-primary" ng-click="showform()" ng-show="true">Add Project</button>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <form>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                            <input type="text" class="form-control" placeholder="Search" ng-model="filterPM">
+                        </div>
+                    </div>
+                </form>
+                <table class="table table-bordered table-striped table-hover table-condensed">
+                    <thead style="background:#e3e3e3;color:white;">
+                        <tr style="background:#808080;color:white;">
+                            <!--<th style="width:4%;text-align:center;">SNo</th>-->
+                            <th style="width:10%;text-align:center;">Project Code</th>
+                            <th style="width:10%;text-align:center;">
+                                <a href="#" class="anchorhover" ng-click="sortType = 'Project_Name'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    Project Name
+                                </a>
+                            </th>
+                            <th style="width:10%;text-align:center;">
+                                <a href="#" class="anchorhover" ng-click="sortType = 'Project_Client'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    Project Client
+                                </a>
+                            </th>
+                            <th style="width:10%;text-align:center;">
+                                <a href="#" class="anchorhover" ng-click="sortType = 'CompID'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    Company ID
+                                </a>
+                            </th>
+                            <th style="width:10%;text-align:center;">
+                                <a href="#" class="anchorhover" ng-click="sortType = 'Project_DeliveryDate'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    Project Delivery Date
+                                </a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr dir-paginate="pm in projectMasterList|filter:{Project_Name:Project_Name}|filter:filterPM|itemsPerPage:5|orderBy:sortType:sortReverse">
+                            <!--<td style="text-align:center;">{{ps.id}}</td>-->
+                            <td style="text-align:left;">{{pm.Project_Code}}</td>
+                            <td style="text-align:left;"><a href="#" ng-click="ViewDetails(pm)">{{pm.Project_Name}}</a></td>
+                            <td style="text-align:left;">{{pm.Project_Client}}</td>
+                            <td style="text-align:left;">{{pm.CompID}}</td>
+                            <td style="text-align:left;">{{pm.Project_DeliveryDate|date:"MMM d, y"}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row" ng-show="projectMasterList.length>5">
+                    <div class="col-lg-10" style="margin-bottom: 0px -35px -13px">
+                        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                        </dir-pagination-controls>
+                        <!--<select name="level" ng-model="page.levels" ng-options="obj.value as obj.label for obj in page.levelsArr" style="position: absolute;top: 20px;height: 34px;"></select>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default" ng-hide="showform">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-lg-10 col-md-10 col-xs-10">
+                        <h3 class="panel-title">
+                            <i class="fa fa-plus-circle" aria-hidden="true" tooltip-html-unsafe="add " tooltip-placement="bottom"></i>
+                            Add Project
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <form name="newProjectMasterForm" novalidate ng-submit="addProjectMaster()" style="margin-bottom:0px;">
+                    <div id="inputContainer" ng-cloak>
+                        <md-content layout-padding>
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <md-input-container class="md-block">
+                                        <label style="cursor:pointer">Project Code</label>
+                                        <!--<md-icon class="md-dark" arial-label="ps_name" style="color:#9a7009"><i class="fa fa-user" style="font-size: 20px;"></i></md-icon>-->
+                                        <input type="text" ng-readonly="readOnlyStatus" valid-Name id="Project_Code" name="Project_Code" ng-model="projectMaster.Project_Code" minlength="3" maxlength="20" required>
+                                        <div ng-messages="newProjectMasterForm.Project_Code.$error" role="alert" class="ng-messages">
+                                            <div ng-message="required">*Mandatory.</div>
+                                            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                3 to 20 chars.
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                                <div class="col-lg-3">
+                                    <md-input-container class="md-block">
+                                        <label style="cursor:pointer">Project Description</label>
+                                        <!--<md-icon class="md-dark" arial-label="ps_name" style="color:#9a7009"><i class="fa fa-user" style="font-size: 20px;"></i></md-icon>-->
+                                        <input type="text" ng-readonly="readOnlyStatus" valid-Name id="Project_Description" name="Project_Description" ng-model="projectMaster.Project_Description" minlength="3" maxlength="250" required>
+                                        <div ng-messages="newProjectMasterForm.Project_Description.$error" role="alert" class="ng-messages">
+                                            <div ng-message="required">*Mandatory.</div>
+                                            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                3 to 250 chars.
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                                <div class="col-lg-3">
+                                    <md-input-container class="md-block">
+                                        <label>Client/Buyer</label>
+                                        <!--<md-icon class="md-dark" arial-label="project_id" style="color:#ff006e"><i class="fa fa-map-marker" style="font-size: 20px;"></i></md-icon>-->
+                                        <md-select name="Project_Client" ng-model="projectMaster.Project_Client" ng-disabled="!clientslists.length" required>
+                                            <md-option ng-repeat="client in clientslists" ng-value="client.id">
+                                                {{client.client_name}}
+                                            </md-option>
+                                        </md-select>
+                                        <div ng-messages="newProjectMasterForm.Project_Client.$error" role="alert" class="ng-messages">
+                                            <div ng-message="required">* Mandatory.</div>
+                                            <div ng-message-exp="['required', 'pattern']">
+                                                10 Chars.
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label>Delivery Date</label>
+                                    <md-datepicker name="age" ng-model="projectMaster.Project_DeliveryDate" ng-readonly="readOnlyStatus" md-min-date="minDate" md-max-date="maxDate" md-open-on-focus></md-datepicker>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <label>Equipment Name/Items</label>
+                                </div>
+                                <div class="col-lg-9">
+                                    <table class="table table-bordered table-hover table-condensed table-responsive">
+                                        <thead>
+                                            <tr>
+                                                <th>S.no</th>
+                                                <th>Maker No</th>
+                                                <th>Description of Item</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>1234</td>
+                                                <td>dfgds gsdgdsf gdsf gsdfg</td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>1234</td>
+                                                <td>dfgds gsdgdsf gdsf gsdfg</td>
+                                            </tr>
+                                            <tr>
+                                                <td>4</td>
+                                                <td>1234</td>
+                                                <td>dfgds gsdgdsf gdsf gsdfg</td>
+                                            </tr>
+                                            <tr>
+                                                <td>5</td>
+                                                <td>1234</td>
+                                                <td>dfgds gsdgdsf gdsf gsdfg</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </md-content>
+                    </div>
+                    <div>
+                        <div ng-cloak>
+                            <md-content>
+                                <md-tabs md-dynamic-height md-border-bottom>
+                                    <md-tab label="Technical Data">
+                                        <md-content class="md-padding">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <md-input-container class="md-block">
+                                                                <label>Code of Constructions</label>
+                                                                <!--<md-icon class="md-dark" arial-label="project_id" style="color:#ff006e"><i class="fa fa-map-marker" style="font-size: 20px;"></i></md-icon>-->
+                                                                <md-select name="coc" ng-model="projectMaster.COC" ng-disabled="!coclists.length" required>
+                                                                    <md-option ng-repeat="coc in coclists" ng-value="client.id">
+                                                                        {{coc.coc_name}}
+                                                                    </md-option>
+                                                                </md-select>
+                                                                <div ng-messages="newProjectMasterForm.coc.$error" role="alert" class="ng-messages">
+                                                                    <div ng-message="required">* Mandatory.</div>
+                                                                    <div ng-message-exp="['required', 'pattern']">
+                                                                        10 Chars.
+                                                                    </div>
+                                                                </div>
+                                                            </md-input-container>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <md-input-container class="md-block">
+                                                                <label style="cursor:pointer">Special Material Requirement</label>
+                                                                <!--<md-icon class="md-dark" arial-label="ps_name" style="color:#9a7009"><i class="fa fa-user" style="font-size: 20px;"></i></md-icon>-->
+                                                                <input type="text" ng-readonly="readOnlyStatus" valid-Name id="SMR" name="SMR" ng-model="projectMaster.SMR" minlength="3" maxlength="20" required>
+                                                                <div ng-messages="newProjectMasterForm.SMR.$error" role="alert" class="ng-messages">
+                                                                    <div ng-message="required">*Mandatory.</div>
+                                                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                                        3 to 20 chars.
+                                                                    </div>
+                                                                </div>
+                                                            </md-input-container>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <md-input-container class="md-block">
+                                                                <label style="cursor:pointer">Warranty Period</label>
+                                                                <!--<md-icon class="md-dark" arial-label="ps_name" style="color:#9a7009"><i class="fa fa-user" style="font-size: 20px;"></i></md-icon>-->
+                                                                <input type="text" ng-readonly="readOnlyStatus" valid-Name id="warrenty" name="warrenty" ng-model="projectMaster.warrenty" minlength="3" maxlength="20" required>
+                                                                <div ng-messages="newProjectMasterForm.warrenty.$error" role="alert" class="ng-messages">
+                                                                    <div ng-message="required">*Mandatory.</div>
+                                                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                                        3 to 20 chars.
+                                                                    </div>
+                                                                </div>
+                                                            </md-input-container>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <md-checkbox ng-model="projectMaster.cb1" aria-label="Checkbox 1">
+                                                                CE Marketing/PED Conformity
+                                                            </md-checkbox>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <md-checkbox ng-model="projectMaster.cb2" aria-label="Checkbox 2">
+                                                                Inspection by TPIA
+                                                            </md-checkbox>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <md-checkbox ng-model="projectMaster.cb3" aria-label="Checkbox 3">
+                                                                Inspection and Acceptance by Client
+                                                            </md-checkbox>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <md-checkbox ng-model="projectMaster.cb3" aria-label="Checkbox 3">
+                                                                Inspection by CIB, TS
+                                                            </md-checkbox>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </md-content>
+                                    </md-tab>
+                                    <md-tab label="Commercial Data">
+                                        <md-content class="md-padding">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <md-input-container class="md-block">
+                                                                <label>Project Classification</label>
+                                                                <!--<md-icon class="md-dark" arial-label="project_id" style="color:#ff006e"><i class="fa fa-map-marker" style="font-size: 20px;"></i></md-icon>-->
+                                                                <md-select name="Project_Classification" ng-model="projectMaster.Project_Classification" ng-disabled="!clientslists.length" required>
+                                                                    <md-option ng-repeat="client in clientslists" ng-value="client.id">
+                                                                        {{client.client_name}}
+                                                                    </md-option>
+                                                                </md-select>
+                                                                <div ng-messages="newProjectMasterForm.Project_Classification.$error" role="alert" class="ng-messages">
+                                                                    <div ng-message="required">* Mandatory.</div>
+                                                                    <div ng-message-exp="['required', 'pattern']">
+                                                                        10 Chars.
+                                                                    </div>
+                                                                </div>
+                                                            </md-input-container>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-11">
+                                                            <md-input-container class="md-block">
+                                                                <label>Project Sector</label>
+                                                                <!--<md-icon class="md-dark" arial-label="project_id" style="color:#ff006e"><i class="fa fa-map-marker" style="font-size: 20px;"></i></md-icon>-->
+                                                                <md-select name="Project_Sector" ng-model="projectMaster.Project_Sector" ng-disabled="!clientslists.length" required>
+                                                                    <md-option ng-repeat="client in clientslists" ng-value="client.id">
+                                                                        {{client.client_name}}
+                                                                    </md-option>
+                                                                </md-select>
+                                                                <div ng-messages="newProjectMasterForm.Project_Sector.$error" role="alert" class="ng-messages">
+                                                                    <div ng-message="required">* Mandatory.</div>
+                                                                    <div ng-message-exp="['required', 'pattern']">
+                                                                        10 Chars.
+                                                                    </div>
+                                                                </div>
+                                                            </md-input-container>
+                                                        </div>
+                                                        <div class="col-lg-1">
+                                                            <input type="button" class="btn btn-sm btn-info" ng-click="addProjectSector()" value="Add" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-11">
+                                                            <md-input-container class="md-block">
+                                                                <label>Currency</label>
+                                                                <!--<md-icon class="md-dark" arial-label="project_id" style="color:#ff006e"><i class="fa fa-map-marker" style="font-size: 20px;"></i></md-icon>-->
+                                                                <md-select name="Currency" ng-model="projectMaster.Currency" ng-disabled="!clientslists.length" required>
+                                                                    <md-option ng-repeat="client in clientslists" ng-value="client.id">
+                                                                        {{client.client_name}}
+                                                                    </md-option>
+                                                                </md-select>
+                                                                <div ng-messages="newProjectMasterForm.Currency.$error" role="alert" class="ng-messages">
+                                                                    <div ng-message="required">* Mandatory.</div>
+                                                                    <div ng-message-exp="['required', 'pattern']">
+                                                                        10 Chars.
+                                                                    </div>
+                                                                </div>
+                                                            </md-input-container>
+                                                        </div>
+                                                        <div class="col-lg-1">
+                                                            <input type="button" class="btn btn-sm btn-info" ng-click="addCurrency()" value="Add" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <md-input-container class="md-block">
+                                                                <label style="cursor:pointer">LD of Delayed Delivery of Equipments</label>
+                                                                <!--<md-icon class="md-dark" arial-label="ps_name" style="color:#9a7009"><i class="fa fa-user" style="font-size: 20px;"></i></md-icon>-->
+                                                                <input type="text" ng-readonly="readOnlyStatus" valid-Name id="DDE" name="DDE" ng-model="projectMaster.DDE" minlength="3" maxlength="20" required>
+                                                                <div ng-messages="newProjectMasterForm.DDE.$error" role="alert" class="ng-messages">
+                                                                    <div ng-message="required">*Mandatory.</div>
+                                                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                                        3 to 20 chars.
+                                                                    </div>
+                                                                </div>
+                                                            </md-input-container>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <md-input-container class="md-block">
+                                                                <label style="cursor:pointer">LD of Delayed Delivery of Drawing</label>
+                                                                <!--<md-icon class="md-dark" arial-label="ps_name" style="color:#9a7009"><i class="fa fa-user" style="font-size: 20px;"></i></md-icon>-->
+                                                                <input type="text" ng-readonly="readOnlyStatus" valid-Name id="DDD" name="DDD" ng-model="projectMaster.DDD" minlength="3" maxlength="20" required>
+                                                                <div ng-messages="newProjectMasterForm.DDD.$error" role="alert" class="ng-messages">
+                                                                    <div ng-message="required">*Mandatory.</div>
+                                                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                                        3 to 20 chars.
+                                                                    </div>
+                                                                </div>
+                                                            </md-input-container>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="col-lg-12">
+                                                        <table class="table table-bordered table-hover table-condensed table-responsive">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>S.no</th>
+                                                                    <th>Maker No</th>
+                                                                    <th>Description of Item</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>2</td>
+                                                                    <td>1234</td>
+                                                                    <td>dfgds gsdgdsf gdsf gsdfg</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>3</td>
+                                                                    <td>1234</td>
+                                                                    <td>dfgds gsdgdsf gdsf gsdfg</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>4</td>
+                                                                    <td>1234</td>
+                                                                    <td>dfgds gsdgdsf gdsf gsdfg</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>5</td>
+                                                                    <td>1234</td>
+                                                                    <td>dfgds gsdgdsf gdsf gsdfg</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </md-content>
+                                    </md-tab>
+                                    <md-tab label="Attachment">
+                                        <md-content class="md-padding">
+                                            
+                                        </md-content>
+                                    </md-tab>
+                                </md-tabs>
+                            </md-content>
+                        </div>
+                    </div>
+                    <div class="col-md-offset-9" style="padding: 0px 0px 14px 143px;">
+                        <input type="button" class="btn btn-sm btn-info" ng-click="hideForm()" value="Cancel" />
+                        <button class="btn btn-sm btn-info" type="submit">Save</button>
+                    </div>
+                    <!--<div class="panel-footer" style="height:40px; padding-right: 0px; padding-top:5px"></div>-->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

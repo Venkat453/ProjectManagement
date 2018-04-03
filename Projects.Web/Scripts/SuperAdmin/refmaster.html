@@ -1,0 +1,55 @@
+﻿<div class="page">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Reference Master</h3>
+        </div>
+        <div class="panel-body" style="padding:0px">
+            <div class="col-md-12" style="padding-top:5px!important">
+                <table class="table table-condensed" style="table-layout: fixed; width: 100%; font-size:12px">
+                    <tr ng-repeat-start="ref in RefMasterData" style="background:none">
+                        <td style="width:30px; vertical-align:middle; border-color:black; border:solid 0px;">
+                            <button ng-click="expanded = !expanded" expand>
+                                <span ng-bind="expanded ? '-' : '+'"></span>
+                            </button>
+                        </td>
+                        <td style="width:98%; vertical-align:middle; border-color:black; border:solid 0px; font-weight:bold">
+                            {{ref.refGroup}}
+                            <span class="badgeTwo">{{ref.RefMaster.length}}</span>
+                        </td>
+                    </tr>
+                    <tr ng-repeat-end ng-show="expanded">
+                        <td></td>
+                        <td>
+                            <table class="table table-condensed table-bordered" style="table-layout: fixed; width: 100%; margin-bottom:0px">
+                                <tr style="background:#48cbb7">
+                                    <th style="width:3%">SN</th>
+                                    <th style="width:7%">ID</th>
+                                    <th style="width:10%">Item</th>
+                                    <th style="width:20%">Value</th>
+                                    <th style="width:60%">Description</th>
+
+                                </tr>
+                                <tbody>
+                                    <tr ng-repeat="r in ref.RefMaster">
+                                        <td> {{$index + 1}}</td>
+                                        <td>{{r.refID}}</td>
+                                        <td>{{r.refItem}}</td>
+                                        <td>{{r.refValue}}</td>
+                                        <td>{{r.description}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+
+                </table>
+                <pagination total-items="totalItems" ng-model="currentPage"
+                            max-size="10" boundary-links="true"
+                            items-per-page="numPerPage" class="pagination-sm">
+                </pagination>
+            </div>
+
+
+        </div>
+    </div>
+</div>

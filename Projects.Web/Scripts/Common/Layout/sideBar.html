@@ -1,0 +1,44 @@
+﻿
+<aside class="main-sidebar" style="overflow-y:auto;position:fixed;height:60%;">
+    <section class="sidebar myDataToggle">
+        <div class="user-panel">
+            <div> 
+                <a href="#">
+                    <img style="height: 66px;margin-top: -6px;width: 125px;" src="../../../Content/images/Common/logo.png" />
+                </a>
+            </div> 
+            <div class="image">
+                <a style="border: none;" href="{{user.profileURL}}" ng-show="!tenant.tenantlogo && !user.userlogo"> <img src="../../../Content/images/Common/emp_photo.jpg" class="img-circle"></a>
+                <a style="border: none;" href="{{user.profileURL}}" ng-show="tenant.tenantlogo"><img src="data:{{tenant.tenantlogofiletype}};base64,{{tenant.tenantlogo}}" class="img-circle"></a>
+                <a style="border: none;" href="{{user.profileURL}}" ng-show="user.userlogo"><img src="data:{{user.userlogofiletype}};base64,{{user.userlogo}}" class="img-circle"></a>
+            </div>
+
+            <div class="info">
+                <p>{{tenant.username}}</p>
+                <small style="font-weight:normal; font-size:11px">{{tenant.tenantkey}}</small>
+            </div>
+
+        </div>
+        <ul class="sidebar-menu">
+            <li class="treeview" ng-repeat="mainmenu in MenuList | filter: {parent_menu: 0}: true">
+                <a ng-href="{{mainmenu.url}}">
+                    <i class="{{mainmenu.icon}}"></i>
+                    <span>{{mainmenu.name}}</span>
+                    <i ng-show="mainmenu.submenu.length" class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu" style="padding:0">
+                    <li ng-repeat="smenu in MenuList | filter: {parent_menu: mainmenu.id}: true">
+                        <a ng-href="{{smenu.url}}">
+                            <i class="{{smenu.icon}}"></i>
+                            <span>{{smenu.name}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="#" ng-click="logout()" style="color:red;"><i class="fa fa-power-off"></i> <span>Logout</span></a></li>
+        </ul> 
+    </section>
+</aside>
+
+
+

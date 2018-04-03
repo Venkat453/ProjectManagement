@@ -1,0 +1,174 @@
+﻿<style>
+    .anchorhover:hover {
+        color: deepskyblue !important;
+    }
+</style>
+<script>
+    $('#divTopBar').show();
+    $('#sidebar-wrapper').show();
+    $('#divSideBar').show();
+</script>
+<div class="page">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="panel-title">Pending Indents for Approval</span>
+        </div>
+        <div class="panel-body" style="text-align: center;">
+            <div class="row">
+                <div class="col-lg-3">
+                    <md-input-container class="md-block">
+                        <label>Project</label>
+                        <md-select name="project_id" ng-model="project_id" ng-change="GetAllIndents(project_id)" required>
+                            <md-option ng-repeat="project in projectslists" ng-value="project.id">
+                                {{project.project_name}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="panel-body panel-body-data" ng-show="showdiv">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form ng-show="IndentnewLists.length!=0">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                        <input type="text" class="form-control" placeholder="Search" ng-model="filterIndents">
+                                    </div>
+                                </div>
+                            </form>
+                            <table class="table table-bordered table-striped table-hover table-condensed" ng-show="IndentnewLists.length!=0">
+                                <tr style="background:#808080;color:white;">
+                                    <th style="text-align:center;">SNo</th>
+                                    <th style="text-align:center;">
+                                        <a href="#" class="anchorhover" ng-click="sortType = 'indent_no'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                            Indent Number
+                                        </a>
+                                        <!--<span ng-bind="sortReverse ? '&and;' : '&or;'" style="color:black;"></span>-->
+                                    </th>
+                                    <th style="text-align:center;">
+                                        <a href="#" class="anchorhover" ng-click="sortType = 'project_name'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                            Project
+                                        </a>
+                                        <!--<span ng-bind="sortReverse ? '&and;' : '&or;'" style="color:black;"></span>-->
+                                    </th>
+                                    <th style="text-align:center;">
+                                        <a href="#" class="anchorhover" ng-click="sortType = 'Subcontractor_name'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                            SubContractor
+                                        </a>
+                                    </th>
+                                    <th style="text-align:center;">
+                                        <a href="#" class="anchorhover" ng-click="sortType = 'date_recieved'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                            Created Date
+                                        </a>
+                                        <!--<span ng-bind="sortReverse ? '&and;' : '&or;'" style="color:black;"></span>-->
+                                    </th>
+                                    <th style="text-align:center;">
+                                        <a href="#" class="anchorhover" ng-click="sortType = 'date_required'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                            Required Date
+                                        </a>
+                                    </th>
+                                    <th style="text-align:center;">
+                                        <a href="#" class="anchorhover" ng-click="sortType = 'indentstatus'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                            Indent Status
+                                        </a>
+                                    </th>
+                                    <th style="text-align:center;">Update</th>
+                                </tr>
+                                <tr dir-paginate="indent in IndentnewLists|filter:filterIndents|itemsPerPage:person.levels|orderBy:sortType:sortReverse">
+                                    <td style="text-align:center;"> {{$index+1}}</td>
+                                    <td style="text-align:left;">{{indent.Indent_no}}</td>
+                                    <td style="text-align:left;">{{indent.project_name}}</td>
+                                    <td style="text-align:left;">{{indent.subcontractor_name}}</td>
+                                    <td style="text-align:left;">{{indent.date_received|date :  "MMM d, y"}}</td>
+                                    <td style="text-align:left;">{{indent.date_required|date :  "MMM d, y"}}</td>
+                                    <td style="text-align:center;">
+                                        <span editable-select="indent.indent_status" ng-init="indent.indent_status" e-name="indentstatus" e-form="indentstatusform" onbeforesave="checkName($data, indent.indent_status)|| validateRequired($data)"
+                                              e-ng-options="opt for opt in options">
+                                            {{ indent.indent_status }}
+                                        </span>
+                                    </td>
+                                    <td style="white-space: nowrap; text-align:center;">
+                                        <form editable-form name="indentstatusform" onbeforesave="Updatestatus($data,indent)" ng-show="indentstatusform.$visible" class="form-buttons form-inline checkVisible" shown="inserted == indent" style="margin-bottom:0px!important">
+                                            <button type="submit" ng-disabled="indentstatusform.$waiting" class="fa fa-save"
+                                                    style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                            <button type="button" ng-disabled="indentstatusform.$waiting" ng-click="indentstatusform.$cancel()" class="fa fa-times"
+                                                    style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                        </form>
+                                        <div class="buttons" ng-show="!indentstatusform.$visible">
+                                            <button ng-click="editCall(indentstatusform)" class="fa fa-edit" ng-disabled="indent.indent_status==='Given'"
+                                                    style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="row" ng-show="IndentnewLists.length>3">
+                                <div class="col-lg-4">
+                                    <dir-pagination-controls max-size="5"
+                                                             direction-links="true"
+                                                             boundary-links="true">
+                                    </dir-pagination-controls>
+                                    <select name="level" ng-model="person.levels" ng-options="obj.value as obj.label for obj in person.levelsArr" style="position: absolute;top: 20px;height: 34px;"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <span class="panel-title">Non Confirmity Works Details</span>
+    </div>
+    <div class="panel-body panel-body-data">
+        <div class="form-group">
+            <table class="table table-bordered table-striped table-hover table-condensed">
+                <tr style="background:#808080;color:white;">
+                    <th style="text-align:center;">SNo</th>
+                    <th style="text-align:center;">Project</th>
+                    <th style="text-align:center;">PoliceStation</th>
+                    <th style="text-align:center;">Junction</th>
+                    <th style="text-align:center;">Subcontractor</th>
+                    <th style="text-align:center;">Component</th>
+                    <th style="text-align:center;">Total</th>
+                    <th style="text-align:center;">Non Confirmity</th>
+                    <th style="text-align:center;">Comments</th>
+                    <th style="text-align:center;">Status</th>
+                    <th style="text-align:center;">Update</th>
+                </tr>
+                <tr ng-repeat="ncworks in NCWorksList|filter:{verification_status:57}:true">
+                    <td style="text-align:center;"> {{$index+1}}</td>
+                    <td style="text-align:left;">{{ncworks.project_name}}</td>
+                    <td style="text-align:left;">{{ncworks.ps_name}}</td>
+                    <td style="text-align:left;">{{ncworks.junction_name}}</td>
+                    <td style="text-align:left;">{{ncworks.subcontractor_name}}</td>
+                    <td style="text-align:left;">{{ncworks.junction_component}}</td>
+                    <td style="text-align:center;">{{ncworks.total}}</td>
+                    <td style="text-align:center;">{{ncworks.nc_quantity}}</td>
+                    <td style="text-align:left;">{{ncworks.comments}}</td>
+                    <td style="text-align:left;">
+                        <span editable-select="ncworks.verification_status" e-name="ncstatus" e-form="ncstatusform" onbeforesave="checkName($data, ncworks.verification_status)|| validateRequired($data)"
+                              e-ng-options="refdata.id as refdata.reference_value  for refdata in refmasterdata| filter:{id:58}:true">
+                            {{getstatus(ncworks.verification_status)}}
+                        </span>
+                    </td>
+                    <td style="white-space: nowrap; text-align:center;">
+                        <form editable-form name="ncstatusform" onbeforesave="UpdateNCWorksstatus($data,ncworks)" ng-show="ncstatusform.$visible" class="form-buttons form-inline checkVisible" shown="inserted == ncworks" style="margin-bottom:0px!important">
+                            <button type="submit" ng-disabled="ncstatusform.$waiting" class="fa fa-save"
+                                    style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                            <button type="button" ng-disabled="ncstatusform.$waiting" ng-click="ncstatusform.$cancel()" class="fa fa-times"
+                                    style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                        </form>
+                        <div class="buttons" ng-show="!ncstatusform.$visible">
+                            <button ng-click="editncCall(ncstatusform)" class="fa fa-edit"
+                                    style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

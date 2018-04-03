@@ -1,0 +1,66 @@
+﻿<style>
+    .templateRoot {
+        display: inline-block;
+    }
+
+    .hover-edit-trigger {
+        padding: 3px;
+    }
+
+        .hover-edit-trigger:hover {
+            border: 1px solid #dcdcdc;
+            border-radius: 4px;
+        }
+
+    .edit-pencil {
+        display: none;
+        margin-left: 3px;
+        padding: 3px;
+        border-left: 1px solid #dcdcdc;
+    }
+
+    .hover-text-field:hover .edit-pencil {
+        display: inline-block;
+    }
+
+    .edit-button-group {
+        border-top: none;
+        border-radius: 4px;
+    }
+
+        .edit-button-group .glyphicon {
+            border: 1px solid #dcdcdc;
+            border-radius: 4px;
+            margin: 1px;
+            cursor: pointer;
+        }
+</style>
+
+<div class="page">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">SMTP Configuration</h3>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-5">
+                <!--<div class="container-fluid img-rounded" style="border: 1px solid gray; padding: 25px; display: inline-block; width: 400px" ng-controller="WidgetsController">-->
+
+                    <form class="form-signin" role="form" novalidate angular-validator name="smtpConfigurationForm" angular-validator-submit="smtpUpdate()" ng-controller="smtpConfigurationCtrl">
+                        <table class="table table-striped">
+                            <tr>
+                                <th>ID</th>
+                                <th>SMTP Details</th>
+                                <th>Value</th>
+                            </tr>
+                            <tr ng-repeat="s in smtplist">
+                                <td style="width:10px;">{{s.id}}</td>
+                                <td style="width:50px;">{{s.ref_description}}</td>
+                                <td style="width:200px;"><div click-to-edit type="inputText" ng-model="s.ref_value"></div></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>  
+        </div>
+
+    </div>
+</div>

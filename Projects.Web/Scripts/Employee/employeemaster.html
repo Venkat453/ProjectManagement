@@ -1,0 +1,110 @@
+﻿<div>
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title" ng-click="showAddform()">
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    Add Employee
+                </h3>
+            </div>
+            <div class="panel-body" ng-show="showEMForm">
+                <form name="newEmployeeMasterForm" angular-validator-submit="addEmployeeMaster()" style="margin-bottom:0px;">
+                    <div id="inputContainer" ng-cloak>
+                        <md-content layout-padding>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <md-input-container class="md-block">
+                                        <label style="cursor:pointer">Employee Name</label>
+                                        <md-icon class="md-dark" arial-label="name" style="color:#9a7009"><i class="fa fa-user" style="font-size: 20px;"></i></md-icon>
+                                        <input ng-readonly="readOnlyStatus" id="name" name="name" ng-model="empmaster.name" minlength="4" maxlength="15">
+                                        <div ng-messages="newEmployeeMasterForm.name.$error" role="alert" class="ng-messages">
+                                            <div ng-message="required">*Mandatory.</div>
+                                            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                4 to 15 chars.
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                                <div class="col-lg-4">
+                                    <md-input-container class="md-block">
+                                        <label>Select Designation</label>
+                                        <md-icon class="md-dark" arial-label="designation" style="color:#4800ff"><i class="fa fa-map-marker" style="font-size: 20px;"></i></md-icon>
+                                        <md-select ng-readonly="readOnlyStatus" name="designation" ng-model="empmaster.designation">
+                                            <md-option ng-repeat="dsglist in DesignationList" ng-value="dsglist.value">
+                                                {{dsglist.name}}
+                                            </md-option>
+                                        </md-select>
+                                        <div ng-messages="newEmployeeMasterForm.designation.$error" role="alert">
+                                            <div ng-message="required">* Mandatory.</div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                                <div class="col-lg-4">
+                                    <md-input-container class="md-block">
+                                        <label>Select SubContractor</label>
+                                        <md-icon class="md-dark" arial-label="subcontractor" style="color:#4800ff"><i class="fa fa-map-marker" style="font-size: 20px;"></i></md-icon>
+                                        <md-select ng-readonly="readOnlyStatus" name="subcontractor" ng-model="empmaster.subcontractor_id">
+                                            <md-option ng-repeat="subcontractor in SCList" ng-value="subcontractor.id">
+                                                {{subcontractor.subcontractor_name}}
+                                            </md-option>
+                                        </md-select>
+                                        <div ng-messages="newEmployeeMasterForm.subcontractor.$error" role="alert">
+                                            <div ng-message="required">* Mandatory.</div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                        </md-content>
+                    </div>
+
+                    <div class="panel-footer" style="height:40px; padding-right: 0px; padding-top:5px">
+                        <div class="col-lg-12" style="text-align:right;">
+                            <button ng-show="addBtn" class="btn btn-sm btn-info" ng-click="addEmployeeMaster()" type="submit">Register</button>
+                            <input type="button" value="Update" ng-show="updateBtn" class="btn btn-sm btn-warning" ng-click="UpdateEmpMaster()"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Employee Master Information</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-bordered table-hover table-condensed">
+                    <thead>
+                        <tr>
+                            <th style="width:2%;text-align:center;">id</th>
+                            <th style="width:5%;text-align:center;">Employee ID</th>
+                            <th style="width:5%;text-align:center;">Employee Name</th>
+                            <th style="width:5%;text-align:center;">Designation</th>
+                            <th style="width:5%;text-align:center;">SubContractor</th>
+                            <th style="width:2%;text-align:center;">IsActive</th>
+                            <th style="width:2%;text-align:center;">Date Created</th>
+                            <th style="width:2%;text-align:center;">Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-style="editColor(empMaster.name)" ng-repeat="empMaster in EmployeeMasterList track by empMaster.name">
+                            <td style="width:2%;text-align:center;">{{$index+1}}</td>
+                            <td style="width:2%;text-align:center;">{{empMaster.emp_id}}</td>
+                            <td style="width:5%;text-align:center;">
+                                <a href="#" ng-click="ViewDetails(empMaster)">{{empMaster.name}}</a>
+                            </td>
+                            <td style="width:5%;text-align:center;">{{empMaster.designation}}</td>
+                            <td style="width:5%;text-align:center;">{{empMaster.subcontractor_id}}</td>
+                            <td style="width:5%;text-align:center;">{{empMaster.isActive}}</td>
+                            <td style="width:5%;text-align:center;">{{ps.created_date|date:"MMM d, y"}}</td>
+                            <td style="width:5%;text-align:center;">
+                                <span ng-click="EditPs(empMaster,$index)">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

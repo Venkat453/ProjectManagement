@@ -1,0 +1,5 @@
+E:\PHONE DATA\ProjectManagement\Projects.Library\bin\Debug\Projects.Library.dll
+E:\PHONE DATA\ProjectManagement\Projects.Library\bin\Debug\Projects.Library.pdb
+E:\PHONE DATA\ProjectManagement\Projects.Library\obj\Debug\Projects.Library.csprojResolveAssemblyReference.cache
+E:\PHONE DATA\ProjectManagement\Projects.Library\obj\Debug\Projects.Library.dll
+E:\PHONE DATA\ProjectManagement\Projects.Library\obj\Debug\Projects.Library.pdb

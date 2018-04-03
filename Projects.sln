@@ -1,0 +1,67 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Projects.Web", "Projects.Web\Projects.Web.csproj", "{3412AD71-A027-4F2E-BCDE-F180E2EDF970}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Projects.Data", "Projects.Data\Projects.Data.csproj", "{DA57A420-F393-482D-B8E3-2D6A1BB197C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Projects.Entities", "Projects.Entities\Projects.Entities.csproj", "{3F4A4DD7-F6C6-4543-A750-97ABAA016157}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Projects.Library", "Projects.Library\Projects.Library.csproj", "{F53830E7-112B-4A31-99D5-3AE980F915A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Projects.Services", "Projects.Services\Projects.Services.csproj", "{59683B8A-CE4B-44CC-A0C9-AC8D97DFB5AD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3412AD71-A027-4F2E-BCDE-F180E2EDF970}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3412AD71-A027-4F2E-BCDE-F180E2EDF970}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3412AD71-A027-4F2E-BCDE-F180E2EDF970}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3412AD71-A027-4F2E-BCDE-F180E2EDF970}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA57A420-F393-482D-B8E3-2D6A1BB197C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA57A420-F393-482D-B8E3-2D6A1BB197C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA57A420-F393-482D-B8E3-2D6A1BB197C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA57A420-F393-482D-B8E3-2D6A1BB197C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F4A4DD7-F6C6-4543-A750-97ABAA016157}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F4A4DD7-F6C6-4543-A750-97ABAA016157}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F4A4DD7-F6C6-4543-A750-97ABAA016157}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F4A4DD7-F6C6-4543-A750-97ABAA016157}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F53830E7-112B-4A31-99D5-3AE980F915A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F53830E7-112B-4A31-99D5-3AE980F915A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F53830E7-112B-4A31-99D5-3AE980F915A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F53830E7-112B-4A31-99D5-3AE980F915A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59683B8A-CE4B-44CC-A0C9-AC8D97DFB5AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59683B8A-CE4B-44CC-A0C9-AC8D97DFB5AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59683B8A-CE4B-44CC-A0C9-AC8D97DFB5AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59683B8A-CE4B-44CC-A0C9-AC8D97DFB5AD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 6
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://192.168.10.75:8080/tfs/oak-projects
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Projects.Web\\Projects.Web.csproj
+		SccProjectName1 = Projects.Web
+		SccLocalPath1 = Projects.Web
+		SccProjectUniqueName2 = Projects.Data\\Projects.Data.csproj
+		SccProjectName2 = Projects.Data
+		SccLocalPath2 = Projects.Data
+		SccProjectUniqueName3 = Projects.Entities\\Projects.Entities.csproj
+		SccProjectName3 = Projects.Entities
+		SccLocalPath3 = Projects.Entities
+		SccProjectUniqueName4 = Projects.Library\\Projects.Library.csproj
+		SccProjectName4 = Projects.Library
+		SccLocalPath4 = Projects.Library
+		SccProjectUniqueName5 = Projects.Services\\Projects.Services.csproj
+		SccProjectName5 = Projects.Services
+		SccLocalPath5 = Projects.Services
+	EndGlobalSection
+EndGlobal

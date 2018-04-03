@@ -1,0 +1,38 @@
+﻿
+@{
+    Layout = null; 
+}
+
+
+<html ng-app="Projects">
+<head>
+    <meta charset="utf-8" />
+    <base href="/"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Projects Automation !!!</title>
+
+    @*<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">*@
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body ng-controller="rootCtrl" class="skin-blue sidebar-mini">
+    <div id="divTopBar">
+        <top-bar></top-bar>
+    </div>
+    <div id="main-wrap">
+        <div id="divSideBar">
+            <side-bar></side-bar>
+        </div>
+        <div class="content-wrapper">
+            <section class="content-header">
+                <div class="page {{ pageClass }}" ng-view=""></div>
+            </section>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/vendors")
+    @Scripts.Render("~/bundles/Common")
+    @Scripts.Render("~/bundles/Projects")
+
+</body>
+</html>

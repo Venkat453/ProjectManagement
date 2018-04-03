@@ -1,0 +1,406 @@
+﻿<style>
+    .ng-show {
+        height: 0;
+        width: 0;
+        background-color: transparent;
+        top: -200px;
+        left: 200px;
+    }
+</style>
+
+
+<div class="page">
+    <div class="panel panel-default" ng-show="false">
+        <div class="panel-heading">
+            <h3 class="panel-title">Employees List</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-condensed table-striped table-bordered">
+                <tr style="background:#808080;">
+                    <th style="width:2%;">Sno</th>
+                    <th style="width:8%;">UserName</th>
+                    <th style="width:5%;">Role</th>
+                    <th style="width:2%;text-align:center;">Create User</th>
+                </tr>
+                <tbody>
+                    <tr dir-paginate="emp in EmployeesList|itemsPerPage:5" pagination-id="employeetable">
+                        <td>{{$index+1}}</td>
+                        <td>{{emp.UserName}}</td>
+                        <td>{{emp.Role}}</td>
+                        <td style="text-align:center;" ng-click="CreateUser(emp)"><span style=""><i class="fa fa-dot-circle-o fa-lg fa-border" style="color:green;" aria-hidden="true"></i></span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <dir-pagination-controls max-size="5" pagination-id="employeetable"
+                                     direction-links="true" boundary-links="true">
+            </dir-pagination-controls>
+        </div>
+    </div>
+    <!--ng-show="showUserRegForm"-->
+    <div id="userForm" class="panel panel-default" collapse="!userRegistration">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-10 col-md-10 col-lg-10">
+                    <h3 class="panel-title">User Registration</h3>
+                </div>
+                <div class="col-xs-2 col-xs-2 col-lg-2" style="text-align:right;">
+                    <i style="float:right;" ng-class="{'fa fa fa-expand' : userRegistration,'fa fa fa-compress' : !userRegistration}" aria-hidden="true" ng-click="userRegistration = !userRegistration"></i>
+                </div>
+            </div>
+        </div>
+        <form name="newUserForm" novalidate ng-submit="registerNewUser()" style="margin-bottom:0px;">
+            <div class="panel-body">
+                <div id="inputContainer" class="col-md-12" style="padding-left:10px" ng-cloak>
+                    <md-content layout-padding>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <md-input-container class="md-block">
+                                    <label>User ID</label>
+                                    <input required id="userid" name="userid" ng-model="newUser.userid" minlength="2" maxlength="50">
+                                    <div ng-messages="newUserForm.userid.$error" role="alert" class="ng-messages">
+                                        <div ng-message="required">*Mandatory.</div>
+                                        <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                            4 to 50 chars.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <md-input-container class="md-block">
+                                    <label>Password</label>
+                                    <input type="password" required id="pwd" name="pwd" ng-model="newUser.pwd" minlength="2" maxlength="15">
+                                    <div ng-messages="newUserForm.pwd.$error" role="alert" class="ng-messages">
+                                        <div ng-message="required">*Mandatory.</div>
+                                        <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                            4 to 15 chars.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <md-input-container class="md-block">
+                                    <label>Confirm Password</label>
+                                    <input type="password" required id="confpwd" name="confpwd" ng-pattern="{{newUser.pwd}}" ng-model="newUser.confpwd" minlength="4" maxlength="15">
+                                    <div ng-messages="newUserForm.confpwd.$error" role="alert" class="ng-messages">
+                                        <div ng-message="required">*Mandatory.</div>
+                                        <div ng-message="pattern">Password and Confirm Password not matched.</div>
+                                        <div ng-message-exp="['minlength', 'maxlength']">
+                                            4 to 15 chars.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <md-input-container class="md-block">
+                                    <label>User Name</label>
+                                    <input required id="username" valid-Name name="username" ng-model="newUser.username" minlength="2" maxlength="50">
+                                    <div ng-messages="newUserForm.username.$error" role="alert" class="ng-messages">
+                                        <div ng-message="required">*Mandatory.</div>
+                                        <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                            4 to 50 chars.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <md-input-container class="md-block" style="margin: 10px 0;">
+                                    <label>Email</label>
+                                    <input required id="email" name="email" ng-model="newUser.email" minlength="5" maxlength="50" ng-pattern="/^.+@.+\..+$/" style="text-transform: lowercase;">
+                                    <div ng-messages="newUserForm.email.$error" role="alert" class="ng-messages">
+                                        <div ng-message="required">*Valid Email Address is required.</div>
+                                        <div ng-message-exp="['required', 'minlength', 'maxlength']">
+                                            Valid Range: 5 to 50 characters.
+                                        </div>
+                                        <div ng-message-exp="['pattern']">
+                                            Please enter valid email address.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <md-input-container class="md-block">
+                                    <label>User Role</label>
+                                    <md-select name="role" ng-model="roles" required>
+                                        <md-option ng-repeat="roles in rolesList" ng-value="roles">
+                                            {{roles.Name}}
+                                        </md-option>
+                                    </md-select>
+                                    <div ng-messages="newUserForm.role.$error" role="alert">
+                                        <div ng-message="required">* Mandatory.</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </md-content>
+                </div>
+            </div>
+            <div class="panel-footer" style="height:40px; padding-right: 0px; padding-top:5px">
+                <div class="col-md-4">
+                    <span style="font-size:10px">
+                        <input type="checkbox" checked="checked" ng-model="newUser.mail2tenant">
+                        Send Registration Email to the Tenant as CC?
+                    </span>
+                </div>
+                <div class="col-md-4">
+                    <span style="font-size:10px">
+                        <input type="checkbox" checked="checked" ng-model="newUser.mail2user">
+                        Send Registration Email to the User?
+                    </span>
+                </div>
+                <div class="col-md-4" style="padding: 0 0 0 180px;">
+                    <input ng-click="ClearUserForm()" type="button" class="btn btn-sm btn-info" value="Cancel" />
+                    <button class="btn btn-sm btn-info" type="submit">Register User</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading" style="padding:5px 15px;">
+            <div class="row">
+                <div class="col-xs-10 col-md-10 col-lg-10">
+                    <h3 class="panel-title" style="float:left;margin-top: 6px;">
+                        <i ng-class="{'fa fa-plus-circle' : myUsers,'fa fa-minus-circle' : !myUsers}" aria-hidden="true" ng-click="myUsers = !myUsers"></i>
+                        <span>My Users</span>
+                    </h3>
+                </div>
+                <div class="col-xs-2 col-md-2 col-lg-2">
+                    <button class="btn btn-sm btn-info pull-right" type="submit" ng-hide="userRegistration" ng-click="ClearUserForm()">Create User</button>
+                </div>
+            </div>
+        </div>
+        <div collapse="myUsers">
+            <div class="panel-body" style="padding:0px">
+                <div class="col-md-12" style="padding-top:5px!important">
+                    <table class="table table-condensed table-bordered" style="table-layout: fixed; margin-bottom:0px">
+                        <tr style="background:#48cbb7">
+                            <th style="width:12%">User ID</th>
+                            <th style="width:16%">Name</th>
+                            <th style="width:20%">Email</th>
+                            <th style="width:11%">Role</th>
+                            <th style="width:6%">Blocked?</th>
+                            <th style="width:8%">Created</th>
+                            <th style="width:8%">Last Modified</th>
+                            <th style="width:4%">Block</th>
+                            <th style="width:5%">Reset</th>
+                            <th style="width:7%">Edit</th>
+                        </tr>
+                        <tbody>
+                            <tr dir-paginate="mu in AllUsers|itemsPerPage:5">
+                                <td style="vertical-align:middle;">
+                                    {{mu.userid}}
+                                </td>
+                                <td style="vertical-align:middle;">
+                                    <span editable-text="mu.user_name" e-name="mUserName" e-form="rowform" onbeforesave="checkName($data, mu.user_name) || validateRequired($data)" e-required>
+                                        {{mu.user_name}}
+                                    </span>
+
+                                </td>
+                                <td style="vertical-align:middle;">
+                                    <span editable-text="mu.email" e-name="mEmail" e-form="rowform" onbeforesave="checkName($data, mu.email) || validateRequired($data)" e-required>
+                                        {{mu.email}}
+                                    </span>
+                                </td>
+                                <td style="vertical-align:middle">
+                                    <span editable-select="mu.roleid" e-name="mRole" e-form="rowform" e-ng-options="r.id as r.Name for r in rolesList" onbeforesave="checkName($data, r.id) || validateRequired($data)">
+                                        {{ showRole(mu.roleid) }}
+                                    </span>
+                                </td>
+                                <td style="text-align:center; vertical-align:middle;">{{mu.IsLocked}}</td>
+                                <td>{{mu.DateCreated | date:'dd-MMM-yyyy HH:mm:ss'}}</td>
+                                <td>{{mu.DateModified | date:'dd-MMM-yyyy HH:mm:ss'}}</td>
+                                <td style="text-align:center; vertical-align:middle; font-size:15px;">
+                                    <i ng-class="mu.IsLocked ?'fa fa-user':'fa fa-user-times'" ng-click="Blockuser(mu)"></i>
+                                </td>
+                                <td style="text-align:center; vertical-align:middle; font-size:15px;">
+                                    <i ng-class="mu.IsLocked ?'fa fa-unlock-alt':'fa fa-lock'"></i>
+                                </td>
+                                <td style="text-align:center; vertical-align:middle; font-size:15px;">
+                                    <div class="form-buttons form-inline" name="editform" ng-show="!rowform.$visible">
+                                        <button ng-click="editCall(rowform)" class="fa fa-edit"
+                                                style="background-color: Transparent; background-repeat:no-repeat; border: none;overflow: hidden; outline:none; font-size:15px;"></button>
+                                    </div>
+
+                                    <form editable-form name="rowform" onbeforesave="updateUser($data, mu.id)" ng-show="rowform.$visible"
+                                          class="form-buttons form-inline checkVisible" shown="inserted == mu" style="margin-bottom:0px!important">
+                                        <button type="submit" ng-disabled="rowform.$waiting" class="fa fa-save"
+                                                style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size:15px;"></button>
+                                        <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="fa fa-times"
+                                                style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size:15px;"></button>
+                                    </form>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <dir-pagination-controls max-size="5"
+                                             direction-links="true" boundary-links="true">
+                    </dir-pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--<div class="panel panel-default">
+        <div class="panel-heading">
+            <table>
+                <tr>
+                    <td style="width:96%"><h3 class="panel-title">User Access Control </h3></td>
+                    <td style="width:10%; text-align:right"><button class="btn btn-sm btn-info" ng-click="SaveMenuAccess()">Save</button></td>
+                </tr>
+            </table>
+        </div>
+        <div class="panel-body" style="padding:0px">
+            <div>
+                <div class="col-lg-4">
+                    <md-input-container class="md-block">
+                        <label>Select User</label>
+                        <md-icon class="md-dark" arial-label="role" style="color:darkorange">
+                            <i class="fa fa-navicon" style="font-size: 20px;"></i>
+                        </md-icon>
+                        <md-select name="role" ng-model="userSelected" required ng-change="LoadUserMenuAccess(userSelected.id)">
+                            <md-option ng-repeat="mu in myUsers" ng-value="mu">
+                                {{mu.userid}}
+                            </md-option>
+                        </md-select>
+                        <div ng-messages="newUserForm.role.$error" role="alert">
+                            <div ng-message="required">* Mandatory.</div>
+                        </div>
+                    </md-input-container>
+                </div>
+            </div>
+
+            <div class="col-md-6" style="padding-top:5px!important;overflow-y: auto;height: 70%;width: 66.6%;">
+                <table class="table table-condensed" style="table-layout: fixed; width: 100%; font-size:12px">
+                    <tr ng-repeat-start="mainmenu in mainMenuList = (TenantMenuList | filter: {parent_menu: 0}: true)" style="background:none">
+                        <td style="width:30px; vertical-align:middle; border-color:black; border:solid 0px;">
+                            <button ng-click="showDetails(mainmenu)" expand>
+                                <i ng-class="active==mainmenu ?'fa fa-minus':'fa fa-plus'"></i>
+                            </button>
+                        </td>
+                        <td style="text-align:center; width:30px;">
+                            <input type="checkbox" ng-checked="mainmenu.is_access" ng-model="mainmenu.is_access" ng-click="checkAll(mainmenu.is_access, mainmenu.id)" />
+                        </td>
+                        <td style="width:95%; vertical-align:middle; border-color:black; border:solid 0px; font-weight:bold">
+                            {{mainmenu.name}}
+                            <span class="badgeTwo">{{subMenuList.length}}</span>
+                        </td>
+                    </tr>
+                    <tr ng-repeat-end="" ng-show="active==mainmenu">
+                        <td ng-show="subMenuList.length"></td>
+                        <td ng-show="subMenuList.length"></td>
+                        <td ng-show="subMenuList.length">
+                            <table class="table table-condensed table-bordered" style="table-layout: fixed; margin-bottom:0px">
+                                <tr style="background:#48cbb7">
+                                    <th style="width:5%">SNo</th>
+                                    <th style="width:30%">Menu</th>
+                                    <th style="width:5%">Access</th>
+                                </tr>
+                                <tbody>
+                                    <tr ng-repeat="smenu in subMenuList = (TenantMenuList | filter: {parent_menu: mainmenu.id}: true)">
+                                        <td> {{$index + 1}}</td>
+                                        <td>{{smenu.name}} </td>
+                                        <td style="text-align:center;">
+                                            <input type="checkbox" ng-checked="smenu.is_access" ng-model="smenu.is_access" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>-->
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-10 col-md-10 col-lg-10">
+                    <h3 class="panel-title" style="float:left;margin-top: 6px;">
+                        <i ng-class="{'fa fa-plus-circle' : myUsersAccess,'fa fa-minus-circle' : !myUsersAccess}" aria-hidden="true" ng-click="myUsersAccess = !myUsersAccess"></i>
+                        <span>User Access Control</span>
+                    </h3>
+                </div> 
+            </div>
+        </div>
+        <div collapse ="myUsersAccess">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-3">
+                    <md-input-container class="md-block">
+                        <label>Select User</label>
+                        <md-select name="userList" ng-model="selectedUser" ng-change="LoadUserMenuAccess(selectedUser.id);">
+                            <md-option>Select</md-option>
+                            <md-option ng-repeat="mu in AllUsers" ng-value="mu">
+                                {{mu.userid}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div class="col-lg-3">
+                    <md-input-container class="md-block">
+                        <label>Select Menu</label>
+                        <md-select name="parentMenu" ng-model="menuSelected" ng-disabled="!selectedUser||selectedUser.id==undefined" ng-change="loadMenuList(menuSelected)">
+                            <md-option ng-hide="mainmenu.id == 4||mainmenu.id == 3" ng-repeat="mainmenu in mainMenuList = (Allmenu | filter: {parent_menu: 0}: true)" ng-value="mainmenu">
+                                {{mainmenu.name}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div class="col-lg-1" style="top: 4px;">
+                    <button class="btn btn-sm btn-info" ng-disabled="useraccess.$invalid || !displayGrid" ng-click="SaveMenuAccess()">Save</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <table class="table table-condensed table-bordered table-striped " ng-if="menuSelected">
+                        <thead>
+                            <tr style="background:#48cbb7">
+                                <th style="width:75%;text-align:center">Menu</th>
+                                <th style="width:23%;text-align:center">Access &nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="submenu in sbMenuList = (Allmenu | filter: filterData)">
+                                <td ng-style="($index + 1)== 1 && {'font-weight':'800'}">{{submenu.name}} </td>
+                                <td style="text-align:center;">
+                                    <input type="checkbox" ng-checked="submenu.is_access" ng-model="submenu.is_access" ng-change="onPushSelectedMenu(submenu)" ng-click="CheckAll(submenu.is_access,submenu.id,menuSelected)" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-6">
+                    <div class="displayData" ng-if="displayGrid">
+                        <div class="panel panel-primary" style="margin-top:0px;">
+                            <div class="panel-heading" style="height: 40px;">
+                                <div>User accessing modules</div>
+                            </div>
+                            <div class="panel-body" style="overflow-y:auto;height:200px;">
+                                <div class="col-sm-9">
+                                    <ul ng-repeat="pmlist in Allmenu| filter: {parent_menu: 0}: true|filter:{is_access:true}:true">
+                                        <b>{{pmlist.name}}</b>
+                                        <li ng-repeat="psmlist in Allmenu| filter: {parent_menu: pmlist.id}: true|filter:{is_access:true}:true" style="margin-left:20px;">
+                                            {{psmlist.name}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+

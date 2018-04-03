@@ -1,0 +1,92 @@
+﻿<div class="page">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">My Tenants</h3>
+        </div>
+        <div class="panel-body" style="padding-right:0px">
+            <div class="row col-md-12" style="">
+                <form>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                            <input type="text" class="form-control" placeholder="Search" ng-model="searchTenant">
+                        </div>
+                    </div>
+                </form>
+                <table class="table table-bordered" style="font-size:12px; width:100%">
+                    <tr style="vertical-align:middle">
+                        <th style="width:4%"></th>
+                        <th>Tenant</th>
+                        <th style="width:28%">Contact</th>
+                        <th>
+                            <a href="#" ng-click="sortType = 'tenant_type'; sortReverse = !sortReverse">
+                                License
+                                <span ng-show="sortType == 'tenant_type' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'tenant_type' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
+                        <th>
+                            <a href="#" ng-click="sortType = 'account_valid_till'; sortReverse = !sortReverse">
+                                Valid Till
+                                <span ng-show="sortType == 'account_valid_till' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'account_valid_till' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
+                        <th>Created Date</th>
+                        <th>Block</th>
+                    </tr>
+                    <tr dir-paginate-start="t in tenants| filter:searchTenant | itemsPerPage:5 " pagination-id="table1">
+                        <td style="vertical-align:middle;"> 
+                            <button ng-click="showDetails(t)" expand>
+                                <i ng-hide="active==t" class="fa fa-plus"></i>
+                                <i ng-show="active==t" class="fa fa-minus"></i>
+                            </button>
+                        </td>
+                        <td>{{t.tenant_name}} <br />{{t.tenant_key}}<br />{{t.domain}}</td>
+                        <td>{{t.contact_person}}<br />Email:{{t.email}} <br />Contact#:{{t.contact_no}}</td>
+                        <td>{{t.tenant_type}}</td>
+                        <td>{{t.account_valid_till | date:'dd-MMM-yyyy'}}</td>
+                        <td>{{t.date_created | date:'dd-MMM-yyyy'}}</td>
+                        <td style="text-align:center; vertical-align:middle; font-size:15px;">
+                            <i ng-class="t.IsLocked ?'fa fa-user':'fa fa-user-times'" ng-click="Blockuser(t)"></i>
+                        </td>
+                       
+                        <!--<td><a href="javascript:;" data-ng-click="DeleteUserList(u)" style="color:#f6bc1b; font-weight:bold; font-size:15px; height:15px;" class="fa fa-times-circle"></a></td>
+                        <td><a href="javascript:;" data-ng-click="openAddModulesDialog(p)" style="color:#f6bc1b; font-weight:bold; font-size:15px; height:15px;" class="fa fa-edit"></a></td>-->
+                    </tr>
+                    <tr dir-paginate-end=""  ng-show="active==t">
+                        <td></td>
+                        <td colspan="6">
+                            <table id="subtable" class="table table-bordered table-hover" style="width: 70%;border-color:black; border:solid 0px; overflow:scroll; height:0">
+                                <thead style="background-color:slategray">
+                                    <tr>
+                                        <th style="width:34%">User Name</th>
+                                        <th style="width:43%">Email</th>
+                                        <th>Created Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="user in myUsers|filter:{tenant_id:t.id}">
+                                        <td>{{user.user_name}}</td>
+                                        <td>{{user.email}}</td>
+                                        <td>{{user.date_created | date :  "MMM d, y"}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <div class="row" nh-show="tenants.length>5">
+                    <div class="col-lg-10" style="margin-bottom: 0px -35px -13px">
+                        <dir-pagination-controls
+                             max-size="5" pagination-id="table1"
+                             direction-links="true" 
+                             boundary-links="true">
+                        </dir-pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

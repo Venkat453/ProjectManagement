@@ -1,0 +1,77 @@
+﻿
+<div class="page">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Reference Master Configuration</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-2">
+                    <select data-ng-model="groupid" class="form-control" ng-change="BindReferenceMasterGrid(groupid)" ng-options="refgroupmaster.groupid as refgroupmaster.refitem for refgroupmaster in RefgroupmasterData">
+                        <option value='' selected>Select Group</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row" style="width:99%; padding-left:10px!important">
+                <table class="table table-bordered table-hover table-condensed" style="margin-bottom: 0px;">
+                    <tr style="font-weight: bold">
+                        <td style="width:3%">ID</td>
+                        <td style="width:7%">Group ID</td>
+                        <td style="width:15%">Reference Type</td>
+                        <td style="width:30%">Reference Value</td>
+                        <td style="width:40%">Description</td>
+                        <td style="width:5%">Edit</td>
+                    </tr>
+                    <tr ng-repeat="Refmaster in RefmasterData | filter : paginate">
+                        <td>
+                            <span e-name="id" e-form="rowform" onbeforesave="checkName($data, Refmaster.id)" e-required>
+                                {{ Refmaster.id}}
+                            </span>
+                        </td>
+                        <td>
+                            <span e-name="groupid" e-form="rowform" onbeforesave="checkName($data, Refmaster.groupid)" e-required>
+                                {{ Refmaster.groupid }}
+                            </span>
+                        </td>
+                        <td>
+                            <span e-name="reftype" e-form="rowform" onbeforesave="checkName($data, Refmaster.reference_item)" e-required>
+                                {{ Refmaster.reference_item }}
+                            </span>
+                        </td>
+                        <td>
+                            <span editable-text="Refmaster.reference_value" e-name="refvalue" e-form="rowform" onbeforesave="checkName($data, Refmaster.reference_value)" e-required>
+                                {{ Refmaster.reference_value }}
+                            </span>
+                        </td>
+                        <td>
+                            <span editable-text="Refmaster.description" e-name="refdescription" e-form="rowform" onbeforesave="checkName($data, Refmaster.description)" e-required>
+                                {{ Refmaster.description }}
+                            </span>
+                        </td>
+                        <td style="white-space: nowrap">
+                            <form editable-form name="rowform" onbeforesave="saveUser($data, Refmaster.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == Refmaster" style="margin-bottom:0px!important">
+                                <button type="submit" ng-disabled="rowform.$waiting" class="fa fa-save"
+                                        style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;">
+                                </button>
+                                <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="fa fa-times"
+                                        style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                            </form>
+                            <div class="buttons" ng-show="!rowform.$visible">
+                                <button ng-click="rowform.$show()" class="fa fa-edit" 
+                                        style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                <!--<button ng-click="removeReferenceMaster($index)" class="fa fa-cancel"
+                                        style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>-->
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <pagination total-items="totalItems" ng-model="currentPage"
+                            max-size="10" boundary-links="true"
+                            items-per-page="numPerPage" class="pagination-sm" style="margin: 10px 0;">
+                </pagination>
+            </div>
+            <!--<button class="btn btn-default" ng-click="addReferenceMaster()">Add row</button>-->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,67 @@
+﻿<script>
+    $('#divTopBar').show();
+    $('#sidebar-wrapper').show();
+    $('#divSideBar').show();
+</script>
+<div>
+</div>
+<div id="main-body">
+    <div class="container container-fluid">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table table-bordered table-striped table-hover table-condensed">
+                        <thead style="background:#e3e3e3;color:white;">
+                            <tr style="background:#808080;color:white;">
+                                <!--<th style="width:4%;text-align:center;">SNo</th>-->
+                                <th style="width:10%;text-align:center;">Project Code</th>
+                                <th style="width:10%;text-align:center;">
+                                    <a href="#" class="anchorhover" ng-click="sortType = 'Project_Name'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                        Project Name
+                                    </a>
+                                </th>
+                                <th style="width:10%;text-align:center;">
+                                    <a href="#" class="anchorhover" ng-click="sortType = 'Project_Client'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                        Project Client
+                                    </a>
+                                </th>
+                                <th style="width:10%;text-align:center;">
+                                    <a href="#" class="anchorhover" ng-click="sortType = 'CompID'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                        Company ID
+                                    </a>
+                                </th>
+                                <th style="width:10%;text-align:center;">
+                                    <a href="#" class="anchorhover" ng-click="sortType = 'Project_DeliveryDate'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                        Project Delivery Date
+                                    </a>
+                                </th>
+                                <th style="width:3%;text-align:center;">
+                                    Edit
+                                </th>
+                                <th style="width:3%;text-align:center;">
+                                    Delete
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr dir-paginate="pm in projectMasterList|filter:{Project_Name:Project_Name}|filter:filterPM|itemsPerPage:5|orderBy:sortType:sortReverse">
+                                <!--<td style="text-align:center;">{{ps.id}}</td>-->
+                                <td style="text-align:left;">{{pm.Project_Code}}</td>
+                                <td style="text-align:left;"><a href="#" ng-click="ViewDetails(pm)">{{pm.Project_Name}}</a></td>
+                                <td style="text-align:left;">{{pm.Project_Client}}</td>
+                                <td style="text-align:left;">{{pm.CompID}}</td>
+                                <td style="text-align:left;">{{pm.Project_DeliveryDate|date:"MMM d, y"}}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary" ng-click="showform()" ng-show="true">Edit</button>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary" ng-click="showform()" ng-show="true">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

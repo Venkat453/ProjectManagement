@@ -1,0 +1,80 @@
+﻿<div class="page">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Login Log</h3>
+        </div>
+        <div class="panel-body" style="padding-right:0px">
+            <div class="row col-md-12" style="">
+                <!--<div class="row col-md-12">
+                    <div class="input-group" style="margin-bottom:10px;">
+                        <input type="text" class="form-control" placeholder="Anything about the Tenant ..." aria-describedby="basic-addon2" style="border-top-left-radius: 5px; border-bottom-left-radius: 5px">
+                        <span class="input-group-addon" id="basic-addon2" style="border-top-right-radius: 5px; border-bottom-right-radius: 5px; background: #d2d6de;">Search <i class="fa fa-search" style="font-size: 15px;"></i></span>
+                    </div>
+                </div>-->
+                <form>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                            <input type="text" class="form-control" placeholder="Search" ng-model="searchLogin">
+                        </div>
+                    </div>
+                </form>
+                <table class="table table-bordered table-hover" style="font-size:12px; width:100%">
+                    <tr style="vertical-align:middle">
+                        <th style="width:5%;">
+                            
+                        </th>
+                        <th style="width:20%;">
+                            <a href="#" ng-click="sortType = 'tenant_key'; sortReverse = !sortReverse">
+                                Tenant Key
+                                <span ng-show="sortType == 'tenant_key' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'tenant_key' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
+                        <th style="width:20%;">
+                            <a href="#" ng-click="sortType = 'user_name'; sortReverse = !sortReverse">
+                                User
+                                <span ng-show="sortType == 'user_name' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'user_name' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
+                        <th style="width:30%;">
+                            <a href="#" ng-click="sortType = 'login_time'; sortReverse = !sortReverse">
+                                Login Time
+                                <span ng-show="sortType == 'login_time' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'login_time' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
+                        <th style="width:10%;">
+                            <a href="#" ng-click="sortType = 'login_ip'; sortReverse = !sortReverse">
+                                IP Address
+                                <span ng-show="sortType == 'login_ip' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'login_ip' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
+                        <th style="width:15%;">
+                            <a href="#" ng-click="sortType = 'location'; sortReverse = !sortReverse">
+                                Location
+                                <span ng-show="sortType == 'location' && !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'location' && sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
+                    </tr>
+                    <tr ng-repeat="log in LoginLog | orderBy:sortType:sortReverse | filter:searchLogin | filter : paginate">
+                        <td></td>
+                        <td>{{log.tenant_key}}</td>
+                        <td>{{log.user_name}}</td>
+                        <td>{{log.login_time | date:'dd-MMM-yyyy HH:mm:ss'}}</td>
+                        <td>{{log.login_ip}}</td>
+                        <td>{{log.location}}</td>
+                    </tr>
+                </table>
+                <pagination total-items="totalItems" ng-model="currentPage"
+                            max-size="10" boundary-links="true"
+                            items-per-page="numPerPage" class="pagination-sm">
+                </pagination>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,147 @@
+﻿<div ng-show="!ProductsList.length" id="productform" class="panel panel-default">
+
+    <div class="panel-heading">
+        <h3 class="panel-title">User Registration</h3>
+    </div>
+    <form name="newUserForm" angular-validator-submit="register()" style="margin-bottom:0px;">
+        <div class="panel-body">
+            <div id="inputContainer" ng-cloak>
+                <md-content layout-padding>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <md-input-container class="md-block">
+                                <label>User ID</label>
+                                <md-icon class="md-dark" arial-label="userid" style="color:#0094ff">account_circle</md-icon>
+                                <input required id="userid" name="userid" ng-model="user.userid" minlength="4" maxlength="10">
+                                <div ng-messages="newUserForm.userid.$error" role="alert" class="ng-messages">
+                                    <div ng-message="required">*Mandatory.</div>
+                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                        4 to 10 chars.
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <md-input-container class="md-block">
+                                <label>Password</label>
+                                <md-icon class="md-dark" arial-label="pwd" style="color:#0094ff">lock</md-icon>
+                                <input type="password" required id="pwd" name="pwd" ng-model="user.pwd" minlength="4" maxlength="15">
+                                <div ng-messages="newUserForm.pwd.$error" role="alert" class="ng-messages">
+                                    <div ng-message="required">*Mandatory.</div>
+                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                        4 to 15 chars.
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <md-input-container class="md-block">
+                                <label>Confirm Password</label>
+                                <md-icon class="md-dark" arial-label="pwd" style="color:#0094ff">lock</md-icon>
+                                <input type="password" required id="confpwd" name="confpwd" ng-model="user.confpwd" minlength="4" maxlength="15">
+                                <div ng-messages="newUserForm.confpwd.$error" role="alert" class="ng-messages">
+                                    <div ng-message="required">*Mandatory.</div>
+                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                        4 to 15 chars.
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <md-input-container class="md-block">
+                                <label>User Name</label>
+                                <md-icon class="md-dark" arial-label="username" style="color:#0094ff">account_circle</md-icon>
+                                <input required id="username" name="username" ng-model="user.username" minlength="4" maxlength="50">
+                                <div ng-messages="newUserForm.username.$error" role="alert" class="ng-messages">
+                                    <div ng-message="required">*Mandatory.</div>
+                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                        4 to 50 chars.
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <md-input-container class="md-block" style="margin: 10px 0;">
+                                <label>Email</label>
+                                <md-icon class="md-dark" arial-label="email" style="color:#ff00dc">contact_mail</md-icon>
+                                <input required id="email" name="email" ng-model="user.email" minlength="5" maxlength="50">
+                                <div ng-messages="newUserForm.email.$error" role="alert" class="ng-messages">
+                                    <div ng-message="required">*  Valid Email Address is required.</div>
+                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                        Valid Range: 5 to 30 characters.
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <md-input-container class="md-block">
+                                <label>User Role</label>
+                                <md-icon class="md-dark" arial-label="role" style="color:#0094ff">assignment_ind</md-icon>
+                                <md-select name="role" ng-model="roles" required>
+                                    <md-option ng-repeat="roles in rolesList" ng-value="roles">
+                                        {{roles.rolename}}
+                                    </md-option>
+                                </md-select>
+                                <div ng-messages="newUserForm.role.$error" role="alert">
+                                    <div ng-message="required">* Mandatory.</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                    </div>
+                </md-content>
+            </div>
+        </div>
+
+        <div class="panel-footer" style="height:40px; padding-right: 0px; padding-top:5px">
+            <div class="col-lg-12" style="text-align:right;">
+                <button class="btn btn-sm btn-info" ng-click="register()" type="submit">Register User</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="page">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="form-group">
+                <div class="row col-md-12" style="padding-top:50px;">
+                    <table class="table table-bordered table-hover" style="font-size:12px">
+                        <tr style="vertical-align:middle">
+                            <th style="width:7%;">UserID</th>
+                            <th style="width:10%;">Name</th>
+                            <th style="width:10%;">Email</th>
+                            <th style="width:5%;">Created Date</th>
+                            <th style="width:5%;">Last Modified Date</th>
+                            <th style="width:3%;">Role</th>
+                            <th style="width:2%;">Is Locked</th>
+                            <th style="width:2%;">Delete</th>
+                            <th style="width:2%;">Reset Password</th>
+                        </tr>
+                        <tr ng-repeat="u in UsersList | filter: paginate">
+                            <td>{{u.userid}}</td>
+                            <td>{{u.user_name}}</td>
+                            <td>{{u.email}}</td>
+                            <td>{{u.Date_Created | date:'dd-MMM-yyyy'}}</td>
+                            <td>{{u.DateModified | date:'dd-MMM-yyyy'}}</td>
+                            <td>{{u.user_role}}</td>
+                            <td>{{u.Is_Blocked}}</td>
+                            <td><a href="javascript:;" data-ng-click="DeleteUserList(u)" style="color:#f6bc1b; font-weight:bold; font-size:15px; height:15px;" class="fa fa-times-circle"></a></td>
+                            <td><a href="javascript:;" data-ng-click="openAddModulesDialog(p)" style="color:#f6bc1b; font-weight:bold; font-size:15px; height:15px;" class="fa fa-edit"></a></td>
+                        </tr>
+                    </table>
+                    <pagination total-items="totalItems" ng-model="currentPage"
+                                max-size="10" boundary-links="true"
+                                items-per-page="numPerPage" class="pagination-sm">
+                    </pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

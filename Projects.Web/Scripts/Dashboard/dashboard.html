@@ -1,0 +1,972 @@
+﻿<script>
+    $('#divTopBar').show();
+    $('#sidebar-wrapper').show();
+    $('#divSideBar').show();
+</script>
+
+<div class="panel panel-default"> 
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-4" style="margin-top:20px;">
+                    <md-input-container class="md-block">
+                        <label>Select Project</label>
+                        <md-select name="project_id" ng-model="project_id" required ng-change="getChartDataByProjId(project_id)">
+                            <md-option ng-repeat="project in projectslists" ng-value="project.id">
+                                {{project.project_name}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div class="col-lg-4" style="margin-top:20px;">
+                    <!--<md-input-container class="md-block">
+                        <label>Select Graph</label>
+                        <md-select name="charttitle_id" ng-model="charttitle_id">
+                            <md-option ng-repeat="charttitle in Charttitlelist" ng-value="charttitle.id" >
+                                <md-checkbox ng-model="charttitle.is_active" ng-change="Updatedashboard(charttitle)">
+                                    {{charttitle.charts_title}}
+                                </md-checkbox>
+                            </md-option>
+                        </md-select>
+                    </md-input-container>-->
+                    <md-input-container class="md-block">
+                        <label>Select Graph</label>
+                        <md-select ng-model="charttitle" multiple md-on-close="Updatedashboard()">
+                            <md-option ng-repeat="charttitle in Charttitlelist" ng-value="charttitle">
+                                    {{charttitle.charts_title}} 
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    <!--<div class="panel panel-default" style="z-index:999;position:absolute;width:100%;">
+                        <div class="panel-heading" style="cursor:pointer;">
+                            <a href="#" ng-click="isCollapsedGraph = !isCollapsedGraph" style="color: #080808;" >
+                                <h3 class="panel-title">
+                                    Select Graphs<b class="caret" style="float:right;margin-top:7px;"></b>
+                                </h3>
+                            </a>
+                        </div>
+                        <div collapse="!isCollapsedGraph">
+                            <div class="panel-body">
+                                <md-input-container class="md-block">
+                                    <div class="row">
+                                        <div ng-repeat="charttitle in Charttitlelist" ng-value="charttitle.id" style="padding-left: 5%;max-width: 100%;">
+                                            <md-checkbox ng-model="charttitle.is_active" aria-label="Checkbox 1" ng-change="Updatedashboard(charttitle)">
+                                                {{charttitle.charts_title}}
+                                            </md-checkbox>
+                                        </div>
+                                        <button class="btn btn-xs btn-primary pull-right" ng-click="isCollapsedGraph = !isCollapsedGraph" style="margin: -15px 20px 0px 0px;">OK</button> 
+                                    </div>
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </div>--> 
+                </div>
+                <div class="col-lg-4" style="margin-top:20px;">
+                    <!--<button class="btn btn-sm btn-primary" style="margin-top: 4px;">Save</button>-->
+                    <!--<a ng-href="/SampleReports"class="btn btn-sm btn-primary" style="margin-top: 10px;">Sample Reports</a> &nbsp;
+                    <button class="btn btn-sm btn-primary" ng-click="showPayumoneyOrderform()" style="margin-top: 10px;">PayUMoney</button>-->
+                </div>
+            </div> 
+            <ul class="panel-group" id="sortable">
+                <li class="panel panel-default" id="1" ng-show="title1.is_active">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-10 col-md-10 col-lg-10">
+                                <h3 class="panel-title" style="float:left;">
+                                    <i ng-class="{'fa fa-minus-circle' : isCollapsed2,'fa fa-plus-circle' : !isCollapsed2}" aria-hidden="true" ng-click="isCollapsed2 = !isCollapsed2"></i>
+                                    <span ng-click="dashboardstatusform1.$show()" editable-text="title1.charts_title" e-name="dashboardstatus" e-form="dashboardstatusform1" onbeforesave="checkName($data, title1) || validateRequired($data)">
+                                        {{title1.charts_title}}
+                                    </span>
+                                </h3>
+                                <form style="float:left;margin-left: 105px;margin-bottom:0px!important;margin-top:8px;" editable-form name="dashboardstatusform1" onbeforesave="Updatestatus($data, title1)" ng-show="dashboardstatusform1.$visible" class="form-buttons form-inline" shown="inserted == charttitle">
+                                    <button type="submit" ng-disabled="dashboardstatusform1.$waiting" class="fa fa-save"
+                                            style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                    <button type="button" ng-disabled="dashboardstatusform1.$waiting" ng-click="dashboardstatusform1.$cancel()" class="fa fa-times"
+                                            style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                </form>
+                                <div class="buttons" ng-show="!dashboardstatusform1.$visible">
+                                    <button ng-click="dashboardstatusform1.$show()"
+                                            style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 col-xs-2 col-lg-2" style="text-align:right;">
+                                <i ng-class="{'fa fa fa-expand' : isCollapsed2,'fa fa fa-compress' : !isCollapsed2}" aria-hidden="true" ng-click="isCollapsed2 = !isCollapsed2"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div collapse="!isCollapsed2">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="panel panel-default">
+                                        <span style="float:right;">
+                                            Police Stations:
+                                            <select ng-model="ps" ng-options="ps.id as ps.ps_name for ps in PolicestationList" ng-change="psWiseWP(ps)">
+                                                <option value="">All</option>
+                                            </select>
+                                        </span>
+                                        <div ng-show="showWPChart" id="WorkProgressContainer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="panel panel-default" id="2" ng-show="title2.is_active">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-10 col-md-10 col-lg-10">
+                                <h3 class="panel-title" style="float:left;">
+                                    <i ng-class="{'fa fa-minus-circle' : isCollapsed3,'fa fa-plus-circle' : !isCollapsed3}" aria-hidden="true" ng-click="isCollapsed3 = !isCollapsed3"></i>
+                                    <span ng-click="dashboardstatusform2.$show()" editable-text="title2.charts_title" e-name="dashboardstatus" e-form="dashboardstatusform2" onbeforesave="checkName($data, title2) || validateRequired($data)">
+                                        {{title2.charts_title}}
+                                    </span>
+                                </h3>
+                                <form style="float:left;margin-left: 105px;margin-bottom:0px!important;" editable-form name="dashboardstatusform2" onbeforesave="Updatestatus($data, title2)" ng-show="dashboardstatusform2.$visible" class="form-buttons form-inline" shown="inserted == charttitle">
+                                    <button type="submit" ng-disabled="dashboardstatusform2.$waiting" class="fa fa-save"
+                                            style="background-color: Transparent;margin-top:9px; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                    <button type="button" ng-disabled="dashboardstatusform2.$waiting" ng-click="dashboardstatusform2.$cancel()" class="fa fa-times"
+                                            style="background-color: Transparent;margin-top:9px; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                </form>
+                                <div class="buttons" ng-show="!dashboardstatusform2.$visible">
+                                    <button ng-click="dashboardstatusform2.$show()" 
+                                            style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 col-xs-2 col-lg-2" style="text-align:right;">
+                                <i ng-class="{'fa fa fa-expand' : isCollapsed3,'fa fa fa-compress' : !isCollapsed3}" aria-hidden="true" ng-click="isCollapsed3 = !isCollapsed3"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div collapse="!isCollapsed3">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-4 ">
+                                    <div ng-show="showIndChart" class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <div class="row">
+                                                <div class="col-xs-12 col-md-12 col-lg-12">
+                                                    <h3 class="panel-title">
+                                                        <a href="#" ng-click="isCollapsed11 = !isCollapsed11">Induction Done Chart</a>
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div collapse="isCollapsed11">
+                                            <div class="panel-body">
+                                                <div id="InductionContainer" style="min-width: 100%; height: 335px; margin: 0 auto"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div ng-show="showIndStatChart" class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <div class="row">
+                                                <div class="col-xs-11 col-md-11 col-lg-11">
+                                                    <h3 class="panel-title">
+                                                        <a href="#" ng-click="isCollapsed12 = !isCollapsed12">Complete Indents status</a>
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div collapse="isCollapsed12">
+                                            <div class="panel-body">
+                                                <div id="IndentsStatusContainer" style="min-width: 100%; height: 335px; margin: 0 auto"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 ">
+                                    <div ng-show="showIndCostChart" class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <div class="row">
+                                                <div class="col-xs-12 col-md-12 col-lg-12">
+                                                    <h3 class="panel-title">
+                                                        <a href="#" ng-click="isCollapsed14 = !isCollapsed14">Subcontractor Indent Cost Details</a>
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div collapse="isCollapsed14">
+                                            <div class="panel-body">
+                                                <div id="SubcontractorIndentCostContainer" style="min-width: 100%; height: 335px; margin: 0 auto"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="panel panel-default" id="3" ng-show="title3.is_active">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-10 col-md-10 col-lg-10">
+                                <h3 class="panel-title" style="float:left;">
+                                    <i ng-class="{'fa fa-minus-circle' : isCollapsed4,'fa fa-plus-circle' : !isCollapsed4}" aria-hidden="true" ng-click="isCollapsed4 = !isCollapsed4"></i>
+                                    <span ng-click="dashboardstatusform3.$show()" editable-text="title3.charts_title" e-name="dashboardstatus" e-form="dashboardstatusform3" onbeforesave="checkName($data, title3) || validateRequired($data)">
+                                        {{title3.charts_title}}
+                                    </span>
+                                </h3>
+                                <form style="float:left;margin-left: 105px;margin-bottom:0px!important;" editable-form name="dashboardstatusform3" onbeforesave="Updatestatus($data, title3)" ng-show="dashboardstatusform3.$visible" class="form-buttons form-inline" shown="inserted == charttitle">
+                                    <button type="submit" ng-disabled="dashboardstatusform3.$waiting" class="fa fa-save"
+                                            style="background-color: Transparent;margin-top:9px; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                    <button type="button" ng-disabled="dashboardstatusform3.$waiting" ng-click="dashboardstatusform3.$cancel()" class="fa fa-times"
+                                            style="background-color: Transparent;margin-top:9px; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                </form>
+                                <div class="buttons" ng-show="!dashboardstatusform3.$visible">
+                                    <button ng-click="dashboardstatusform3.$show()"
+                                            style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 col-xs-2 col-lg-2" style="text-align:right;">
+                                <i ng-class="{'fa fa fa-expand' : isCollapsed4,'fa fa fa-compress' : !isCollapsed4}" aria-hidden="true" ng-click="isCollapsed4 = !isCollapsed4"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div collapse="!isCollapsed4">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div ng-show="showWpQualChart" class="panel panel-default">
+                                        <div collapse="isCollapsed15">
+                                            <div class="panel-body">
+                                                <div id="WorkProgressQualityContainer" style="min-width: 100%; height: 335px; margin: 0 auto"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="panel panel-default" id="4" ng-show="title4.is_active">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-10 col-md-10 col-lg-10">
+                                <h3 class="panel-title" style="float:left;">
+                                    <i ng-class="{'fa fa-minus-circle' : isCollapsed5,'fa fa-plus-circle' : !isCollapsed5} " aria-hidden="true" ng-click="isCollapsed5 = !isCollapsed5"></i>
+                                    <span ng-click="dashboardstatusform4.$show()" editable-text="title4.charts_title" e-name="dashboardstatus" e-form="dashboardstatusform4" onbeforesave="checkName($data, title4) || validateRequired($data)">
+                                        {{title4.charts_title}}
+                                    </span>
+                                </h3>
+                                <form style="float:left;margin-left: 105px;margin-bottom:0px!important;" editable-form name="dashboardstatusform4" onbeforesave="Updatestatus($data, title4)" ng-show="dashboardstatusform4.$visible" class="form-buttons form-inline" shown="inserted == charttitle">
+                                    <button type="submit" ng-disabled="dashboardstatusform4.$waiting" class="fa fa-save"
+                                            style="background-color: Transparent;margin-top:9px; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                    <button type="button" ng-disabled="dashboardstatusform4.$waiting" ng-click="dashboardstatusform4.$cancel()" class="fa fa-times"
+                                            style="background-color: Transparent;margin-top:9px; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                </form>
+                                <div class="buttons" ng-show="!dashboardstatusform4.$visible">
+                                    <button ng-click="dashboardstatusform4.$show()"
+                                            style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 col-xs-2 col-lg-2" style="text-align:right;">
+                                <i ng-class="{'fa fa fa-expand' : isCollapsed5,'fa fa fa-compress' : !isCollapsed5}" aria-hidden="true" ng-click="isCollapsed5 = !isCollapsed5"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div collapse="!isCollapsed5">
+                        <div class="panel-body">
+                            <div class="panel panel-default">
+                                <div ng-show="showMatrlChart">
+                                    <div id="SCWiseMaterailchart" style="min-width: 100%; height: 335px; margin: 0 auto"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="panel panel-default" id="5" ng-show="title5.is_active">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-10 col-md-10 col-lg-10">
+                                <h3 class="panel-title" style="float:left">
+                                    <i ng-class="{'fa fa-minus-circle' : isCollapsed73,'fa fa-plus-circle' : !isCollapsed73}" aria-hidden="true" ng-click="isCollapsed73 = !isCollapsed73"></i>
+                                    <span ng-click="dashboardstatusform5.$show()" editable-text="title5.charts_title" e-name="dashboardstatus" e-form="dashboardstatusform5" onbeforesave="checkName($data, title5) || validateRequired($data)">
+                                        {{title5.charts_title}}
+                                    </span>
+                                </h3>
+                                <form style="float:left;margin-left: 105px;margin-bottom:0px!important;" editable-form name="dashboardstatusform5" onbeforesave="Updatestatus($data, title5)" ng-show="dashboardstatusform5.$visible" class="form-buttons form-inline" shown="inserted == charttitle">
+                                    <button type="submit" ng-disabled="dashboardstatusform5.$waiting" class="fa fa-save"
+                                            style="background-color: Transparent;margin-top:9px; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                    <button type="button" ng-disabled="dashboardstatusform5.$waiting" ng-click="dashboardstatusform5.$cancel()" class="fa fa-times"
+                                            style="background-color: Transparent;margin-top:9px; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                </form>
+                                <div class="buttons" ng-show="!dashboardstatusform5.$visible">
+                                    <button ng-click="dashboardstatusform5.$show()"
+                                            style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 col-xs-2 col-lg-2" style="text-align:right;">
+                                <i ng-class="{'fa fa fa-expand' : isCollapsed73,'fa fa fa-compress' : !isCollapsed73}" aria-hidden="true" ng-click="isCollapsed73 = !isCollapsed73"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div collapse="!isCollapsed73">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div ng-show="missedcertifiedlabourList.length!=0" class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <div class="row">
+                                                <div class="col-xs-12 col-md-12 col-lg-12">
+                                                    <h3 class="panel-title">
+                                                        <a href="#" ng-click="isCollapsed51 = !isCollapsed51">Pending Documents List</a>
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div collapse="isCollapsed51">
+                                            <table class="table table-responsive table-bordered table-striped table-hover table-condensed">
+                                                <thead style="display: table; width: 100%; table-layout: fixed; width: calc( 100% - 1em );">
+                                                    <tr style="background:#808080;color:white;">
+                                                        <th style="text-align: center;vertical-align: middle;">Emp Code</th>
+                                                        <th style="text-align: center;vertical-align: middle; word-break:break-all;">Subcontractor</th>
+                                                        <th style="text-align: center;vertical-align: middle;">Labour Name</th>
+                                                        <th style="text-align: center;vertical-align: middle;">Aadhar</th>
+                                                        <th style="text-align: center;vertical-align: middle;">Bank</th>
+                                                        <th style="text-align: center;vertical-align: middle;">Medical</th>
+                                                        <th style="text-align: center;vertical-align: middle;">Eye</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody style="display: block; height: 290px;overflow: auto;">
+                                                    <tr style="display:table;width:100%; table-layout: fixed;" ng-repeat="readytoretired in missedcertifiedlabourList |filter:{project_id:project_id}:true">
+                                                        <td style="text-align: center;vertical-align: middle;">{{readytoretired.emp_code}}{{readytoretired.code_seperation}}-{{readytoretired.emp_num}}</td>
+                                                        <td style="text-align: left;vertical-align: middle;">{{readytoretired.subcontractor_name}}</td>
+                                                        <td style="text-align: left;vertical-align: middle;">{{readytoretired.name}}</td>
+                                                        <td style="text-align: center;vertical-align: middle;"><i ng-class="{'fa fa-close' : readytoretired.aadhar_filename==null,'fa fa-check' : readytoretired.aadhar_filename!=null}" ng-style="{'color': (( readytoretired.aadhar_filename!=null) ? 'green' : ( readytoretired.aadhar_filename==null) ? 'red' : '') }"></i></td>
+                                                        <td style="text-align: center;vertical-align: middle;"><i ng-class="{'fa fa-close' : readytoretired.bank_filename==null,'fa fa-check' : readytoretired.bank_filename!=null}" ng-style="{'color': (( readytoretired.bank_filename!=null) ? 'green' : ( readytoretired.bank_filename==null) ? 'red' : '') }"></i></td>
+                                                        <td style="text-align: center;vertical-align: middle;"><i ng-class="{'fa fa-close' : readytoretired.medical_filename==null,'fa fa-check' : readytoretired.medical_filename!=null}" ng-style="{'color': (( readytoretired.medical_filename!=null) ? 'green' : ( readytoretired.medical_filename==null) ? 'red' : '') }"></i></td>
+                                                        <td style="text-align: center;vertical-align: middle;"><i ng-class="{'fa fa-close' : readytoretired.eye_certificate_filenmae==null,'fa fa-check' : readytoretired.eye_certificate_filenmae!=null}" ng-style="{'color': (( readytoretired.eye_certificate_filenmae!=null) ? 'green' : ( readytoretired.eye_certificate_filenmae==null) ? 'red' : '') }"></i></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div ng-show="showLbCertChart" class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <div class="row">
+                                                <div class="col-xs-12 col-md-12 col-lg-12">
+                                                    <h3 class="panel-title">
+                                                        <a href="#" ng-click="isCollapsed13 = !isCollapsed13">Medical & Eye Test Done Chart of Labours</a>
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div collapse="isCollapsed13"style="overflow-x: scroll;overflow-y:hidden;">
+                                            <div class="panel-body">
+                                                <div id="LaborCertificatesContainer" style="min-width: 100%; height: 350px; margin: 0 auto"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="panel panel-default" id="6" ng-show="title6.is_active">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-10 col-md-10 col-lg-10">
+                                <h3 class="panel-title" style="float:left">
+                                    <i ng-class="{'fa fa-minus-circle' : isCollapsed6,'fa fa-plus-circle' : !isCollapsed6}" aria-hidden="true" ng-click="isCollapsed6 = !isCollapsed6"></i>
+                                    <span ng-click="dashboardstatusform6.$show()" editable-text="title6.charts_title" e-name="dashboardstatus" e-form="dashboardstatusform6" onbeforesave="checkName($data, title6) || validateRequired($data)">
+                                        {{title6.charts_title}}
+                                    </span>
+                                </h3>
+                                <form style="float:left;margin-left: 105px;margin-bottom:0px!important;" editable-form name="dashboardstatusform6" onbeforesave="Updatestatus($data, title6)" ng-show="dashboardstatusform6.$visible" class="form-buttons form-inline" shown="inserted == charttitle">
+                                    <button type="submit" ng-disabled="dashboardstatusform6.$waiting" class="fa fa-save"
+                                            style="background-color: Transparent;margin-top:9px; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                    <button type="button" ng-disabled="dashboardstatusform6.$waiting" ng-click="dashboardstatusform6.$cancel()" class="fa fa-times"
+                                            style="background-color: Transparent;margin-top:9px; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                </form>
+                                <div class="buttons" ng-show="!dashboardstatusform6.$visible">
+                                    <button ng-click="dashboardstatusform6.$show()"
+                                            style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                </div>
+                            </div>
+                            <div class="col-xs-2 col-xs-2 col-lg-2" style="text-align:right;">
+                                <i ng-class="{'fa fa fa-expand' : isCollapsed6,'fa fa fa-compress' : !isCollapsed6}" aria-hidden="true" ng-click="isCollapsed6 = !isCollapsed6"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div collapse="!isCollapsed6">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6 ">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <div class="row">
+                                                <div class="col-xs-12 col-md-12 col-lg-12">
+                                                    <h3 class="panel-title">
+                                                        <a href="#" ng-click="isCollapsed61 = !isCollapsed61">Labours Expires List</a>
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div collapse="isCollapsed61">
+                                            <table class="table table-responsive table-bordered table-striped table-hover table-condensed">
+                                                <thead>
+                                                    <tr style="background:#808080;color:white">
+                                                        <th style="text-align: center;vertical-align: middle;">Employee Code</th>
+                                                        <th style="text-align: center;vertical-align: middle;">Labour Name</th>
+                                                        <th style="text-align: center;vertical-align: middle;">Father's Name</th>
+                                                        <th style="text-align: center;vertical-align: middle;">Contact No</th>
+                                                        <th style="text-align: center;vertical-align: middle;">Date of Birth</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr dir-paginate="readytoretired in readytoretiredlabourList|itemsPerPage:5|filter:{project_id:project_id}:true" pagination-id="vehical2">
+                                                        <td style="text-align: center;vertical-align: middle;">{{readytoretired.emp_code}}{{readytoretired.code_seperation}}-{{readytoretired.emp_num}}</td>
+                                                        <td style="text-align: center;vertical-align: middle;"><a href="#" popover-template="'Scripts/Dashboard/labouragecheck.html'" popover-placement="right" data-popover-trigger="mouseenter" popover-title="{{dynamicPopover.title}}" ng-mouseover="labourdata(readytoretired.master_emp_id)">{{readytoretired.name}}</a></td>
+                                                        <td style="text-align: center;vertical-align: middle;">{{readytoretired.fathers_name}}</td>
+                                                        <td style="text-align: center;vertical-align: middle;">{{readytoretired.current_contact_number}}</td>
+                                                        <td ng-style="set_bgcolor(readytoretired.age);" style="text-align: center;vertical-align: middle;">{{readytoretired.age|date :  "MMM d, y"}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div>
+                                                <dir-pagination-controls max-size="5" pagination-id="vehical2"
+                                                                         direction-links="true" boundary-links="true">
+                                                </dir-pagination-controls>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <div class="row">
+                                                <div class="col-xs-12 col-md-12 col-lg-12">
+                                                    <h3 class="panel-title">
+                                                        <a href="#" ng-click="isCollapsed62 = !isCollapsed62">Vehicle Expires List</a>
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div collapse="isCollapsed62">
+                                            <table class="table table-responsive table-bordered table-striped table-hover table-condensed">
+                                                <thead>
+                                                    <tr style="background:#808080;color:white">
+                                                        <th style="text-align: center;vertical-align: middle;">Vehicle RegNo</th>
+                                                        <th style="text-align: center;vertical-align: middle;">Pollution Valid Till</th>
+                                                        <th style="text-align: center;vertical-align: middle;">Insurance Valid Till</th>
+                                                        <th style="text-align: center;vertical-align: middle;">Fitness Valid Till</th>
+                                                        <th style="text-align: center;vertical-align: middle;">Driver licence Valid Till</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr dir-paginate="vehicle in ExpiredVehicleList|itemsPerPage:5|filter:{project_id:project_id}:true" pagination-id="vehical1">
+                                                        <td style="text-align: center;vertical-align: middle;"><a href="#" popover-template="'Scripts/Dashboard/vehiclecertificate.html'" popover-placement="right" data-popover-trigger="mouseenter" popover-title="{{dynamicPopover.title}}" ng-mouseover="Vehicleview(vehicle.vehicle_reg_no)">{{vehicle.vehicle_reg_no}}</a></td>
+                                                        <td style="text-align: center;vertical-align: middle;" ng-style="set_color(vehicle.pollution_validdate)">{{vehicle.pollution_validdate|date :  "MMM d, y"}}</td>
+                                                        <td style="text-align: center;vertical-align: middle;" ng-style="set_color(vehicle.insurence_validdate)">{{vehicle.insurence_validdate|date :  "MMM d, y"}}</td>
+                                                        <td style="text-align: center;vertical-align: middle;" ng-style="set_color(vehicle.fitness_validdate)">{{vehicle.fitness_validdate|date :  "MMM d, y"}}</td>
+                                                        <td style="text-align: center;vertical-align: middle;" ng-style="set_color(vehicle.driver_lic_validdate)">{{vehicle.driver_lic_validdate|date :  "MMM d, y"}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div>
+                                                <dir-pagination-controls max-size="5" pagination-id="vehical1"
+                                                                         direction-links="true" boundary-links="true">
+                                                </dir-pagination-controls>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul> 
+
+            <!--<div id="accordion">
+                <div class="s_panel">
+                    <div class="panel panel-default" id="1" ng-show="title1.is_active">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-10 col-md-10 col-lg-10">
+                                    <h3 class="panel-title" style="float:left;">
+                                        <i ng-class="{'fa fa-plus-circle' : isCollapsed2,'fa fa-minus-circle' : !isCollapsed2}" aria-hidden="true" ng-click="isCollapsed2 = !isCollapsed2"></i>
+                                        <span ng-click="dashboardstatusform1.$show()" editable-text="title1.charts_title" e-name="dashboardstatus" e-form="dashboardstatusform1" onbeforesave="checkName($data, title1) || validateRequired($data)">
+                                            {{title1.charts_title}}
+                                        </span>
+                                    </h3>
+                                    <form style="float:left;margin-left: 105px;margin-bottom:0px!important;margin-top:8px;" editable-form name="dashboardstatusform1" onbeforesave="Updatestatus($data, title1)" ng-show="dashboardstatusform1.$visible" class="form-buttons form-inline" shown="inserted == charttitle">
+                                        <button type="submit" ng-disabled="dashboardstatusform1.$waiting" class="fa fa-save"
+                                                style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                        <button type="button" ng-disabled="dashboardstatusform1.$waiting" ng-click="dashboardstatusform1.$cancel()" class="fa fa-times"
+                                                style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                    </form>
+                                    <div class="buttons" ng-show="!dashboardstatusform1.$visible">
+                                        <button ng-click="dashboardstatusform1.$show()"
+                                                style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2 col-xs-2 col-lg-2" style="text-align:right;">
+                                    <i ng-class="{'fa fa fa-expand' : isCollapsed2,'fa fa fa-compress' : !isCollapsed2}" aria-hidden="true" ng-click="isCollapsed2 = !isCollapsed2"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div collapse="isCollapsed2">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="panel panel-default">
+                                            <span style="float:right;">
+                                                Police Stations:
+                                                <select ng-model="ps" ng-options="ps.id as ps.ps_name for ps in PolicestationList" ng-change="psWiseWP(ps)">
+                                                    <option value="">All</option>
+                                                </select>
+                                            </span>
+                                            <div ng-show="showWPChart" id="WorkProgressContainer"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="s_panel">
+                    <div class="panel panel-default" id="2" ng-show="title2.is_active">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-10 col-md-10 col-lg-10">
+                                    <h3 class="panel-title" style="float:left;">
+                                        <i ng-class="{'fa fa-plus-circle' : isCollapsed3,'fa fa-minus-circle' : !isCollapsed3}" aria-hidden="true" ng-click="isCollapsed3 = !isCollapsed3"></i>
+                                        <span ng-click="dashboardstatusform2.$show()" editable-text="title2.charts_title" e-name="dashboardstatus" e-form="dashboardstatusform2" onbeforesave="checkName($data, title2) || validateRequired($data)">
+                                            {{title2.charts_title}}
+                                        </span>
+                                    </h3>
+                                    <form style="float:left;margin-left: 105px;margin-bottom:0px!important;" editable-form name="dashboardstatusform2" onbeforesave="Updatestatus($data, title2)" ng-show="dashboardstatusform2.$visible" class="form-buttons form-inline" shown="inserted == charttitle">
+                                        <button type="submit" ng-disabled="dashboardstatusform2.$waiting" class="fa fa-save"
+                                                style="background-color: Transparent;margin-top:9px; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                        <button type="button" ng-disabled="dashboardstatusform2.$waiting" ng-click="dashboardstatusform2.$cancel()" class="fa fa-times"
+                                                style="background-color: Transparent;margin-top:9px; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                    </form>
+                                    <div class="buttons" ng-show="!dashboardstatusform2.$visible">
+                                        <button ng-click="dashboardstatusform2.$show()"
+                                                style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2 col-xs-2 col-lg-2" style="text-align:right;">
+                                    <i ng-class="{'fa fa fa-expand' : isCollapsed3,'fa fa fa-compress' : !isCollapsed3}" aria-hidden="true" ng-click="isCollapsed3 = !isCollapsed3"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div collapse="!isCollapsed3">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-4 ">
+                                        <div ng-show="showIndChart" class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-12 col-lg-12">
+                                                        <h3 class="panel-title">
+                                                            <a href="#" ng-click="isCollapsed11 = !isCollapsed11">Induction Done Chart</a>
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div collapse="isCollapsed11">
+                                                <div class="panel-body">
+                                                    <div id="InductionContainer" style="min-width: 100%; height: 335px; margin: 0 auto"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div ng-show="showIndStatChart" class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <div class="row">
+                                                    <div class="col-xs-11 col-md-11 col-lg-11">
+                                                        <h3 class="panel-title">
+                                                            <a href="#" ng-click="isCollapsed12 = !isCollapsed12">Complete Indents status</a>
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div collapse="isCollapsed12">
+                                                <div class="panel-body">
+                                                    <div id="IndentsStatusContainer" style="min-width: 100%; height: 335px; margin: 0 auto"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 ">
+                                        <div ng-show="showIndCostChart" class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-12 col-lg-12">
+                                                        <h3 class="panel-title">
+                                                            <a href="#" ng-click="isCollapsed14 = !isCollapsed14">Subcontractor Indent Cost Details</a>
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div collapse="isCollapsed14">
+                                                <div class="panel-body">
+                                                    <div id="SubcontractorIndentCostContainer" style="min-width: 100%; height: 335px; margin: 0 auto"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="s_panel">
+                    <div class="panel panel-default" id="3" ng-show="title3.is_active">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-10 col-md-10 col-lg-10">
+                                    <h3 class="panel-title" style="float:left;">
+                                        <i ng-class="{'fa fa-plus-circle' : isCollapsed4,'fa fa-minus-circle' : !isCollapsed4}" aria-hidden="true" ng-click="isCollapsed4 = !isCollapsed4"></i>
+                                        <span ng-click="dashboardstatusform3.$show()" editable-text="title3.charts_title" e-name="dashboardstatus" e-form="dashboardstatusform3" onbeforesave="checkName($data, title3) || validateRequired($data)">
+                                            {{title3.charts_title}}
+                                        </span>
+                                    </h3>
+                                    <form style="float:left;margin-left: 105px;margin-bottom:0px!important;" editable-form name="dashboardstatusform3" onbeforesave="Updatestatus($data, title3)" ng-show="dashboardstatusform3.$visible" class="form-buttons form-inline" shown="inserted == charttitle">
+                                        <button type="submit" ng-disabled="dashboardstatusform3.$waiting" class="fa fa-save"
+                                                style="background-color: Transparent;margin-top:9px; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                        <button type="button" ng-disabled="dashboardstatusform3.$waiting" ng-click="dashboardstatusform3.$cancel()" class="fa fa-times"
+                                                style="background-color: Transparent;margin-top:9px; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                    </form>
+                                    <div class="buttons" ng-show="!dashboardstatusform3.$visible">
+                                        <button ng-click="dashboardstatusform3.$show()"
+                                                style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2 col-xs-2 col-lg-2" style="text-align:right;">
+                                    <i ng-class="{'fa fa fa-expand' : isCollapsed4,'fa fa fa-compress' : !isCollapsed4}" aria-hidden="true" ng-click="isCollapsed4 = !isCollapsed4"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div collapse="!isCollapsed4">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div ng-show="showWpQualChart" class="panel panel-default">
+                                            <div collapse="isCollapsed15">
+                                                <div class="panel-body">
+                                                    <div id="WorkProgressQualityContainer" style="min-width: 100%; height: 335px; margin: 0 auto"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="s_panel">
+                    <div class="panel panel-default" id="4" ng-show="title4.is_active">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-10 col-md-10 col-lg-10">
+                                    <h3 class="panel-title" style="float:left;">
+                                        <i ng-class="{'fa fa-plus-circle' : isCollapsed5,'fa fa-minus-circle' : !isCollapsed5} " aria-hidden="true" ng-click="isCollapsed5 = !isCollapsed5"></i>
+                                        <span ng-click="dashboardstatusform4.$show()" editable-text="title4.charts_title" e-name="dashboardstatus" e-form="dashboardstatusform4" onbeforesave="checkName($data, title4) || validateRequired($data)">
+                                            {{title4.charts_title}}
+                                        </span>
+                                    </h3>
+                                    <form style="float:left;margin-left: 105px;margin-bottom:0px!important;" editable-form name="dashboardstatusform4" onbeforesave="Updatestatus($data, title4)" ng-show="dashboardstatusform4.$visible" class="form-buttons form-inline" shown="inserted == charttitle">
+                                        <button type="submit" ng-disabled="dashboardstatusform4.$waiting" class="fa fa-save"
+                                                style="background-color: Transparent;margin-top:9px; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                        <button type="button" ng-disabled="dashboardstatusform4.$waiting" ng-click="dashboardstatusform4.$cancel()" class="fa fa-times"
+                                                style="background-color: Transparent;margin-top:9px; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                    </form>
+                                    <div class="buttons" ng-show="!dashboardstatusform4.$visible">
+                                        <button ng-click="dashboardstatusform4.$show()"
+                                                style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2 col-xs-2 col-lg-2" style="text-align:right;">
+                                    <i ng-class="{'fa fa fa-expand' : isCollapsed5,'fa fa fa-compress' : !isCollapsed5}" aria-hidden="true" ng-click="isCollapsed5 = !isCollapsed5"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div collapse="!isCollapsed5">
+                            <div class="panel-body">
+                                <div class="panel panel-default">
+                                    <div ng-show="showMatrlChart">
+                                        <div id="SCWiseMaterailchart" style="min-width: 100%; height: 335px; margin: 0 auto"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="s_panel">
+                    <div class="panel panel-default" id="5" ng-show="title5.is_active">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-10 col-md-10 col-lg-10">
+                                    <h3 class="panel-title" style="float:left">
+                                        <i ng-class="{'fa fa-plus-circle' : isCollapsed73,'fa fa-minus-circle' : !isCollapsed73}" aria-hidden="true" ng-click="isCollapsed73 = !isCollapsed73"></i>
+                                        <span ng-click="dashboardstatusform5.$show()" editable-text="title5.charts_title" e-name="dashboardstatus" e-form="dashboardstatusform5" onbeforesave="checkName($data, title5) || validateRequired($data)">
+                                            {{title5.charts_title}}
+                                        </span>
+                                    </h3>
+                                    <form style="float:left;margin-left: 105px;margin-bottom:0px!important;" editable-form name="dashboardstatusform5" onbeforesave="Updatestatus($data, title5)" ng-show="dashboardstatusform5.$visible" class="form-buttons form-inline" shown="inserted == charttitle">
+                                        <button type="submit" ng-disabled="dashboardstatusform5.$waiting" class="fa fa-save"
+                                                style="background-color: Transparent;margin-top:9px; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                        <button type="button" ng-disabled="dashboardstatusform5.$waiting" ng-click="dashboardstatusform5.$cancel()" class="fa fa-times"
+                                                style="background-color: Transparent;margin-top:9px; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                    </form>
+                                    <div class="buttons" ng-show="!dashboardstatusform5.$visible">
+                                        <button ng-click="dashboardstatusform5.$show()"
+                                                style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2 col-xs-2 col-lg-2" style="text-align:right;">
+                                    <i ng-class="{'fa fa fa-expand' : isCollapsed73,'fa fa fa-compress' : !isCollapsed73}" aria-hidden="true" ng-click="isCollapsed73 = !isCollapsed73"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div collapse="!isCollapsed73">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div ng-show="missedcertifiedlabourList.length!=0" class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-12 col-lg-12">
+                                                        <h3 class="panel-title">
+                                                            <a href="#" ng-click="isCollapsed51 = !isCollapsed51">Pending Documents List</a>
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div collapse="isCollapsed51">
+                                                <table class="table table-responsive table-bordered table-striped table-hover table-condensed">
+                                                    <thead style="display: table; width: 100%; table-layout: fixed; width: calc( 100% - 1em );">
+                                                        <tr style="background:#808080;color:white;">
+                                                            <th style="text-align: center;vertical-align: middle;">Emp Code</th>
+                                                            <th style="text-align: center;vertical-align: middle; word-break:break-all;">Subcontractor</th>
+                                                            <th style="text-align: center;vertical-align: middle;">Labour Name</th>
+                                                            <th style="text-align: center;vertical-align: middle;">Aadhar</th>
+                                                            <th style="text-align: center;vertical-align: middle;">Bank</th>
+                                                            <th style="text-align: center;vertical-align: middle;">Medical</th>
+                                                            <th style="text-align: center;vertical-align: middle;">Eye</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody style="display: block; height: 290px;overflow: auto;">
+                                                        <tr style="display:table;width:100%; table-layout: fixed;" ng-repeat="readytoretired in missedcertifiedlabourList |filter:{project_id:project_id}:true">
+                                                            <td style="text-align: center;vertical-align: middle;">{{readytoretired.emp_code}}{{readytoretired.code_seperation}}-{{readytoretired.emp_num}}</td>
+                                                            <td style="text-align: left;vertical-align: middle;">{{readytoretired.subcontractor_name}}</td>
+                                                            <td style="text-align: left;vertical-align: middle;">{{readytoretired.name}}</td>
+                                                            <td style="text-align: center;vertical-align: middle;"><i ng-class="{'fa fa-close' : readytoretired.aadhar_filename==null,'fa fa-check' : readytoretired.aadhar_filename!=null}" ng-style="{'color': (( readytoretired.aadhar_filename!=null) ? 'green' : ( readytoretired.aadhar_filename==null) ? 'red' : '') }"></i></td>
+                                                            <td style="text-align: center;vertical-align: middle;"><i ng-class="{'fa fa-close' : readytoretired.bank_filename==null,'fa fa-check' : readytoretired.bank_filename!=null}" ng-style="{'color': (( readytoretired.bank_filename!=null) ? 'green' : ( readytoretired.bank_filename==null) ? 'red' : '') }"></i></td>
+                                                            <td style="text-align: center;vertical-align: middle;"><i ng-class="{'fa fa-close' : readytoretired.medical_filename==null,'fa fa-check' : readytoretired.medical_filename!=null}" ng-style="{'color': (( readytoretired.medical_filename!=null) ? 'green' : ( readytoretired.medical_filename==null) ? 'red' : '') }"></i></td>
+                                                            <td style="text-align: center;vertical-align: middle;"><i ng-class="{'fa fa-close' : readytoretired.eye_certificate_filenmae==null,'fa fa-check' : readytoretired.eye_certificate_filenmae!=null}" ng-style="{'color': (( readytoretired.eye_certificate_filenmae!=null) ? 'green' : ( readytoretired.eye_certificate_filenmae==null) ? 'red' : '') }"></i></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div ng-show="showLbCertChart" class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-12 col-lg-12">
+                                                        <h3 class="panel-title">
+                                                            <a href="#" ng-click="isCollapsed13 = !isCollapsed13">Medical & Eye Test Done Chart of Labours</a>
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div collapse="isCollapsed13" style="overflow-x: scroll;overflow-y:hidden;">
+                                                <div class="panel-body">
+                                                    <div id="LaborCertificatesContainer" style="min-width: 100%; height: 350px; margin: 0 auto"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="s_panel">
+                    <div class="panel panel-default" id="6" ng-show="title6.is_active">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-10 col-md-10 col-lg-10">
+                                    <h3 class="panel-title" style="float:left">
+                                        <i ng-class="{'fa fa-plus-circle' : isCollapsed6,'fa fa-minus-circle' : !isCollapsed6}" aria-hidden="true" ng-click="isCollapsed6 = !isCollapsed6"></i>
+                                        <span ng-click="dashboardstatusform6.$show()" editable-text="title6.charts_title" e-name="dashboardstatus" e-form="dashboardstatusform6" onbeforesave="checkName($data, title6) || validateRequired($data)">
+                                            {{title6.charts_title}}
+                                        </span>
+                                    </h3>
+                                    <form style="float:left;margin-left: 105px;margin-bottom:0px!important;" editable-form name="dashboardstatusform6" onbeforesave="Updatestatus($data, title6)" ng-show="dashboardstatusform6.$visible" class="form-buttons form-inline" shown="inserted == charttitle">
+                                        <button type="submit" ng-disabled="dashboardstatusform6.$waiting" class="fa fa-save"
+                                                style="background-color: Transparent;margin-top:9px; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                        <button type="button" ng-disabled="dashboardstatusform6.$waiting" ng-click="dashboardstatusform6.$cancel()" class="fa fa-times"
+                                                style="background-color: Transparent;margin-top:9px; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                    </form>
+                                    <div class="buttons" ng-show="!dashboardstatusform6.$visible">
+                                        <button ng-click="dashboardstatusform6.$show()"
+                                                style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2 col-xs-2 col-lg-2" style="text-align:right;">
+                                    <i ng-class="{'fa fa fa-expand' : isCollapsed6,'fa fa fa-compress' : !isCollapsed6}" aria-hidden="true" ng-click="isCollapsed6 = !isCollapsed6"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div collapse="!isCollapsed6">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-6 ">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-12 col-lg-12">
+                                                        <h3 class="panel-title">
+                                                            <a href="#" ng-click="isCollapsed61 = !isCollapsed61">Labours Expires List</a>
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div collapse="isCollapsed61">
+                                                <table class="table table-responsive table-bordered table-striped table-hover table-condensed">
+                                                    <thead>
+                                                        <tr style="background:#808080;color:white">
+                                                            <th style="text-align: center;vertical-align: middle;">Employee Code</th>
+                                                            <th style="text-align: center;vertical-align: middle;">Labour Name</th>
+                                                            <th style="text-align: center;vertical-align: middle;">Father's Name</th>
+                                                            <th style="text-align: center;vertical-align: middle;">Contact No</th>
+                                                            <th style="text-align: center;vertical-align: middle;">Date of Birth</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr dir-paginate="readytoretired in readytoretiredlabourList|itemsPerPage:5|filter:{project_id:project_id}:true" pagination-id="vehical2">
+                                                            <td style="text-align: center;vertical-align: middle;">{{readytoretired.emp_code}}{{readytoretired.code_seperation}}-{{readytoretired.emp_num}}</td>
+                                                            <td style="text-align: center;vertical-align: middle;"><a href="#" popover-template="'Scripts/Dashboard/labouragecheck.html'" popover-placement="right" data-popover-trigger="mouseenter" popover-title="{{dynamicPopover.title}}" ng-mouseover="labourdata(readytoretired.master_emp_id)">{{readytoretired.name}}</a></td>
+                                                            <td style="text-align: center;vertical-align: middle;">{{readytoretired.fathers_name}}</td>
+                                                            <td style="text-align: center;vertical-align: middle;">{{readytoretired.current_contact_number}}</td>
+                                                            <td ng-style="set_bgcolor(readytoretired.age);" style="text-align: center;vertical-align: middle;">{{readytoretired.age|date :  "MMM d, y"}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div>
+                                                    <dir-pagination-controls max-size="5" pagination-id="vehical2"
+                                                                             direction-links="true" boundary-links="true">
+                                                    </dir-pagination-controls>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-12 col-lg-12">
+                                                        <h3 class="panel-title">
+                                                            <a href="#" ng-click="isCollapsed62 = !isCollapsed62">Vehicle Expires List</a>
+                                                        </h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div collapse="isCollapsed62">
+                                                <table class="table table-responsive table-bordered table-striped table-hover table-condensed">
+                                                    <thead>
+                                                        <tr style="background:#808080;color:white">
+                                                            <th style="text-align: center;vertical-align: middle;">Vehicle RegNo</th>
+                                                            <th style="text-align: center;vertical-align: middle;">Pollution Valid Till</th>
+                                                            <th style="text-align: center;vertical-align: middle;">Insurance Valid Till</th>
+                                                            <th style="text-align: center;vertical-align: middle;">Fitness Valid Till</th>
+                                                            <th style="text-align: center;vertical-align: middle;">Driver licence Valid Till</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr dir-paginate="vehicle in ExpiredVehicleList|itemsPerPage:5|filter:{project_id:project_id}:true" pagination-id="vehical1">
+                                                            <td style="text-align: center;vertical-align: middle;"><a href="#" popover-template="'Scripts/Dashboard/vehiclecertificate.html'" popover-placement="right" data-popover-trigger="mouseenter" popover-title="{{dynamicPopover.title}}" ng-mouseover="Vehicleview(vehicle.vehicle_reg_no)">{{vehicle.vehicle_reg_no}}</a></td>
+                                                            <td style="text-align: center;vertical-align: middle;" ng-style="set_color(vehicle.pollution_validdate)">{{vehicle.pollution_validdate|date :  "MMM d, y"}}</td>
+                                                            <td style="text-align: center;vertical-align: middle;" ng-style="set_color(vehicle.insurence_validdate)">{{vehicle.insurence_validdate|date :  "MMM d, y"}}</td>
+                                                            <td style="text-align: center;vertical-align: middle;" ng-style="set_color(vehicle.fitness_validdate)">{{vehicle.fitness_validdate|date :  "MMM d, y"}}</td>
+                                                            <td style="text-align: center;vertical-align: middle;" ng-style="set_color(vehicle.driver_lic_validdate)">{{vehicle.driver_lic_validdate|date :  "MMM d, y"}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div>
+                                                    <dir-pagination-controls max-size="5" pagination-id="vehical1"
+                                                                             direction-links="true" boundary-links="true">
+                                                    </dir-pagination-controls>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+        </div> 
+</div>
+
+
+<style>
+    #sortable {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+     
+    .panel-heading {
+        cursor: move;
+    }
+
+    hr {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .panel-body {
+        padding: 0px 8px 8px 8px;
+    }
+
+    .pagination {
+        padding-left: 10px;
+    }
+
+    md-checkbox.md-checked.blue .md-icon {
+        background-color: blue;
+    }
+
+    /*tbody {
+        display: block;
+        height: 100px;
+        overflow: auto;
+    }
+
+        thead, tbody tr {
+            display: table; width: 100%; table-layout: fixed;  even columns width , fix width of table too
+        }
+
+    thead {
+        width: calc( 100% - 1em );  scrollbar is average 1em/16px width, remove it from thead width
+    }
+
+    table {
+        width: 400px;
+    }*/
+
+    /* remove bottom-margin of inputs */
+    .editable-wrap .editable-controls > input {
+        margin-bottom: 0;
+        width: 150%;
+    }
+</style>

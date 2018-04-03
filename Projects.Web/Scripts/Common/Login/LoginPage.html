@@ -1,0 +1,541 @@
+﻿
+<script>
+    $('#divTopBar').hide();
+    $('#divSideBar').hide();
+</script>
+
+<style>
+
+/*.bg-image {
+    height: 664px;
+    width: 104%;
+    margin-right: 0%;
+}*/
+.bg-image {
+    height: 100%;
+    width: 186%;
+    /* margin-right: 53%; */
+    margin-left: -32%;
+}
+
+    @media (max-width: 1000px) {
+        .bg-image {
+            height: 160px;
+            width: 113%;
+            margin: 0;
+        }
+
+        .mobile-header {
+            display: none;
+        }
+
+        .mobile-header1 {
+            display: block !important;
+        }
+
+        .header-smh {
+            height: 25px !important;
+            line-height: 25px !important;
+            width: 120%;
+        }
+
+        .content-wrapper {
+            margin-left: 0px;
+        }
+    }
+
+    .mobile-header1 {
+        display: none;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        /*z-index: -999;*/
+        text-align: left;
+        -webkit-background-size: cover;
+        -mox-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+
+
+    /*#main-wrap {
+    position: absolute;
+    left: -20%;
+}*/
+
+    #login_panel {
+        display: none;
+        border-left: 1px solid #fff;
+    }
+
+    .login_panel li {
+        display: block;
+        list-style: none;
+    }
+
+    .login_panel {
+        /*background: rgba(255, 255, 255, 0.2);
+        border:1px solid rgba(255, 255, 255, 0.4);*/
+        /*position: fixed;*/
+        /*background: rgba(255, 255, 255, 0.8);*/
+        background: rgb(255, 255, 255);
+        /*right: 0;
+        float: right;
+        height: 100%;
+        margin: 0;
+        padding: 0;*/
+        width: 120%;
+        height: 100%;
+        z-index: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .login_panel_layout {
+        margin: 0 auto;
+        text-align: left;
+    }
+
+    .login_panel label {
+        font-weight: normal !important;
+    }
+</style>
+
+<style>
+    .form-signin {
+        /*max-width: 330px;*/
+        padding: 15px;
+        margin: 0 auto;
+        /*background-color: #f3f3f3;*/
+        background: rgb(255, 255, 255);
+    }
+
+        .form-signin .form-signin-heading,
+        .form-signin .checkbox {
+            margin-bottom: 10px;
+        }
+
+        .form-signin .checkbox {
+            font-weight: normal;
+        }
+
+        .form-signin .form-control {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            position: relative;
+            font: 15px 'Segoe UI',Arial,sans-serif;
+            background-color: #EAEBE5;
+            /*height: auto;*/
+            padding: 10px;
+            color: #7e8c8d;
+            outline: none;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+            .form-signin .form-control:focus {
+                z-index: 2;
+            }
+
+        .form-signin input[type="email"] {
+            margin-bottom: -1px;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .form-signin input[type="password"] {
+            /*margin-bottom: 10px;*/
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+    #recover input[type="email"] {
+        margin-bottom: 10px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    /*___________________________________*/
+    .container {
+        border-top: 0px solid #aaa;
+        /*box-shadow:  0 2px 10px rgba(0,0,0,0.8);*/
+        /*box-shadow:1px 1px 1px 1px #999;*/
+        width: 100%;
+        height: 524px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+        -moz-perspective: 800px;
+        -webkit-perspective: 800px;
+        perspective: 800px;
+    }
+
+        .container form {
+            width: 100%;
+            height: 120%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            /* Enabling 3d space for the transforms */
+            -moz-transform-style: preserve-3d;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+            /* When the forms are flipped, they will be hidden */
+            -moz-backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            /* Enabling a smooth animated transition */
+            -moz-transition: 0.8s;
+            -webkit-transition: 0.8s;
+            transition: 0.8s;
+        }
+
+        .container.flipped .form-signin {
+            opacity: 0;
+            /**
+       * Rotating the login form when the
+       * flipped class is added to the container
+       */
+            -moz-transform: rotateY(-180deg);
+            -webkit-transform: rotateY(-180deg);
+            transform: rotateY(-180deg);
+        }
+
+        .container.flipped #recover {
+            opacity: 0;
+            /* Rotating the recover div into view */
+            -moz-transform: rotateY(0deg);
+            -webkit-transform: rotateY(0deg);
+            transform: rotateY(0deg);
+        }
+
+
+    .form-signin {
+        z-index: 100;
+    }
+
+    #login {
+        /*background: #f3f3f3;*/
+        background: rgb(255, 255, 255);
+        z-index: 100;
+    }
+
+    #recover:before {
+        /* The "Click here" tooltip */
+        width: 100px;
+        height: 26px;
+        /*content:'Sign in ->';*/
+        content: '';
+        position: absolute;
+        right: 270px;
+        top: 15px;
+    }
+
+    #login:after {
+        /* The "Click here" tooltip */
+        width: 150px;
+        height: 26px;
+        content: '';
+        /*content:'<- Forgot password?';*/
+        position: absolute;
+        right: -170px;
+        top: 15px;
+    }
+
+    #recover {
+        /*background:#f3f3f3;*/
+        background: rgb(255, 255, 255);
+        z-index: 1;
+        /* Rotating the recover password form by default */
+        -moz-transform: rotateY(180deg);
+        -webkit-transform: rotateY(180deg);
+        transform: rotateY(180deg);
+    }
+
+    #formContainer.flipped #login {
+        opacity: 0;
+        /**
+       * Rotating the login form when the
+       * flipped class is added to the container
+       */
+        -moz-transform: rotateY(-180deg);
+        -webkit-transform: rotateY(-180deg);
+        transform: rotateY(-180deg);
+    }
+
+    #formContainer.flipped #recover {
+        opacity: 1;
+        /* Rotating the recover div into view */
+        -moz-transform: rotateY(0deg);
+        -webkit-transform: rotateY(0deg);
+        transform: rotateY(0deg);
+    }
+
+    /*----------------------------
+      Inputs, Buttons & Links
+    -----------------------------*/
+    #login .flipLink,
+    #recover .flipLink {
+        height: 50px;
+        overflow: hidden;
+        position: absolute;
+        right: 0;
+        text-indent: -9999px;
+        top: 0;
+        width: 50px;
+    }
+
+    #triangle-topright {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        width: 0;
+        height: 0;
+        border-top: 100px solid #ddd;
+        border-left: 100px solid transparent;
+    }
+
+    #recover .flipLink {
+        right: auto;
+        left: 0;
+    }
+</style>
+<div class="row">
+    <div class="col-md-8">
+        <div class="row mobile-header1" style="background-color: rgba(0,0,0,0.2);width: 120%;">
+            <div class="col-md-12 header-smh" style="text-align: center; font-size: 14px;">
+
+                <i class="fa fa-phone">&nbsp;<span style="font-family:Calibri;">(844) 567 5234</span> </i>
+
+                <a href="https://login.skype.com/login?message=signin_continue" style="color: #00aff0;"><i class="fa fa-skype" target="_blank"> &nbsp;<span style="font-family:Calibri;"></span></i></a>
+                <a href="https://www.facebook.com/OakridgeInfotech/" style="color: #4867aa;"><i class="fa fa-facebook" target="_blank"> &nbsp;<span style="font-family:Calibri;"></span></i></a>
+                <a href="https://twitter.com/OakridgeIT" style="color:#1da1f2;" target="_blank">
+                    <i class="fa fa-twitter"> &nbsp;<span style="font-family:Calibri;"></span></i>
+                </a>
+                <a href="https://www.linkedin.com/company/oakridge-infotech?trk=biz-companies-cym" style="color: #0177b5;" target="_blank">
+                    <i class="fa fa-linkedin"> &nbsp;<span style="font-family:Calibri;"></span></i>
+                </a>
+                <a href="mailto:info@oakridgeit.com?Subject=Inquiry" target="_top" style="color: #fff;"><i class="fa fa-envelope-o"> &nbsp;<span style="font-family:Calibri; text-align:center"></span></i></a>
+
+
+            </div>
+        </div>
+        <div>
+            <img class="bg-image" src="../../../Content/images/Common/slide-1.jpg">
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="login_panel">
+            <div class="row mobile-header" style="margin-right:0px;margin-left:0px;background-color: rgba(0,0,0,0.2);">
+
+
+                <div class="col-md-12 " style="text-align: center;border-bottom: 1px solid rgba(0, 0, 0, 0.15);font-size: 18px;">
+                    <div class="col-md-6" style="height: 30px;line-height: 30px;font-size: 18px;">
+                        <i class="fa fa-phone" style="height: 30px; line-height: 30px;">&nbsp;<span style="font-family:Calibri;">(844) 567 5234</span> </i>
+                    </div>
+                    <div class="col-md-6" style="height: 30px; line-height: 30px;font-size: 18px;">
+
+                        <a href="https://login.skype.com/login?message=signin_continue" style="color: #00aff0;" target="_blank">
+                            <i class="fa fa-skype"> &nbsp;<span style="font-family:Calibri;"></span></i>
+                        </a>
+
+
+                        <a href="https://www.facebook.com/OakridgeInfotech/" style="color: #4867aa;" target="_blank">
+                            <i class="fa fa-facebook"> &nbsp;<span style="font-family:Calibri;"></span></i>
+                        </a>
+                        <a href="https://twitter.com/OakridgeIT" style="color:#1da1f2;" target="_blank">
+                            <i class="fa fa-twitter"> &nbsp;<span style="font-family:Calibri;"></span></i>
+                        </a>
+                        <a href="https://www.linkedin.com/company/oakridge-infotech?trk=biz-companies-cym" style="color: #0177b5;" target="_blank">
+                            <i class="fa fa-linkedin"> &nbsp;<span style="font-family:Calibri;"></span></i>
+                        </a>
+
+                        <a href="mailto:info@oakridgeit.com?Subject=Inquiry" target="_top" style="color: #030303;">
+                            <i class="fa fa-envelope-o"> &nbsp;<span style="font-family:Calibri; text-align:center"></span></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row" style="margin-top:10px;text-align:center;">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group ">
+                        <img src="../../../Content/images/Common/logo.png" style="width: 150px;" />
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <span style="font-size: 12px;">
+                        <span class="lblregister">Not yet registered?</span> <a href="#" id="flipToRecover" class="register flipLink">Register</a>
+                    </span>
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+            <div class="col-md-10" style="padding-top: 2%;padding-left: 10%;padding-right: 4%;">
+                <div class="container">
+                    <div class="row">
+                        <div class="container" id="formContainer">
+                            <form class="form-signin" id="login" name="userLoginForm" role="form">
+                                <div class="form-group ">
+                                    <md-input-container class="md-block">
+                                        <label style="color:black">User ID</label>
+                                        <md-icon class="md-dark" arial-label="user" style="color:darkorange"><i class="fa fa-user" style="font-size: 20px;"></i></md-icon>
+                                        <input required name="userid" ng-model="user.userid" minlength="4" maxlength="20">
+                                        <div ng-messages="userLoginForm.userid.$error" role="alert" class="ng-messages">
+                                            <div ng-message="required">* User Name is required.</div>
+                                            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                Valid Range: 4 to 20 characters.
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                                <div class="form-group ">
+                                    <md-input-container class="md-block">
+                                        <label style="color:black">Password</label>
+                                        <md-icon class="md-dark" arial-label="password" style="color:darkorange"><i class="fa fa-key" style="font-size: 20px;"></i></md-icon>
+                                        <input required type="password" name="password" ng-model="user.password" minlength="4" maxlength="20">
+                                        <div ng-messages="userLoginForm.password.$error" role="alert" class="ng-messages">
+                                            <div ng-message="required">* Password is required.</div>
+                                            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                Valid Range: 4 to 20 characters.
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-5" style="width:48%">
+                                            <a href="#" style="font-size: 12px;line-height: 50px;" ng-click="forgotPassword()" id="forgotPassword">Forgot Password</a>
+                                    </div>
+                                    <div class="col-md-5 ">
+                                        <button class="btn btn-info" ng-click="Login()" type="submit">Login</button> 
+                                    </div>
+                                </div>
+                            </form>
+                            <form class="form-signin" id="recover" name="registerform" role="form">
+                                <div class="form-group ">
+                                    <div class="col-lg-12">
+                                        <md-input-container class="md-block" style="margin: 3px 0;">
+                                            <label>Your Key (User ID)</label>
+                                            <md-icon class="md-dark" arial-label="userid" style="color:darkorange"><i class="fa fa-key" style="font-size: 20px;"></i></md-icon>
+                                            <input required name="userid" ng-model="tenant_key" disabled style="color:black">
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <div class="col-lg-12">
+                                        <md-input-container class="md-block" style="margin: 3px 0;">
+                                            <label>Your Company Name</label>
+                                            <md-icon class="md-dark" arial-label="company" style="color:green"><i class="fa fa-skyatlas" style="font-size: 20px;"></i></md-icon>
+                                            <input required id="companyname" name="companyname" ng-model="tenant.tenant_name" minlength="3" maxlength="30">
+                                            <div ng-messages="registerform.companyname.$error" role="alert" class="ng-messages">
+                                                <div ng-message="required">* Company Name is required.</div>
+                                                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                    Valid Range: 3 to 30 characters.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <div class="col-lg-12">
+                                        <md-input-container class="md-block" style="margin: 3px 0;">
+                                            <label>Contact Person</label>
+                                            <md-icon class="md-dark" arial-label="contact" style="color:dodgerblue"><i class="fa fa-mobile" style="font-size: 20px;"></i></md-icon>
+                                            <input required id="owner" valid-Name name="owner" ng-model="tenant.contact_person" minlength="10" maxlength="50" >
+                                            <div ng-messages="registerform.owner.$error" role="alert" class="ng-messages">
+                                                <div ng-message="required">*  Contact Person name is required.</div>
+                                                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                    Valid Range: 10 to 50 characters.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <div class="col-lg-12">
+                                        <md-input-container class="md-block" style="margin: 3px 0;">
+                                            <label>Valid Email</label>
+                                            <md-icon class="md-dark" arial-label="email" style="color:#ff00dc"><i class="fa fa-envelope" style="font-size: 20px;"></i></md-icon>
+                                            <input required id="email" name="email" ng-model="tenant.email" minlength="5" maxlength="100" ng-pattern="/^.+@.+\..+$/">
+                                            <div ng-messages="registerform.email.$error" role="alert" class="ng-messages">
+                                                <div ng-message="required">*  Valid Email Address is required.</div>
+                                                <div ng-message-exp="['required', 'minlength', 'maxlength']">
+                                                    Valid Range: 5 to 100 characters.
+                                                </div>
+                                                <div ng-message-exp="['pattern']">
+                                                    Please enter valid email address
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <div class="col-lg-12">
+                                        <md-input-container class="md-block" style="margin: 3px 0;">
+                                            <label>Contact #</label>
+                                            <md-icon class="md-dark" arial-label="altcontact" style="color:purple"><i class="fa fa-phone" style="font-size: 20px;"></i></md-icon>
+                                            <input mask="+99 9999999999" required name="contact"  ng-model="tenant.contact_no" minlength="8" maxlength="15">
+                                            <div ng-messages="registerform.contact.$error" role="alert" class="ng-messages">
+                                                <div ng-message="required">*  Contact # is required.</div>
+                                                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                    Valid Range: 8 to 15 characters.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <div class="col-lg-12">
+                                        <md-input-container class="md-block" style="margin: 3px 0;">
+                                            <label>Other Contact #</label>
+                                            <md-icon class="md-dark" arial-label="altcontact" style="color:darkorange"><i class="fa fa-phone" style="font-size: 20px;"></i></md-icon>
+                                            <input mask="+99 9999999999" name="altcontact" ng-model="tenant.alt_contact_no" minlength="8" maxlength="15">
+                                            <div ng-messages="registerform.altcontact.$error" role="alert" class="ng-messages">
+                                                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                    Valid Range: 8 to 15 characters.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-1 ">
+                                    </div>
+                                    <div class="col-md-8 ">
+                                        <label style="color:black; font-size: 11px;">
+                                            <input type="checkbox" ng-model="tenant.agree"> I Agree with the <a href="#">Terms And Conditions.</a>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-2 ">
+                                        <button ng-disabled="!tenant.agree" class="btn btn-info" ng-click="RegisterTenant()" type="submit">Register</button>
+                                    </div>
+                                    <div class="col-md-1 ">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+        if (self == top) {
+            var body = $('body');
+            body.css('display', 'block');
+        } else {
+            top.location = self.location;
+        }
+    </script>

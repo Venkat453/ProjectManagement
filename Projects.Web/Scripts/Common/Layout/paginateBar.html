@@ -1,0 +1,13 @@
+﻿
+
+<div id="paginationDiv">
+    
+    <button ng-click="showFirst()" style="width:27px;font-size:small"><<</button>
+    <button ng-click="showPrevious()" style="width:25px;font-size:small"><</button>
+    <button ng-style="set_color($index)" style="width:40px;font-size:small" ng-if="showBtn($index)"  ng-repeat="i in getNumberAsArray(numberOfPages()) track by $index" ng-click="setCurrentPage($index)">
+        {{$index + 1}}
+    </button>
+    <button ng-click="showNext()" style="width:25px;font-size:small">></button>
+    <button ng-click="showLast()" style="width:27px;font-size:small">>></button>
+</div>
+

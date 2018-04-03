@@ -1,0 +1,69 @@
+﻿<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            Generate Custom Report
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span style="float:right;">
+                <span style="color:darkslategrey;" ng-click="printDiv(reportTable)"><i class="fa fa-print" aria-hidden="true"></i></span>&nbsp;&nbsp;
+                <span style="color:red;" ng-click="exportToPdf()"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></span>&nbsp;&nbsp;                
+                <span ng-click="exportToExcel()" style="color:forestgreen;"><i class="fa fa-file-excel-o" aria-hidden="true"></i></span>&nbsp;&nbsp;
+                <span style="color:deeppink;"><i class="fa fa-envelope-o " aria-hidden="true"></i></span>&nbsp;&nbsp;
+            </span>
+        </h3>
+    </div>
+    <div class="panel-body" style="overflow: scroll;">
+        <!--<select multiple style="height:20%;" ng-model="selectedFields" ng-options="col for col in listColumns" ng-change="addField()">
+            <option value=''>Select Fields</option>
+        </select>-->
+        <div class="show-div" ng-mouseover="ShowFieldsList=true" ng-mouseleave="ShowFieldsList=false" style="background: rgba(0, 0, 0, 0.61);border-radius:5px;width:18%;position: absolute;margin-top: 0px;">
+            <span style="color:white;">Select Fields</span><br />
+            <span style="width:200px;overflow:scroll;padding:2px;" ng-show="ShowFieldsList">
+                <span style="color:white;">
+                    <input type="checkbox" ng-model="selectAll" ng-checked="isSelected" ng-change="selectAllFields(selectAll)">{{SelectAllTog}}<br />
+                </span>
+                <span style="color:white;padding:4px;" ng-repeat="field in listColumns">
+                    <input type="checkbox" ng-model="checkedStatus" ng-checked="isSelected" ng-change="addOrRemoveField(field,checkedStatus)">{{field}}<br />
+                </span>
+            </span>
+        </div>
+        &nbsp;&nbsp;
+        <!--<div class="show-div" ng-mouseover="ShowGroupBy=true" ng-mouseleave="ShowShowGroupBy=false" style="background: rgba(0, 0, 0, 0.61);border-radius:5px;float:right;">
+            <div style="padding:5px;">
+                <span style="color:white;">Grooup By</span><br />
+                <select ng-model="RowField" ng-options="rfield for rfield in listColumns">
+                    <option value="">Select Row Field</option>
+                </select>
+                <select ng-model="ColField" ng-options="cfield for cfield in listColumns">
+                    <option value="">Select Column Field</option>
+                </select>
+                <select ng-model="typeCalc" ng-change="GruopByReport()">
+                    <option value="">Type of Calculation</option>
+                    <option value="count">Count</option>
+                    <option value="sum">Sum</option>
+                </select>
+            </div>
+        </div>-->
+        <div style="margin-top: 11px;">
+            <span>
+                Heading Color:<input type="color" ng-model="hdbgCol" style="border: none; background: none;" />&nbsp;&nbsp;
+                Text Color:<input type="color" ng-model="thtxtCol" style="border: none; background: none;" />&nbsp;&nbsp;
+                Data Bgcolor:<input type="color" ng-model="bgCol" style="border: none; background: none;" />&nbsp;&nbsp;
+            </span>
+        </div>
+        <!--<span><i class="fa fa-spinner fa-spin" style="font-size:48px;"></i>loading
+        </span>-->
+        <!--<span>
+            <span ng-repeat="field in RowFieldList">{{field}}</span>&nbsp;&nbsp;&nbsp;
+        </span>-->
+        <div id="reportDiv">
+            <table id="reportTable" class="table table-bordered table-condensed table-striped" style="position: initial;border:solid 1px black;">
+                <tr ng-style="{'background-color':hdbgCol,'color':thtxtCol}">
+                    <th ng-repeat="field in updatedFields">{{field}}</th>
+                </tr>
+                <tr ng-repeat="mlist in listData" ng-style="{'background-color':bgCol,'border':brdrCol}">
+                    <td ng-repeat="field in updatedFields">{{mlist[field]}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

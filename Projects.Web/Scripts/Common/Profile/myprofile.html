@@ -1,0 +1,96 @@
+﻿<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">My Profile</h3>
+    </div>
+    <form name="myProfileForm" style="margin-bottom:0px;">
+        <div class="panel-body">
+            <div id="inputContainer" ng-cloak>
+                <md-content layout-padding>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <md-input-container class="md-block">
+                                <label>User ID</label>
+                                <md-icon class="md-dark" arial-label="key" style="color:darkorange"><i class="fa fa-key" style="font-size: 20px;"></i></md-icon>
+                                <input name="tenantkey" ng-model="myprofile.userid" style="color:black; font-weight:bold">
+                                <!--<label>Your Key</label>
+                                <md-icon class="md-dark" arial-label="key" style="color:darkorange"><i class="fa fa-key" style="font-size: 20px;"></i></md-icon>
+                                <input name="tenantkey" ng-model="tenant.tenant_key" disabled style="color:black; font-weight:bold">-->
+                            </md-input-container>
+                        </div>
+                        <div class="col-lg-3">
+                            <md-input-container class="md-block">
+                                <label>User Name</label>
+                                <md-icon class="md-dark" arial-label="company" style="color:green"><i class="fa fa-skyatlas" style="font-size: 20px;"></i></md-icon>
+                                <input name="tenantName" ng-model="myprofile.user_name"  style="color:black; font-weight:bold">
+                            </md-input-container>
+                        </div>
+                        <div class="col-lg-3">
+                            <md-input-container class="md-block">
+                                <label>Domain</label>
+                                <!--<md-icon class="md-dark" arial-label="domain" style="color:#0094ff"><i class="fa fa-signal" style="font-size: 20px;"></i></md-icon>-->
+                                <input minlength="4" maxlength="30" name="domain" ng-model="myprofile.domain">
+                                <div ng-messages="tenantform.domain.$error" role="alert" class="ng-messages">
+                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">Range: 4 to 30 chars.</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div class="col-lg-3">
+                            <md-input-container class="md-block">
+                                <img style="height:70px;cursor: pointer;" id="imguserlogo" data-ng-src="{{myprofilelogo}}" />
+                                <input type="file" id="s_file" name="s_file" ng-model="profile_photo" base-sixty-four-input style="opacity: 0;" />
+                                <div ng-messages="tenantform.myprofilelogo.$error" role="alert" class="ng-messages">
+                                    <div ng-message="required">*Mandatory.</div>
+                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                        4 to 10 chars.
+                                    </div>
+                                </div>
+                            </md-input-container> 
+                    </div>
+                        </div>
+                  <div class="row">
+                       <div class="col-lg-5">
+                            <md-input-container class="md-block">
+                                <label>Email Address</label>
+                                <md-icon class="md-dark" arial-label="email" style="color:#b200ff"><i class="fa fa-envelope" style="font-size: 20px;"></i></md-icon>
+                                <input required type="email" name="companyEmail" ng-model="myprofile.email" style="text-transform: lowercase;"
+                                       minlength="10" maxlength="30" ng-pattern="/^.+@.+\..+$/" />
+                                <div ng-messages="tenantform.companyEmail.$error" role="alert" class="ng-messages">
+                                    <div ng-message="required">* Mandatory.</div>
+                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                        Valid Email within 10 to 30 characters.
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div class="col-lg-2">
+                            <md-input-container class="md-block">
+                                <label>Contact #</label>
+                                <md-icon class="md-dark" arial-label="contact" style="color:dodgerblue"><i class="fa fa-mobile" style="font-size: 20px;"></i></md-icon>
+                                <input maxlength="15" required name="contact" ng-model="myprofile.contact_no">
+                                <div ng-messages="tenantform.contact.$error" role="alert" class="ng-messages">
+                                    <div ng-message="required">* Mandatory.</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div class="col-lg-2">
+                            <md-input-container class="md-block">
+                                <label>Alt Contact #</label>
+                                <md-icon class="md-dark" arial-label="contact" style="color:dodgerblue"><i class="fa fa-phone" style="font-size: 20px;"></i></md-icon>
+                                <input maxlength="15" required name="altcontact" ng-model="myprofile.alt_contact_no">
+                                <div ng-messages="tenantform.altcontact.$error" role="alert" class="ng-messages">
+                                    <div ng-message="required">* Mandatory.</div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                    </div>
+                </md-content>
+            </div>
+        </div>
+
+        <div class="panel-footer" style="height:40px; padding-right: 0px; padding-top:5px">
+            <div class="col-lg-12" style="text-align:right;">
+                <button class="btn btn-sm btn-info" ng-click="updateProfile()" type="submit">Update</button>
+            </div>
+        </div>
+    </form>
+</div>

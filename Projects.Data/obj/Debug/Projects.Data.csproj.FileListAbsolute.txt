@@ -1,0 +1,14 @@
+E:\PHONE DATA\ProjectManagement\Projects.Data\bin\Debug\Projects.Data.dll.config
+E:\PHONE DATA\ProjectManagement\Projects.Data\bin\Debug\Projects.Data.dll
+E:\PHONE DATA\ProjectManagement\Projects.Data\bin\Debug\Projects.Data.pdb
+E:\PHONE DATA\ProjectManagement\Projects.Data\bin\Debug\EntityFramework.dll
+E:\PHONE DATA\ProjectManagement\Projects.Data\bin\Debug\EntityFramework.SqlServer.dll
+E:\PHONE DATA\ProjectManagement\Projects.Data\bin\Debug\Projects.Entities.dll
+E:\PHONE DATA\ProjectManagement\Projects.Data\bin\Debug\Projects.Library.dll
+E:\PHONE DATA\ProjectManagement\Projects.Data\bin\Debug\Projects.Entities.pdb
+E:\PHONE DATA\ProjectManagement\Projects.Data\bin\Debug\Projects.Library.pdb
+E:\PHONE DATA\ProjectManagement\Projects.Data\bin\Debug\EntityFramework.xml
+E:\PHONE DATA\ProjectManagement\Projects.Data\bin\Debug\EntityFramework.SqlServer.xml
+E:\PHONE DATA\ProjectManagement\Projects.Data\obj\Debug\Projects.Data.csprojResolveAssemblyReference.cache
+E:\PHONE DATA\ProjectManagement\Projects.Data\obj\Debug\Projects.Data.dll
+E:\PHONE DATA\ProjectManagement\Projects.Data\obj\Debug\Projects.Data.pdb

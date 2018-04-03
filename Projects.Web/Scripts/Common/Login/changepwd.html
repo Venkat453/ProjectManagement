@@ -1,0 +1,57 @@
+﻿<div class="page">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Change Password</h3>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-12" style="margin-top:20px">
+                <form class="form-signin" role="form" novalidate angular-validator name="changepwdForm" angular-validator-submit="ChangePWD()">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label for="inputOldPassword" class="">Old Password</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="password" id="inputOldPassword" name="inputOldPassword" class="form-control" ng-model="user.oldpwd"
+                                       placeholder="Old Password" validate-on="blur" required required-message="'Old Password is required'">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label for="inputNewPassword">New Password</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="password" id="inputNewPassword" name="inputNewPassword" class="form-control" ng-model="user.newpwd" placeholder="New Password"
+                                       validate-on="blur" required required-message="'New Password is required'">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label for="inputConfirmPassword">Confirm Password</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="password" id="inputConfirmPassword" name="inputConfirmPassword" class="form-control" ng-model="user.confirmpassword" placeholder="Confirm Password"
+                                       validate-on="blur" required required-message="'Confirm Password is required'">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-2">
+
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-sm btn-warning" type="submit">Change Password</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

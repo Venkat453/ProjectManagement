@@ -1,0 +1,115 @@
+﻿<script>
+    $('#divTopBar').hide();
+    $('#sidebar-wrapper').hide();
+    $('#divSideBar').hide();
+</script>
+<style>
+    .col-md-3 {
+        text-align: center;
+    }
+
+    #main-wrap {
+        width: 40% !important;
+    }
+
+    .navbar-inverse {
+        background-color: #337ab7 !important;
+        border-color: #045eab !important;
+        background-image: linear-gradient(to bottom, #337ab7 0%, #337ab7 100%);
+    }
+
+    #main-body {
+        margin-top: 60px;
+    }
+
+    .nav {
+        float: right !important;
+    }
+
+    #barslogo {
+        color: white;
+        font-size: 20px;
+    }
+    #welcome-tag{
+        color:white;
+    }
+</style>
+<div>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <a href="/" class="logo" style="position:fixed;">
+                <span class="logo-mini"><img style="width:30px; margin-top: 10px;" src="../../../Content/images/Common/logo_mini.png" /></span>
+            </a>
+            <ul class="nav navbar-nav">
+                <li class="dropdown messages-menu">
+                    <a href="#" class="dropdown-toggle">
+                        <p id="welcome-tag">Welcome to "{{tenant.username}}"</p>
+                    </a>
+                    
+                </li>
+                <li class="dropdown messages-menu">
+                    <a href="/" style="color:red;">
+                        <i class="fa fa-power-off"></i>&nbsp;Logout
+                    </a>
+                </li>
+                <li class="dropdown messages-menu">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="fa fa-bars" id="barslogo" aria-hidden="true"></i>
+                    </a>
+                    
+                </li>
+                <li class="dropdown messages-menu"></li>
+                <li class="dropdown messages-menu"></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div id="main-body">
+    <div class="container container-fluid">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row row-fluid">
+                        <div class="col-md-3">
+                            <i class="fa fa-users" aria-hidden="true" style="font-size: 100px !important; color: #337ab7;"></i><br />
+                            <b>Employees</b>
+                        </div>
+                        <div class="col-md-3">
+                            <i class="fa fa-users" aria-hidden="true" style="font-size: 100px !important; color: #337ab7;"></i><br />
+                            <b>Employees</b>
+                        </div>
+                        <div class="col-md-3">
+                            <i class="fa fa-users" aria-hidden="true" style="font-size: 100px !important; color: #337ab7;"></i><br />
+                            <b>Employees</b>
+                        </div>
+                        <div class="col-md-3">
+                            <i class="fa fa-users" aria-hidden="true" style="font-size: 100px !important; color: #337ab7;"></i><br />
+                            <b>Employees</b>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+                    <div class="row row-fluid">
+                        <div class="col-md-3">
+                            <i class="fa fa-users" aria-hidden="true" style="font-size: 100px !important; color: #337ab7;" ng-click="OnchangeButton()"></i><br />
+                            <b>Employees</b>
+                        </div>
+                        <div class="col-md-3">
+                            <i class="fa fa-users" aria-hidden="true" style="font-size: 100px !important; color: #337ab7;"></i><br />
+                            <b>Employees</b>
+                        </div>
+                        <div class="col-md-3">
+                            <i class="fa fa-users" aria-hidden="true" style="font-size: 100px !important; color: #337ab7;"></i><br />
+                            <b>Employees</b>
+                        </div>
+                        <div class="col-md-3">
+                            <i class="fa fa-users" aria-hidden="true" style="font-size: 100px !important; color: #337ab7;"></i><br />
+                            <b>Employees</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
