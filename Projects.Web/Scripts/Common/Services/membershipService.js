@@ -40,12 +40,6 @@
             changepasswordFailed);
         }
 
-        function passwordVerification(user, completed) {
-            apiService.post('/api/account/passwordVerification', user,
-            completed,
-            changepasswordFailed);
-        }
-
         function saveCredentials(user) {
             var membershipData = $base64.encode(user.userid + ':' + user.password);
 

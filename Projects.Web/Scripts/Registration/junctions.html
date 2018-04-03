@@ -1,0 +1,220 @@
+﻿<style>
+    .anchorhover:hover {
+        color: deepskyblue !important;
+    }
+</style>
+<div>
+    <div class="panel-group">
+        <div class="panel panel-default" ng-show="showJNForm||JunctionsList.length ==0">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-lg-10 col-md-10 col-xs-10">
+                        <h3 class="panel-title" ng-click="showAddform()">
+                            <i class="fa fa-plus-circle" aria-hidden="true" tooltip-html-unsafe="add Junction" tooltip-placement="bottom"></i>
+                            Add Junction
+                        </h3>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-xs-2" style="text-align: right;">
+                        <i class="fa fa-expand" aria-hidden="true" ng-click="showAddform()"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <form name="newJunctionForm" novalidate ng-submit="addJunction()" style="margin-bottom:0px;">
+                    <div id="inputContainer" ng-cloak>
+                        <md-content layout-padding>
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <md-input-container class="md-block">
+                                        <label>Project</label>
+                                        <!--<md-icon class="md-dark" arial-label="project_id" style="color:#ff006e"><i class="fa fa-map-marker" style="font-size: 20px;"></i></md-icon>-->
+                                        <md-select name="project_id" ng-init="junction.project_id=true" ng-model="junction.project_id" ng-disabled="!projectslists.length" ng-change="changefunc()" required>
+                                            <md-option ng-repeat="project in projectslists" ng-value="project.id">
+                                                {{project.project_name}}
+                                            </md-option>
+                                        </md-select>
+                                        <div ng-messages="newJunctionForm.project_id.$error" role="alert" class="ng-messages">
+                                            <div ng-message="required">* Mandatory.</div>
+                                            <div ng-message-exp="['required', 'pattern']">
+                                                10 Chars.
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-2">
+                                    <md-input-container class="md-block">
+                                        <label>PoliceStation</label>
+                                        <!--<md-icon class="md-dark" arial-label="ps" style="color:#4800ff"><i class="fa fa-map-marker" style="font-size: 20px;"></i></md-icon>-->
+                                        <md-select name="ps" ng-model="junction.ps" required ng-disabled="!junction.project_id">
+                                            <md-option ng-repeat="ps in PolicestationList|filter:{tenant_id:tenantid}:true|filter:{project_id:junction.project_id}:true" ng-value="ps.id">
+                                                {{ps.ps_name}}
+                                            </md-option>
+                                        </md-select>
+                                        <div ng-messages="newJunctionForm.ps.$error" role="alert">
+                                            <div ng-message="required">* Mandatory.</div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                                <div class="col-lg-3">
+                                    <md-input-container class="md-block">
+                                        <label style="cursor:pointer">Junction Name</label>
+                                        <!--<md-icon class="md-dark" arial-label="junction_name" style="color:#9a7009"><i class="fa fa-user" style="font-size: 20px;"></i></md-icon>-->
+                                        <input ng-readonly="readOnlyStatus" required id="junction_name" valid-Name name="junction_name"  ng-model="junction.junction_name" ng-blur="checkjunction(junction.project_id,junction.ps,junction.junction_name)" minlength="4" maxlength="30">
+                                        <div ng-messages="newJunctionForm.junction_name.$error" role="alert" class="ng-messages">
+                                            <div ng-message="required">*Mandatory.</div>
+                                            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                4 to 30 chars.
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="col-lg-12" style="margin-top: 25px; padding:0">
+                                <table class="table-bordered" style="border:1px; width:100%">
+                                    <tr style="background: rgba(51, 122, 183, 0.3); height: 25px">
+                                        <th style="width:5%;"></th>
+                                        <!--<th style="width:5%;">Sno</th>-->
+                                        <th style="width:20%;">Component</th>
+                                        <th style="width:35%;">Quantity</th>
+                                    </tr>
+                                    <tr ng-repeat="rws in rows.items">
+                                        <td style="text-align: center;">
+                                            <a href="" ng-click="removeItem()">
+                                                <i class="fa fa-minus-square-o" style="font-size:14px;padding: 4px 0px 4px 0px;"></i>
+                                            </a>
+                                        </td>
+                                        <!--<td>{{$index+1}}</td>-->
+                                        <td><select ng-if="junction.project_id" ng-model="rws.component" ng-change="checkjunwork(rws, $index,junction.project_id,junction.ps)" ng-options="comp.component as comp.component for comp in ComponentsList|filter:{project_id:junction.project_id}:true" ng-disabled="change1"><option value="">Select Component</option></select></td>
+                                        <td><input ng-if="junction.project_id" type="text" ng-model="rws.quantity" placeholder="0" numbers-only="numbers-only" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center;">
+                                            <a ng-click="addRow()">
+                                                <i class="fa fa-plus-square-o" style="font-size:14px;padding: 4px 0px 4px 0px;"></i>
+                                            </a>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <!--<td></td>-->
+                                    </tr>
+                                </table>
+                            </div>
+                        </md-content>
+                    </div>
+                    <div class="col-lg-12" style="padding: 25px 50px 0px 0px;text-align:right;">
+                        <input type="button" ng-show="clearbtn" class="btn btn-sm btn-info" ng-click="Clearform()" value="Clear" />
+                        <input type="button" ng-show="hidebtn" class="btn btn-sm btn-info" ng-click="hideUserForm()" value="Cancel" />
+                        <button ng-show="addBtn" class="btn btn-sm btn-info" type="submit">Save</button>
+                        <input type="button" value="Update PoliceStation" ng-show="updateBtn" class="btn btn-sm btn-warning" ng-click="UpdateJN()" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="panel panel-default" ng-show="JunctionsList.length!=0">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-lg-10 col-md-10 col-xs-10">
+                        <h3 class="panel-title" style="height: 30px;line-height: 30px;">Junctions Information</h3>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-xs-2" style="text-align: right;">
+                        <button class="btn btn-sm btn-primary" ng-click="showAddform()" ng-show="addjun">Add Junction</button>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <form>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                            <input type="text" class="form-control" placeholder="Search" ng-model="filterJunctions">
+                        </div>
+                    </div>
+                </form>
+                <table class="table table-bordered table-striped table-condensed">
+                    <thead>
+                        <tr style="background:#808080;color:white;">
+                            <th style="width:2%;text-align:center;vertical-align:middle;"></th>
+                            <!--<th style="width:2%;text-align:center;vertical-align:middle;">SNo</th>-->
+                            <th style="width:2%;text-align:center;vertical-align:middle;">Project</th>
+                            <th style="width:10%;text-align:center;vertical-align:middle;">
+                                <a href="#" class="anchorhover" ng-click="sortType = 'ps_name'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    PS Name
+                                </a>
+                            </th>
+                            <th style="width:20%;text-align:center;vertical-align:middle;">
+                                <a href="#" class="anchorhover" ng-click="sortType = 'junction_name'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    Junction Name
+                                </a>
+                                (Components)
+                            </th>
+                            <th style="width:66%;text-align:center;vertical-align:middle;"></th>
+                        </tr>
+                    </thead>
+                        <tr dir-paginate-start="jn in JunctionsList|filter:filterJunctions|filter:{tenant_id:tenantid}:true|orderBy:sortType:sortReverse|itemsPerPage:5" pagination-id="table1">
+                            <td style="width:2%; vertical-align:middle;">
+                                <button ng-click="showDetails(jn)" expand>
+                                    <i ng-hide="active==jn" class="fa fa-plus"></i>
+                                    <i ng-show="active==jn" class="fa fa-minus"></i>
+                                </button>
+                            </td>
+                            <!--<td style="width:2%;text-align:center;vertical-align:middle;">{{$index+1}}</td>-->
+                            <td style="width:10%;text-align:left;vertical-align:middle;">{{getprojectname(jn.project_id)}}</td>
+                            <td style="width:10%;text-align:left;vertical-align:middle;">{{jn.ps_name}}</td>
+                            <td style="width:20%;text-align:left;vertical-align:middle;line-height: 26px;">{{jn.junction_name}}
+                                <span class="badgeTwo">{{(JunctionsCompList |filter:{junction_id:jn.j_id}:true).length}}</span>
+                            </td>
+                            <td style="width:66%;text-align:left;vertical-align:middle;"></td>
+                        </tr>
+                    <tr dir-paginate-end="" ng-show="active==jn && (JunctionsCompList|filter:{junction_id:jn.j_id}:true).length > 0">
+                    <!--<tr dir-paginate-end="" ng-show="active==jn">-->
+                            <td colspan="5">
+                                <table style="width: 97%;margin-left: 3%;" class="table table-bordered table-striped table-hover table-condensed">
+                                    <thead>
+                                        <tr style="background:teal;color:white;">
+                                            <!--<th style="width:2%;text-align:center;vertical-align:middle;">SNo</th>-->
+                                            <th style="width:5%;text-align:center;vertical-align:middle;">Component</th>
+                                            <th style="width:5%;text-align:center;vertical-align:middle;">Quantity</th>
+                                            <th style="width:2%;text-align:center;vertical-align:middle;">Edit</th>
+                                            <th style="width:2%;text-align:center;vertical-align:middle;">Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="jnc in JunctionsCompList |filter:{junction_id:jn.j_id}:true">
+                                            <!--<td style="text-align:center;vertical-align:middle;"> {{$index+1}}</td>-->
+                                            <td style="width:2%;text-align:center;vertical-align:middle;">{{jnc.component}}</td>
+                                            <td style="text-align:center;vertical-align:middle;">
+                                                <span editable-text="jnc.quantity"  e-name="quantity" e-form="rowform" onbeforesave="checkName($data, jnc.quantity) || validateRequired($data)" e-required e-numbers-only="numbers-only">
+                                                    {{jnc.quantity}}&nbsp;({{jnc.uom}})
+                                                </span>
+                                            </td>
+                                            <td style="white-space: nowrap;text-align:center;vertical-align:middle;">
+                                                <form editable-form name="rowform" onbeforesave="UpdateJunction($data, jnc.row_id)" ng-show="rowform.$visible" class="form-buttons form-inline checkVisible" shown="inserted == jnc" style="margin-bottom:0px!important">
+                                                    <button type="submit" ng-disabled="rowform.$waiting" class="fa fa-save"
+                                                            style="font-size:15px;background-color: Transparent; background-repeat:no-repeat; border: none;"></button>
+                                                    <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="fa fa-times"
+                                                            style="font-size:15px;background-color: Transparent; background-repeat:no-repeat; border: none;"></button>
+                                                </form>
+                                                <div class="buttons" ng-show="!rowform.$visible">
+                                                    <button ng-click="editCall(rowform)" class="fa fa-edit"
+                                                            style="font-size:15px;background-color: Transparent; background-repeat:no-repeat; border: none;"></button>
+                                                </div>
+                                            </td>
+                                            <td style="text-align:center;vertical-align:middle;font-size: 15px;"><span class="fa fa-trash" ng-click="DeleteJun(jnc)" type="submit"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                </table>
+                <div class="row" ng-show="JunctionsList.length>5">
+                    <div class="col-lg-10" style="margin-bottom: 0px -35px -13px">
+                        <dir-pagination-controls max-size="5" direction-links="true" pagination-id="table1" boundary-links="true">
+                        </dir-pagination-controls>
+                        <!--<select name="level" ng-model="page.levels" ng-options="obj.value as obj.label for obj in page.levelsArr" style="position: absolute;top: 20px;height: 34px;"></select>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

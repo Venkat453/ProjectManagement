@@ -1,0 +1,134 @@
+﻿<style>
+    .anchorhover:hover {
+        color: deepskyblue !important;
+    }
+</style>
+<div class="panel-group">
+    <div class="panel panel-default" ng-show="showComponentsForm||ComoponentsList.length == 0">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-lg-11">
+                    <h3 class="panel-title">
+                        <i class="fa fa-plus-circle" aria-hidden="true" ng-click="showAddform()"></i>
+                        Add Project Components
+                    </h3>
+                </div>
+                <div class="col-lg-1">
+                    <i class="fa fa-expand" aria-hidden="true" style="padding-left: 50px;font-size: 17px;" ng-click="showAddform()"></i>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <form name="newComponentsForm" angular-validator-submit="addComponents()" style="margin-bottom:0px;">
+                <div class="row">
+                    <div class="col-md-3">
+                        <md-input-container class="md-block">
+                            <label>Project</label>
+                            <md-select ng-readonly="readOnlyStatus" ng-init="project_id" name="newComponentsForm" ng-model="project_id" ng-disabled="!projectslists.length">
+                                <md-option ng-repeat="project in projectslists" ng-value="project.id">
+                                    {{project.project_name}}
+                                </md-option>
+                            </md-select>
+                            <div ng-messages="newComponentsForm.newComponentsForm.$error" role="alert">
+                                <div ng-message="required">* Mandatory.</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="col-lg-12" style="margin-top: 25px; padding:0">
+                    <table class="table-bordered" style="border:1px; width:100%">
+                        <tr style="background: rgba(51, 122, 183, 0.3); height: 25px">
+                            <th></th>
+                            <th>SNo</th>
+                            <th>Component</th>
+                            <th>Description</th>
+                            <th>UOM</th>
+                        </tr>
+                        <tr ng-repeat="rws in rows.items">
+                            <td style="text-align: center;"><a href="" ng-click="removeItem()"><i class="fa fa-minus-square-o" style="font-size:14px;padding: 4px 0px 4px 0px;"></i></a></td>
+                            <td>{{$index+1}}</td>
+                            <td><input type="text" id="component" valid-Name ng-if="project_id" ng-model="rws.component" ng-blur="checkComponent(rws,$index)" placeholder="Component Name" ng-keypress="limitKeypress($event,rws.component,20)" /></td>
+                            <td><textarea type="text" valid-Name ng-if="project_id" ng-model="rws.component_description" placeholder="Component Description" ng-keypress="limitKeypress($event,rws.component_description,100)" style="height:20px;width:98%;resize:none;margin:5px 0px;border: 1px solid #c3c3c3;"></textarea></td>
+                            <td><select ng-if="project_id" ng-model="rws.unitofmeasurement" ng-options="uom.reference_value as uom.reference_value for uom in refmaster | filter:{group_id: 12 }:true"><option value="">Select UOM</option></select></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;"><a ng-click="addRow()"><i class="fa fa-plus-square-o" style="font-size:14px;padding: 4px 0px 4px 0px;"></i></a></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="panel-footer" style="height:40px; padding-right: 0px; padding-top:5px;margin-top: 95px;">
+                    <div class="col-lg-12" style="text-align:right;">
+                        <input type="button" ng-show="clearbtn" class="btn btn-sm btn-info" ng-click="Clearform()" value="Clear" />
+                        <input type="button" ng-show="hidebtn" class="btn btn-sm btn-info" ng-click="hideUserForm()" value="Cancel" />
+                        <button class="btn btn-sm btn-info" ng-show="addbtn" ng-click="SaveComponents()" type="submit">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="panel panel-default" ng-show="ComoponentsList.length != 0">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-lg-10 col-md-10 col-xs-10" style="width: 81.333333% !important;">
+                    <h3 class="panel-title" style="height: 30px;line-height: 30px;">Project Components Information</h3>
+                </div>
+                <div class="col-lg-2 col-md-2 col-xs-2" style="text-align:right;padding: 0px 0px 0px 0px;">
+                    <button class="btn btn-sm btn-info" ng-click="showAddform()" ng-show="addprjcmp">Add Components</button>
+                </div>
+            </div>
+            <h3 class="panel-title"></h3>
+        </div>
+        <div class="panel-body">
+            <form>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                        <input type="text" class="form-control" placeholder="Search" ng-model="search">
+                    </div>
+                </div>
+            </form>
+            <table class="table table-bordered table-striped table-hover table-condensed">
+                <thead>
+                    <tr style="background:#808080;color:white;">
+                        <!--<th style="width:2%;text-align:center;">SNo</th>-->
+                        <th style="width:4%;text-align:center;">
+                            <a href="#" class="anchorhover" ng-click="sortType = 'component'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                Component
+                            </a>
+                        </th>
+                        <th style="width:6%;text-align:center;">
+                            <a href="#" class="anchorhover" ng-click="sortType = 'project_name'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                Project
+                            </a>
+                        </th>
+                        <th style="width:5%;text-align:center;">Description</th>
+                        <th style="width:5%;text-align:center;">UOM</th>
+                    </tr>
+                    <!--<tr>
+                        <th colspan="4" style="text-align:center; background-color: #337ab7;" ng-show="result==false">No records found</th>
+                    </tr>-->
+                </thead>
+                <tbody>
+                    <tr dir-paginate="comp in ComoponentsList|filter:search|itemsPerPage:5|orderBy:sortType:sortReverse">
+                        <!--<td style="width:2%;text-align:center;">{{$index+1}}</td>-->
+                        <td style="width:5%;text-align:left;">{{comp.component}}</td>
+                        <td style="width:5%;text-align:left;">{{comp.project_name}}</td>
+                        <td style="width:5%;text-align:left;">{{comp.description}}</td>
+                        <td style="width:5%;text-align:left;">{{comp.uom}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-lg-10" style="margin-bottom: 0px -35px -13px">
+                    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                    </dir-pagination-controls>
+                    <!--<select name="level" ng-model="page.levels" ng-options="obj.value as obj.label for obj in page.levelsArr" style="position: absolute;top: 20px;height: 34px;"></select>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

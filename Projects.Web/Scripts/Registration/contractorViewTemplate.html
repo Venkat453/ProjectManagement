@@ -1,0 +1,137 @@
+﻿
+<div>
+    <div class="row" style="margin-top:4%">
+        <div class="col-md-3" style="margin-top:-3%">
+            <label style="font-size:12px;color:black">Name</label>
+        </div>
+        <div class="col-md-3"  style="margin-top:-3%">
+            <label style="font-size:12px">{{contractorDetails.subcontractor_name}}</label>
+        </div>
+        <div class="col-md-3"  style="margin-top:-3%">
+            <label style="font-size:12px;color:black">Photo</label>
+        </div>
+        <div class="col-md-3">
+            <img data-ng-src="{{getImageinView(contractorDetails.contractor_photo)}}" style="width:40%; margin-top:-32%" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label style="font-size:12px;color:black">Company</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px">{{contractorDetails.company_name}}</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px;color:black">Project</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px">{{getProjectName(contractorDetails.project_id)}}</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label style="font-size:12px;color:black">PAN Number</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px">{{contractorDetails.pan}}</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px;color:black">ServiceTax Number</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px">{{contractorDetails.service_tax_no}}</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label style="font-size:12px;color:black">Bank A/C Number</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px">{{contractorDetails.bank_account_no}}</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px;color:black">Contact Number</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px">{{contractorDetails.current_contact_number}}</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label style="font-size:12px;color:black">Branch Name</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px">{{contractorDetails.bank_branch}}</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px;color:black">IFSC Number</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px">{{contractorDetails.ifsc}}</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label style="font-size:12px;color:black">Create Date</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px">{{contractorDetails.created_date| date :  "MMM d, y"}}</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px;color:black">Street</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px">{{contractorDetails.current_street}}</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label style="font-size:12px;color:black">City</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px">{{showcity(contractorDetails.current_city)}}</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px;color:black">State</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px">{{showstate(contractorDetails.current_state)}}</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label style="font-size:12px;color:black">Country</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px">{{showcountry(contractorDetails.current_country)}}</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px;color:black">Zip</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px">{{contractorDetails.current_zip}}</label>
+        </div>
+    </div>
+</div>
+<style>
+    .popover {
+        width: 100%;
+        margin-top: 10%;
+        max-width: 50%;
+    }
+
+        .popover.right > .arrow {
+            top: 13%;
+        }
+
+    .popover-title {
+        color: black;
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    .popover-content {
+        color: #808080;
+        font-size: 10px;
+    }
+</style> 

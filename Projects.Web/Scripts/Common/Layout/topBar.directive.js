@@ -10,27 +10,6 @@
            templateUrl: '/Scripts/Common/Layout/topBar.html'
         }
     }
-    //function logout() {
-    //    $rootScope.tenant = {};
-    //    $rootScope.ReferenceMasterData = {};
-    //    $rootScope.CountriesList = {};
-    //    $rootScope.StatesList = {};
-    //    $rootScope.CitiesList = {};
-    //    $rootScope.SCMasterList = {};
-    //    $rootScope.MenuList = {};
-    //    $rootScope.projectslists = {};
-    //    $sessionStorage.MenuList = {};
-    //    $sessionStorage.CitiesList = {};
-    //    $sessionStorage.StatesList = {};
-    //    $sessionStorage.tenant = {};
-    //    $sessionStorage.ReferenceMasterData = {};
-    //    $sessionStorage.CountriesList = {};
-    //    $rootScope.user = {};
-    //    alert("logout");
-    //    $location.url("/");
-    //}
-
-
 
 })(angular.module('common.ui'));
 

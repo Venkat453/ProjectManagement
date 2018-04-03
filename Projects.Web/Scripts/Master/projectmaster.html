@@ -1,0 +1,139 @@
+﻿<style>
+    .anchorhover:hover {
+        color: deepskyblue !important;
+    }
+</style>
+<div>
+    <div class="panel-group">
+        <div class="panel panel-default" ng-show="showPMForm||projectslist.length == 0">
+            <div class="panel-heading">
+                <h3 class="panel-title">Project Master<i class="fa fa-expand" style="float:right; cursor:pointer;" aria-hidden="true" ng-click="showAddform()"></i></h3>
+            </div>
+            <div class="panel-body panel-body-form">
+                <form name="ProjectMasterForm" id="ProjectMasterForm" novalidate ng-submit="SaveProject()">
+                    <div class="panel-body" style="padding-bottom:0px">
+                        <div id="inputContainer" ng-cloak>
+                            <md-content layout-padding>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <md-input-container class="md-block">
+                                            <label>Project Name</label>
+                                            <!--<md-icon class="md-dark" arial-label="location" style="color:#b200ff"><i class="fa fa-building" style="font-size: 20px;"></i></md-icon>-->
+                                            <input type="text" id="Project_Name" name="Project_Name" valid-Name ng-model="pm.project_name" ng-keypress="limitKeypress($event,pm.project_name,25)" ng-blur="checkproject(pm.project_name)" required>
+                                            <div ng-messages="ProjectMasterForm.Project_Name.$error" role="alert" class="ng-messages">
+                                                <div ng-message="required">* Mandatory.</div>
+                                                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                    minimum 5 to 25 chars.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <md-input-container class="md-block">
+                                            <label>Description</label>
+                                            <!--<md-icon class="md-dark" arial-label="location" style="color:#b200ff"><i class="fa fa-building" style="font-size: 20px;"></i></md-icon>-->
+                                            <input type="text" name="Project_Description" valid-Name ng-model="pm.project_description"  ng-keypress="limitKeypress($event,pm.project_description,100)" required>
+                                            <div ng-messages="ProjectMasterForm.Project_Description.$error" role="alert" class="ng-messages">
+                                                <div ng-message="required">* Mandatory.</div>
+                                                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <md-input-container class="md-block">
+                                            <label>Customer</label>
+                                            <!--<md-icon class="md-dark" arial-label="location" style="color:#b200ff"><i class="fa fa-building" style="font-size: 20px;"></i></md-icon>-->
+                                            <input type="text" name="Customer_Name" valid-Name ng-model="pm.project_customer" ng-keypress="limitKeypress($event,pm.project_customer,50)" required>
+                                            <div ng-messages="ProjectMasterForm.Customer_Name.$error" role="alert" class="ng-messages">
+                                                <div ng-message="required">* Mandatory.</div>
+                                                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                    Valid Range: 1 to 30 chars.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                            </md-content>
+                        </div>
+                    </div>
+                    <div class="panel-footer" style="height:40px; padding-right: 0px; padding-top:5px">
+                        <div class="col-lg-12" style="text-align:right;">
+                            <input type="button" ng-show="clearbtn" class="btn btn-sm btn-info" ng-click="Clearform()" value="Clear" />
+                            <input type="button" ng-show="hidebtn" class="btn btn-sm btn-info" ng-click="hideUserForm()" value="Cancel" />
+                            <button class="btn btn-sm btn-info" type="submit">Save</button>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="panel panel-default" ng-show="projectslist.length != 0">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-lg-10 col-md-10 col-xs-10">
+                        <h3 class="panel-title" style="height: 30px;line-height: 30px;">Projects Information</h3>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-xs-2" style="text-align: right;">
+                        <button class="btn btn-sm btn-primary" ng-show="addbtn" ng-click="showAddform()">Add Project</button>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <form>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                            <input type="text" class="form-control" placeholder="Search" ng-model="newproject" >
+                        </div>
+                    </div>
+                </form>
+                <table  class="table table-bordered table-striped table-hover table-condensed">
+                    <thead style="background:#808080;color:white;">
+                        <tr > 
+                            <th  style="width:3%;text-align:center;" rowspan="2">
+                                <a href="#" class="anchorhover" ng-click="sortType = 'project_name'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    Project Name
+                                </a>
+                            </th>
+                            <th style="width:8%;text-align:center;" rowspan="2">
+                                <a href="#" class="anchorhover" ng-click="sortType = 'project_description'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    Project Description
+                                </a>
+                            </th>
+                            <th style="width:4%;text-align:center;" rowspan="2">
+                                <a href="#" class="anchorhover" ng-click="sortType = 'project_customer'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    Customer
+                                </a>
+                            </th>
+                          
+                        </tr>
+                        <!--<tr>
+                            <th colspan="3" style="text-align:center;background-color: #337ab7;" ng-show="result==false">No records found</th>
+                        </tr>-->
+                    </thead>
+                    <tbody>
+                        <tr dir-paginate="project in projectslist|filter:newproject|itemsPerPage:5|orderBy:sortType:sortReverse"> 
+                            <td style="width:2%;text-align:left;">{{project.project_name}}</td>
+                            <td style="width:2%;text-align:left;">{{project.project_description}}</td>
+                            <td style="width:2%;text-align:left;">{{project.project_customer}}</td>
+                        </tr>
+                    </tbody>
+                </table> 
+               
+            </div>
+            <div class="row" style=" padding: 0 0 0 15px;">
+                <div class="col-lg-10" style="margin-bottom: 0px -35px -13px">
+                    <dir-pagination-controls max-size="5"
+                                             direction-links="true"
+                                             boundary-links="true">
+                    </dir-pagination-controls>
+                   <!-- <select name="level" ng-model="page.levels" ng-options="obj.value as obj.label for obj in page.levelsArr" style="position: absolute;top: 20px;height: 34px;"></select>-->
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</div>

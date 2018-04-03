@@ -1,0 +1,339 @@
+﻿<style>
+    .anchorhover:hover {
+        color: deepskyblue !important;
+    }
+</style>
+<div class="panel-group">
+    <div class="panel panel-default" ng-show="showIndentForm||GetIndentlist.length==0">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-lg-10 col-md-10 col-xs-10">
+                    <h3 class="panel-title">
+                        <i class="fa fa-plus-circle" aria-hidden="true" ng-click="showAddIndentform()"></i>
+                       Create Indent form
+                    </h3>
+                </div>
+                <div class="col-lg-2 col-md-2 col-xs-2" style="text-align: right;">
+                    <i class="fa fa-expand" aria-hidden="true" ng-click="showAddIndentform()"></i>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <form name="newIndentForm" angular-validator-submit="" style="margin-bottom:0px;">
+                <div id="inputContainer" ng-cloak>
+                    <md-content layout-padding> 
+                        <div class="row">
+                            <div class="col-md-4">
+                                <md-input-container class="md-block">
+                                    <label>Project Name</label>
+                                    <!--<md-icon class="md-dark" arial-label="ProjectName" style="color:#036918"><i class="fa fa-map-marker" style="font-size: 20px;"></i></md-icon>-->
+                                    <md-select ng-readonly="readOnlyStatus" name="ProjectName" ng-init="indent.project_id" ng-model="indent.project_id" ng-disabled="!projectslists.length">
+                                        <md-option ng-repeat="project in projectslists" ng-value="project.id">
+                                            {{project.project_name}}
+                                        </md-option>
+                                    </md-select>
+                                    <div ng-messages="newIndentForm.SubContractorName.$error" role="alert">
+                                        <div ng-message="required">* Mandatory.</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-4">
+                                <md-input-container class="md-block">
+                                    <label>SubContractor Name</label>
+                                    <!--<md-icon class="md-dark" arial-label="state" style="color:#036918"><i class="fa fa-map-marker" style="font-size: 20px;"></i></md-icon>-->
+                                    <md-select ng-readonly="readOnlyStatus" name="SubContractorName" ng-model="indent.SubContractor_id" ng-change="" ng-disabled="!indent.project_id">
+                                        <md-option ng-repeat="subcontractor in SubContractorsList|filter:{project_id:indent.project_id}" ng-value="subcontractor.id">
+                                            {{subcontractor.subcontractor_name}}
+                                        </md-option>
+                                    </md-select>
+                                    <div ng-messages="newIndentForm.SubContractorName.$error" role="alert">
+                                        <div ng-message="required">* Mandatory.</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div class="col-lg-4">
+                                <md-input-container class="md-block">
+                                    <label> Indent Number</label>
+                                    <!--<md-icon class="md-dark" arial-label="regiNmbr" style="color:#0094ff"><i class="fa fa-key" style="font-size: 20px;"></i></md-icon>-->
+                                    <input type="text" numbers-only="numbers-only" ng-readonly="readOnlyStatus" id="IndNo" name="IndNo" ng-model="indent.indent_no" minlength="4" maxlength="10" ng-blur="checkindentNoDup(indent.project_id,indent.indent_no)">
+                                    <div ng-messages="newIndentForm.IndNo.$error" role="alert" class="ng-messages">
+                                        <div ng-message="required">*Mandatory.</div>
+                                        <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                            4 to 10 chars.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <md-input-container class="md-block">
+                                    <label>Authorised By</label>
+                                    <!--<md-icon class="md-dark" arial-label="drivername" style="color:#0094ff"><i class="fa fa-user" style="font-size: 20px;"></i></md-icon>-->
+                                    <input type="text" valid-Name ng-readonly="readOnlyStatus" id="Authorised" name="Authorised" ng-model="indent.authorized_by">
+                                    <div ng-messages="newIndentForm.Authorised.$error" role="alert" class="ng-messages">
+                                        <div ng-message="required">*Mandatory.</div>
+                                        <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                            4 to 10 chars.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div class="col-lg-4">
+                                <md-input-container class="md-block">
+                                    <label>Recieved By</label>
+                                    <!--<md-icon class="md-dark" arial-label="drivername" style="color:#0094ff"><i class="fa fa-user" style="font-size: 20px;"></i></md-icon>-->
+                                    <input type="text" valid-Name ng-readonly="readOnlyStatus" id="Recieved" name="Recieved" ng-model="indent.recieved_by">
+                                    <div ng-messages="newIndentForm.Recieved.$error" role="alert" class="ng-messages">
+                                        <div ng-message="required">*Mandatory.</div>
+                                        <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                            4 to 10 chars.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-4">
+                                <md-datepicker name="required date" ng-model="indent.date_required" md-min-date="minDate1"  md-max-date="maxDate1" md-placeholder="Required Date" md-open-on-focus></md-datepicker>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <md-datepicker name="received date" ng-model="indent.date_recieved" md-min-date="minDate"  md-max-date="maxDate" md-placeholder="Recieved Date" md-open-on-focus></md-datepicker>
+                            </div>
+                            <div class="col-lg-4">
+                                <md-input-container class="md-block">
+                                    <label>Recieved From</label>
+                                    <!--<md-icon class="md-dark" arial-label="RecievedFrom" style="color:#0094ff"><i class="fa fa-key" style="font-size: 20px;"></i></md-icon>-->
+                                    <input type="text" valid-Name ng-readonly="readOnlyStatus" id="RecievedFrom" name="RecievedFrom" ng-model="indent.recieved_from">
+                                    <div ng-messages="newIndentForm.RecievedFrom.$error" role="alert" class="ng-messages">
+                                        <div ng-message="required">*Mandatory.</div>
+                                        <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                            4 to 10 chars.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div class="col-lg-4">
+                                <md-input-container class="md-block">
+                                    <div class="col-lg-12" style="text-align:center;">
+                                        <input type="file" name="i_file" id="i_file" ng-model="indentfile" base-sixty-four-input>
+                                    </div>
+                                    <div ng-messages="newIndentForm.indentfile.$error" role="alert" class="ng-messages">
+                                        <div ng-message="required">*Mandatory.</div>
+                                        <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                            Upload
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div class="col-lg-12" style="margin-top: 25px; padding:0">
+                            <table class="table-bordered" style="border:1px; width:100%">
+                                <tr style="background-color:cadetblue; height: 25px">
+                                    <th style="width:3%;"></th>
+                                    <th style="width:8%;">SNo</th>
+                                    <th style="width:16%;">MATERIAL</th>
+                                    <th style="width:22%;">DESCRIPTION</th>
+                                    <th style="width:14%;">QUANTITY</th>
+                                    <th style="width:17%;">UNIT</th>
+                                    <th style="width:9%;">UNIT PRICE &#x20B9 </th>
+                                    <th style="width:100%;">TOTAL</th>
+                                    <th style="width:100%;"></th>
+                                </tr>
+                                <tr ng-repeat="rws in rows.items">
+                                    <td style="text-align:center"><a  href="" ng-click="removeItem()"><i class="fa fa-minus-square-o" style="font-size:14px;padding: 4px 0px 4px 0px;"></i></a></td>
+                                    <td>{{$index+1}}</td>
+                                    <td><select ng-model="rws.material_name" ng-init="rws.material_name=true" ng-change="checkindmat(rws, $index,indent.project_id,indent.SubContractor_id,indent.indent_no)" ng-options="p.material_name as p.material_name for p in MaterialList|filter:{project_id:indent.project_id}:true"><option value="">Material Type</option></select></td>
+                                    <td><input type="text" ng-disabled="true" ng-if="rws.material_name" ng-model="rws.material_description" placeholder="0" /></td>
+                                    <td><input type="text" numbers-only="numbers-only" ng-disabled="false" ng-if="rws.material_name" ng-model="rws.quantity" placeholder="0" style="width:62px;" minlength="1" maxlength="10"/></td>
+                                    <td><input type="text" ng-disabled="true" ng-if="rws.material_name" ng-model="rws.UOMID"placeholder="0" style="width:62px;" /></td>
+                                    <td><input type="text" ng-disabled="true" ng-if="rws.material_name" ng-model="rws.material_price" placeholder="0" style="width:62px;text-align: right;" /></td>
+                                    <td placeholder="0" ng-model="rws.total_price" style="text-align:right; padding-right:20px">&#x20B9 {{rws.amount=rws.quantity*rws.material_price}} </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"><a  ng-click="addRow()" ><i class="fa fa-plus-square-o" style="font-size:14px;padding: 4px 0px 4px 0px;"></i></a></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <h4>
+                                            Grand Total
+                                        </h4>
+                                    </td>
+                                    <td>
+                                        <h4 style="padding: 15px 0px 17px 58px;">
+                                            <strong>&#x20B9 {{total_amount()}}</strong>
+                                        </h4>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </md-content>
+                    <div class="panel-footer" style="height:40px; padding-right: 0px; padding-top:5px">
+                        <div class="col-lg-12" style="text-align:right;margin-top:10px;">
+                            <input type="button" ng-show="clearbtn" class="btn btn-sm btn-info" ng-click="Clearform()" value="Clear" />
+                            <button class="btn btn-sm btn-info" ng-show="hidebtn" ng-click="showAddIndentform()">Cancel</button>
+                            <button class="btn btn-sm btn-info" ng-show="savebtn" ng-click="SaveIndent(rws)" type="submit">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="panel panel-default" ng-show="GetIndentlist.length!=0">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-lg-10 col-md-10 col-xs-10">
+                    <h3 class="panel-title" style="height: 30px;line-height: 30px;">Indent Information</h3>
+                </div>
+                <div class="col-lg-2 col-md-2 col-xs-2" style="text-align: right;">
+                    <button class="btn btn-sm btn-primary" ng-click="showAddIndentform()" ng-show="addind">Add Indent</button>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top:20px;">
+            <div class="col-lg-4">
+                <md-input-container class="md-block" style="margin-left:15px;">
+                    <label>Select Project</label>
+                    <md-select name="project_id" ng-model="project_id" ng-disabled="!projectslists.length" required>
+                        <md-option ng-repeat="project in projectslists" ng-value="project.id">
+                            {{project.project_name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+        </div>
+        <div class="panel-body">
+            <form ng-show="GetIndentlist.length!=0">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                        <input type="text" class="form-control" placeholder="Search" ng-model="filterindents">
+                    </div>
+                </div>
+            </form>
+            <table class="table table-bordered table-striped  table-condensed" ng-show="GetIndentlist.length!=0">
+                <thead>
+                    <tr style="background:#e3e3e3;color:white;">
+                        <th colspan="1"></th>
+                        <th style="padding: 0px 0px 0px 0px; margin: -7px 0px 0px 0px; width:11% ;" background:#808080;color:white;">
+                            <select ng-model="search.SubContractor_id" class="form-control" ng-options="indt.SubContractor_id as indt.SubContractor_id  for indt in GetIndentlist|unique:'SubContractor_id'" style="font-size: 12px;height: 25px;padding: 4px 12px !important;">
+                                <option value="">All</option>
+                            </select>
+                        </th>
+                        <th style="padding: 0px 0px 0px 0px; margin: -7px 0px 0px 0px; width:11% ;" background:#808080;color:white;">
+                            <select ng-model="search.indent_no" class="form-control" ng-options="indt.indent_no as indt.indent_no for indt in GetIndentlist|filter:{SubContractor_id:search.SubContractor_id}:true" style="font-size: 12px;height: 25px;padding: 4px 12px !important;">
+                                <option value=''>All</option>
+                            </select>
+                        </th>
+                        <th colspan="4"></th>
+                    </tr>
+                    <tr style="background:#808080;color:white;">
+                        <th style="width:2%;text-align:center;vertical-align:middle;"></th>
+                        <!--<th style="width:2%;text-align:center;vertical-align:middle;">SNO</th>-->
+                        <th style="width:5%;text-align:center;vertical-align:middle;">
+                            <a href="#" class="anchorhover" ng-click="sortType = 'SubContractor_id'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                SubContractor
+                            </a>
+                        </th>
+                        <th style="width:5%;text-align:center;vertical-align:middle;">
+                            <a href="#" class="anchorhover" ng-click="sortType = 'indent_no'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                Indent Number
+                            </a>
+                        </th>
+                        <th style="width:6%;text-align:center;vertical-align:middle;">
+                            <a href="#" class="anchorhover" ng-click="sortType = 'recieved_by'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                Received By
+                            </a>
+                        </th>
+                        <th style="width:6%;text-align:center;vertical-align:middle;">
+                            <a href="#" class="anchorhover" ng-click="sortType = 'recieved_from'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                Received From
+                            </a>
+                        </th>
+                        <th style="width:6%;text-align:center;vertical-align:middle;">
+                            <a href="#" class="anchorhover" ng-click="sortType = 'date_recieved'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                Received Date
+                            </a>
+                        </th>
+                        <th style="width:6%;text-align:center;vertical-align:middle;">
+                            <a href="#" class="anchorhover" ng-click="sortType = 'date_required'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                Required Date
+                            </a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr dir-paginate-start="indent in GetIndentlist|filter:filterindents|itemsPerPage:5 | orderBy:sortType:sortReverse|filter:{project_id:project_id}:true
+                         |filter:{SubContractor_id: search.SubContractor_id || undefined,
+                           indent_no: search.indent_no || undefined,}:true" pagination-id="table1">
+                        <td style="width:3%; vertical-align:middle;">
+                            <button ng-click="showDetails(indent)" expand>
+                                <i ng-hide="active==indent" class="fa fa-plus"></i>
+                                <i ng-show="active==indent" class="fa fa-minus"></i>
+                            </button>
+                        </td>
+                        <!--<td style="width:2%;text-align:center;vertical-align:middle;">{{$index+1}}</td>-->
+                        <td style="width:2%;text-align:center;vertical-align:middle;">{{indent.SubContractor_id}}</td>
+                        <td style="width:2%;text-align:center;vertical-align:middle;">{{indent.indent_no}}</td>
+                        <td style="width:2%;text-align:center;vertical-align:middle;">{{indent.recieved_by}}</td>
+                        <td style="width:2%;text-align:center;vertical-align:middle;">{{indent.recieved_from}}</td>
+                        <td style="width:2%;text-align:center;vertical-align:middle;">{{indent.date_recieved|date:"MMM d, y"}}</td>
+                        <td style="width:2%;text-align:center;vertical-align:middle;">{{indent.date_required|date:"MMM d, y"}}</td>
+                    </tr>
+                    <tr dir-paginate-end="" ng-show="active==indent">
+                        <td></td>
+                        <td colspan="8">
+                            <table class="table table-bordered table-striped table-hover table-condensed">
+                                <thead>
+                                    <tr style="background:#106875;color:white;">
+                                        <!--<th style="width:2%;text-align:center;vertical-align:middle;">SNo</th>-->
+                                        <th style="width:5%;text-align:center;vertical-align:middle;">Material</th>
+                                        <th style="width:5%;text-align:center;vertical-align:middle;">Description</th>
+                                        <th style="width:5%;text-align:center;vertical-align:middle;">Quantity</th>
+                                        <th style="width:5%;text-align:center;vertical-align:middle;">Units</th>
+                                        <th style="width:5%;text-align:center;vertical-align:middle;">Unit Price</th>
+                                        <th style="width:5%;text-align:center;vertical-align:middle;">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="Gindl in GetIndentdetailslist|filter:{indent_no:indent.indent_no}:true">
+                                        <!--<td style="width:2%;text-align:center;vertical-align:middle;">{{$index+1}}</td>-->
+                                        <td style="width:5%;text-align:center;vertical-align:middle;">
+                                            {{ Gindl.material_name}}
+                                        </td>
+                                        <td style="width:5%;text-align:center;vertical-align:middle;">{{Gindl.material_description}}</td>
+                                        <td style="width:5%;text-align:center;vertical-align:middle;">{{Gindl.quantity}}</td>
+                                        <td style="width:5%;text-align:center;vertical-align:middle;">{{getUnitName(Gindl.unit_of_measurement)}}</td>
+                                        <td style="width:5%;text-align:center;vertical-align:middle;">{{Gindl.material_price}}</td>
+                                        <td style="width:5%;text-align:center;vertical-align:middle;">{{Gindl.total_price}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row" ng-show="GetIndentlist.length>5">
+                <div class="col-lg-10" style="margin-bottom: 0px -35px -13px">
+                    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true" pagination-id="table1">
+                    </dir-pagination-controls>
+                    <!--<select name="level" ng-model="page.levels" ng-options="obj.value as obj.label for obj in page.levelsArr" style="position: absolute;top: 20px;height: 34px;"></select>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

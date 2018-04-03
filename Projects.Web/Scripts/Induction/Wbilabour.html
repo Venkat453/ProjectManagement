@@ -1,0 +1,65 @@
+﻿ <div role="document" id="clientpopup">
+    <div>
+        <div class="modal-header" style="padding-top:10px;background-color: rgba(222, 219, 219, 0.62);">
+            <button data-dismiss="modal" ng-click="closeclientmodal()" type="button" class="close">x</button>
+         </div>
+        <form name="newwbiForm" style="margin-bottom:0px;">
+            <div class="panel-body">
+            <div class="row"> 
+                <div class="col-md-4">
+                    <label style="font-size:12px">Labor Name:</label>  
+                    <span class="badge">
+                        {{labors.name}}
+                    </span>
+                </div> 
+                <div class="col-md-4">
+                    <label style="font-size:12px">EmpCode:</label>  
+                    <span class="badge">
+                        {{labors.empcode}}
+                    </span>
+                </div> 
+              <div class="col-md-4"> 
+                  <label style="font-size:12px">Joining Date:</label> 
+                  <span class="badge">
+                      {{labors.created_date|date:"MMM d, y"}}
+                  </span>
+                </div>
+            </div>
+              <div class="row">
+                    <div class="col-md-6" style="top: 15px;">
+                        <md-input-container class="md-block">
+                            <label style="cursor:pointer">Wbi No:</label>
+                            <input id="wbino" name="wbino" numbers-only="numbers-only" ng-model="induction_wbino" minlength="1" maxlength="30" required>
+                            <div ng-messages="newwbiForm.wbino.$error" role="alert" class="ng-messages">
+                                <div ng-message="required">*Mandatory.</div>
+                                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                    1 to 30 chars.
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                </div>
+           </div>
+                <div class="panel-footer" style="height:40px; padding-right: 0px; padding-top:5px;background-color: rgba(222, 219, 219, 0.62);">
+                    <div class="col-lg-12" style="text-align:right;">
+                        <button class="btn btn-sm btn-info" type="submit" ng-click="registerwbi(labors)"><b>Register</b></button>
+                    </div>
+                </div>
+        </form>
+    </div>
+</div>
+<style>
+    .modal-dialog {
+        width: 50%;
+    }
+
+    .modal-content {
+        border-radius: 4px;
+    }
+
+    .badge {
+        color: #151414 !important;
+        background-color: rgb(210, 210, 210);
+        float: none;
+    }
+</style>

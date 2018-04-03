@@ -1,0 +1,237 @@
+﻿<style>
+    .anchorhover:hover {
+        color: deepskyblue !important;
+    }
+    .po-heading {
+        background: #337ab7;
+        color: #fff;
+    }
+      .anchorhover:hover {
+        color: deepskyblue !important;
+    }
+
+    .in-heading {
+        background: rgba(51, 122, 183, 0.3);
+        height: 30px;
+        color: black;
+        padding-top: 0px;
+        margin-left: 0px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .pobtn {
+        border: 1px none;
+        height: 30px;
+        width: 39px;
+        font-size: 15px;
+    }
+
+    .items-table .row:nth-child(even) {
+        background: #f9f9f9;
+    }
+
+    .items-table input {
+        line-height: 1.5em;
+    }
+
+    .actions {
+        padding-top: 1em;
+    }
+
+    input:focus {
+        outline: 0;
+    }
+
+    input, textarea {
+        border: 1px solid #FFF;
+    }
+
+    .container input:hover, .container textarea:hover,
+    .table-striped > tbody > tr:nth-child(2n+1) > td input:hover,
+    .container input:focus, .container textarea:focus,
+    .table-striped > tbody > tr:nth-child(2n+1) > td input:focus {
+        border: 1px solid #CCC;
+    }
+
+    .table-striped > tbody > tr:nth-child(2n+1) > td input {
+        background-color: #F9F9F9;
+        border: 1px solid #F9F9F9;
+    }
+
+</style>
+<div class="panel-group">
+    <div class="panel panel-default" ng-show="showRateForm">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-lg-11">
+                    <h3 class="panel-title">
+                        <i class="fa fa-plus-circle" aria-hidden="true" ng-click="showrateform()"></i>
+                        SubContractors RateChart
+                    </h3>
+                </div>
+                <div class="col-lg-1">
+                    <i class="fa fa-expand" aria-hidden="true" style="padding-left: 50px;font-size: 17px;" ng-click="showrateform();clearForm()"></i>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <form name="newRateForm" novalidate ng-submit="addRateChart()" style="margin-bottom:0px;">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <md-input-container class="md-block" style="margin-left: 15px;">
+                            <label>Project</label>
+                            <md-select name="project_id" ng-model="projectid" required ng-disabled="!projectslists.length">
+                                <md-option ng-repeat="project in projectslists" ng-value="project.id" >
+                                    {{project.project_name}}
+                                </md-option>
+                            </md-select>
+                            <div ng-messages="newRateForm.project_id.$error" role="alert" class="ng-messages">
+                                <div ng-message="required">* Mandatory.</div>
+                                <div ng-message-exp="['required', 'pattern']">
+                                    10 Chars.
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <div class="col-lg-4">
+                        <md-input-container class="md-block" style="margin-left: 15px;">
+                            <label>Select SubContractor</label>
+                            <md-select name="subcontractor" ng-model="subcontractor_id" required ng-change="clerarData()" ng-disabled="!SubContractorsList.length || !projectid">
+                                <md-option ng-repeat="subcontractor in SubContractorsList|filter:{project_id:projectid}" ng-value="subcontractor.id">
+                                    {{subcontractor.subcontractor_name}}
+                                </md-option>
+                            </md-select>
+                            <div ng-messages="newRateForm.subcontractor.$error" role="alert">
+                                <div ng-message="required">* Mandatory.</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                </div>
+                <table class="table-bordered responsive-table" style="border:1px; width:100%">
+                    <tr style="background: rgba(51, 122, 183, 0.3); height: 25px;">
+                        <th></th>
+                        <th>SNo</th>
+                        <th>FieldWork Name</th>
+                        <th>FieldWork Description</th>
+                        <th>Unit Of Measurement</th>
+                        <th>Unit Price &#x20B9 </th>
+                    </tr>
+                    <tr ng-repeat="item in ratechart.items track by $index">
+                        <td style="text-align:center">
+                            <a href="" ng-click="removeItem()">
+                                <i class="fa fa-minus-square-o" style="font-size:14px;padding: 4px 0px 4px 0px;"></i>
+                            </a>
+                        </td>
+                        <td>{{$index+1}}</td>
+                        <td><select ng-model="item.fieldwork_id" ng-disabled="!subcontractor_id"  ng-value="fieldwork.id" ng-change="checkfieldwork(item, $index,subcontractor_id, projectid)" ng-options="fw.id as fw.fieldwork_name for fw in fieldworklists|filter:{project_id:projectid}:true">
+                            <option value="">Select Fieldwork</option></select></td>
+                        <td><textarea ng-readonly="true" ng-if="item.fieldwork_id" ng-model="item.fieldwork_description" placeholder="{{item.fieldwork_description}}" style="height:20px;width:98%;resize:none;margin:5px 0px;border: 1px solid #c3c3c3;"></textarea></td>
+                        <td><select ng-if="item.fieldwork_id" ng-model="item.unitofmeasurement" ng-options="uom.reference_value as uom.reference_value for uom in refmaster | filter:{group_id: 12 }:true"><option value="">Select UOM</option></select></td> 
+                        <td><input type="text" numbers-Only ng-model="item.price" ng-if="item.fieldwork_id" placeholder="Price"  style="text-align:right; padding-right:20px"></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">
+                            <a href="" ng-click="addItem()">
+                                <i class="fa fa-plus-square-o" style="font-size:14px;padding: 4px 0px 4px 0px;"></i>
+                            </a>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+                <div class="panel-footer" style="height:40px; padding-right: 0px; padding-top:5px">
+                    <div class="col-lg-12" style="text-align:right;">
+                        <button class="btn btn-sm btn-info" type="reset" ng-click="showrateform();clearForm()">Cancel</button>
+                        <button class="btn btn-sm btn-info" type="submit">Create</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-lg-9 col-md-9 col-xs-9">
+                    <h3 class="panel-title" style="height: 30px;line-height: 30px;">Ratechart Information</h3>
+                </div>
+                <div class="col-lg-3 col-md-3 col-xs-3" style="text-align: right;">
+                    <button class="btn btn-sm btn-primary" ng-click="showrateform()" ng-show="addSCRateChart">Create RateChart</button>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top:20px;">
+            <div class="col-lg-4">
+                <md-input-container class="md-block" style="margin-left: 15px;">
+                    <label>Select Project</label>
+                    <md-select name="project_id" ng-model="project_id" required ng-change="getRateChartByProjId(project_id)">
+                        <md-option ng-repeat="project in projectslists" ng-value="project.id">
+                            {{project.project_name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+        </div>
+        <div class="panel-body" ng-show="showdiv">
+            <form ng-show="RatechartList.length!=0">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                        <input type="text" class="form-control" placeholder="Search" ng-model="filterratechatdetails">
+                    </div>
+                </div>
+            </form>
+            <table class="table table-bordered table-striped table-hover table-condensed" ng-show="RatechartList.length!=0">
+                <thead>
+                    <tr style="background:#808080;color:white;">
+                        <th style="width:2%;text-align:center;vertical-align:middle;">SNo</th>
+                        <th style="width:10%;text-align:center;vertical-align:middle;">
+                            Subcontractor
+                        </th>
+                        <th style="width:10%;text-align:center;vertical-align:middle;">
+                            FieldWork
+                        </th>
+                        <th style="width:63%;text-align:center;vertical-align:middle;">FieldWork Description</th>
+                        <th style="width:6%;text-align:center;vertical-align:middle;">UOM</th>
+                        <th style="width:7%;text-align:center;">Price (&#x20b9;)</th>
+                        <th style="width:2%;text-align:center;vertical-align:middle;">Update</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr dir-paginate="ratechart in RatechartList|filter:filterratechatdetails|itemsPerPage:5|orderBy:sortType:sortReverse">
+                        <td style="text-align:center;vertical-align:middle;">{{$index+1}}</td>
+                        <td style="text-align:left;vertical-align:middle;">{{getSCName(ratechart.subcontractor_id)}}</td>
+                        <td style="text-align:left;vertical-align:middle;">{{getFieldWorkName(ratechart.fieldwork_id)}}</td>
+                        <td style="text-align:left;vertical-align:middle;">{{ratechart.fieldwork_description}}</td>
+                        <td style="text-align:left;vertical-align:middle;">{{ratechart.unitofmeasurement}}</td>
+                        <td style="text-align:right;vertical-align:middle;">
+                            <span editable-text="ratechart.price" e-numbers-only="numbers-only" e-name="price" e-form="rowform" onbeforesave="checkName($data, ratechart.price) || validateRequired($data)" e-required>
+                                {{ratechart.price}}
+                            </span>
+                        </td>
+                        <td style="white-space: nowrap;text-align:center;vertical-align:middle;">
+                            <form editable-form name="rowform" onbeforesave="saveUser($data, ratechart.id)" ng-show="rowform.$visible" class="form-buttons form-inline checkVisible" shown="inserted == ratechart" style="margin-bottom:0px!important">
+                                <button type="submit" ng-disabled="rowform.$waiting" class="fa fa-save"
+                                        style="font-size:15px; height:15px;background-color: Transparent; background-repeat:no-repeat; border: none;"></button>
+                                <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="fa fa-times"
+                                        style="font-size:15px; height:15px;background-color: Transparent; background-repeat:no-repeat; border: none;"></button>
+                            </form>
+                            <div class="buttons" ng-show="!rowform.$visible">
+                                <button ng-click="editCall(rowform)" class="fa fa-edit"
+                                        style="font-size:15px; height:15px;background-color: Transparent; background-repeat:no-repeat; border: none;"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row" ng-show="RatechartList.length>5">
+                <div class="col-lg-10" style="margin-bottom: 0px -35px -13px">
+                    <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                    </dir-pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

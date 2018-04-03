@@ -27,23 +27,40 @@ namespace Projects.Web.Mappings
             Mapper.CreateMap <tbl_country, CountryViewModel>();
             Mapper.CreateMap <tbl_state, StatesViewModel>();
             Mapper.CreateMap<tbl_city, CityViewModel>();
+            Mapper.CreateMap<tbl_subcontractor, SubContractorViewModel>();
+            Mapper.CreateMap<tbl_policestation, PoliceStationViewModel>();
+            Mapper.CreateMap<tbl_junction, JunctionViewModel>();
+            Mapper.CreateMap<tbl_labour, LabourViewModel>();
+            Mapper.CreateMap<tbl_vehicle, VehicleViewModel>();
+            Mapper.CreateMap<tbl_indent_header, IndentHeadViewModel>();
+            Mapper.CreateMap<tbl_material_price, MaterialpriceViewModel>();
+            Mapper.CreateMap<tbl_fieldwork_price, FieldworkViewModel>();
+            Mapper.CreateMap<tbl_project_master, ProjectMasterViewModel>();
+            Mapper.CreateMap<tbl_employee, EmployeeViewModel>();
+            Mapper.CreateMap<tbl_induction, InductionViewModel>();
+            Mapper.CreateMap<tbl_workassigns, WorkAssignmentViewModel>();
+            Mapper.CreateMap<tbl_indentstatus, IndentStatusViewModel>();
+            Mapper.CreateMap<tbl_indent_header, IndentHeadViewModel>();
+
+
+            Mapper.CreateMap<tbl_workassigns, WorkAssignmentViewModel>();
+
+            Mapper.CreateMap<tbl_workprogress, WorkProgressViewModel>();
+            Mapper.CreateMap<tbl_project_components, ProjectComponentsViewModel>();
+            Mapper.CreateMap<tbl_junctionComponents, Components>();
+            Mapper.CreateMap<tbl_indent_details, IndentDetailsViewModel>();
+            Mapper.CreateMap<tbl_subcontractor_ratechart, SubContractorRateChartViewModel>();
+            Mapper.CreateMap<tbl_subcontractor_ratechart, RateChartItems>();
+            Mapper.CreateMap<tbl_Workprogress_History, WorkProgressHistoryViewModel>();
+            Mapper.CreateMap<tbl_workassigns_log, WorkAssignsLogViewModel>();
+            Mapper.CreateMap<tbl_workverification_history, WorkVerificationHistoryViewModel>();
+            Mapper.CreateMap<tbl_nonconfirmity_works, NonConfirmityWorksViewModel>();
+            Mapper.CreateMap<tbl_nonconfirmity_history, NonConfirmityWorksHistoryViewModel>();
             Mapper.CreateMap<tbl_chartsorder, ChartOrderViewModel>();
             Mapper.CreateMap<tbl_Log, LogViewModel>();
             Mapper.CreateMap<tbl_charts_titles, ChartTitleViewModel>();
             Mapper.CreateMap<tbl_charts_titles, ChartTitlesViewModel>();
             Mapper.CreateMap<tbl_users_profiles, UserProfileViewModel>();
-            Mapper.CreateMap<tbl_employee, EmployeeViewModel>();
-
-            Mapper.CreateMap<tbl_project_master, ProjectMasterViewModel>();
-            Mapper.CreateMap<tbl_project_master_child, ProjectMasterChildViewModel>();
-            Mapper.CreateMap<tbl_project_commercial_data, ProjectCommercialDataViewModel>();
-            Mapper.CreateMap<tbl_project_structure, ProjectStructureViewModel>();
-            Mapper.CreateMap<tbl_project_structure_main, ProjectStructureMainViewModel>();
-            Mapper.CreateMap<tbl_project_technical_data, ProjectTechnicalDataViewModel>();
-            Mapper.CreateMap<tbl_project_technical_data_child, ProjectTechnicalDataChildViewModel>();
-            Mapper.CreateMap<tbl_part_list, PartListViewModel>();
-            Mapper.CreateMap<tbl_part_list_item, PartListItemViewModel>();
-
 
 
 

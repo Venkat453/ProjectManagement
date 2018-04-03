@@ -12,3 +12,17 @@ E:\PHONE DATA\ProjectManagement\Projects.Services\bin\Debug\EntityFramework.xml
 E:\PHONE DATA\ProjectManagement\Projects.Services\obj\Debug\Projects.Services.csprojResolveAssemblyReference.cache
 E:\PHONE DATA\ProjectManagement\Projects.Services\obj\Debug\Projects.Services.dll
 E:\PHONE DATA\ProjectManagement\Projects.Services\obj\Debug\Projects.Services.pdb
+E:\PM ORIGINAL\Projects.Services\bin\Debug\Projects.Services.dll.config
+E:\PM ORIGINAL\Projects.Services\bin\Debug\Projects.Services.dll
+E:\PM ORIGINAL\Projects.Services\bin\Debug\Projects.Services.pdb
+E:\PM ORIGINAL\Projects.Services\bin\Debug\Projects.Data.dll
+E:\PM ORIGINAL\Projects.Services\bin\Debug\Projects.Entities.dll
+E:\PM ORIGINAL\Projects.Services\bin\Debug\Projects.Library.dll
+E:\PM ORIGINAL\Projects.Services\bin\Debug\EntityFramework.dll
+E:\PM ORIGINAL\Projects.Services\bin\Debug\Projects.Data.pdb
+E:\PM ORIGINAL\Projects.Services\bin\Debug\Projects.Entities.pdb
+E:\PM ORIGINAL\Projects.Services\bin\Debug\Projects.Library.pdb
+E:\PM ORIGINAL\Projects.Services\bin\Debug\EntityFramework.xml
+E:\PM ORIGINAL\Projects.Services\obj\Debug\Projects.Services.csprojResolveAssemblyReference.cache
+E:\PM ORIGINAL\Projects.Services\obj\Debug\Projects.Services.dll
+E:\PM ORIGINAL\Projects.Services\obj\Debug\Projects.Services.pdb

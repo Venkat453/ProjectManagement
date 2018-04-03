@@ -1,0 +1,178 @@
+﻿<div>
+    <div class="panel-group">
+        <div class="panel panel-default" ng-show="showPSForm||Policestationlist.length == 0" >
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-lg-10 col-md-10 col-xs-10">
+                        <h3 class="panel-title">
+                            <i class="fa fa-plus-circle" aria-hidden="true" ng-click="showAddform()" tooltip-html-unsafe="add vehicle" tooltip-placement="bottom"></i>
+                            Add Police Station
+                        </h3>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-xs-2" style="text-align: right;">
+                        <i class="fa fa-expand" aria-hidden="true" ng-click="showAddform()"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <form name="newPoliceStationForm" novalidate ng-submit="addPoliceStation()" style="margin-bottom:0px;">
+                        <div id="inputContainer" ng-cloak>
+                            <md-content layout-padding>
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <md-input-container class="md-block">
+                                            <label>Project</label>
+                                            <!--<md-icon class="md-dark" arial-label="project_id" style="color:#ff006e"><i class="fa fa-map-marker" style="font-size: 20px;"></i></md-icon>-->
+                                            <md-select name="project_id"  ng-model="policestation.project_id" ng-disabled="!projectslists.length" required>
+                                                <md-option ng-repeat="project in projectslists" ng-value="project.id">
+                                                    {{project.project_name}}
+                                                </md-option>
+                                            </md-select>
+                                            <div ng-messages="newPoliceStationForm.project_id.$error" role="alert" class="ng-messages">
+                                                <div ng-message="required">* Mandatory.</div>
+                                                <div ng-message-exp="['required', 'pattern']">
+                                                    10 Chars.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <md-input-container class="md-block">
+                                            <label style="cursor:pointer">Police Station Name</label>
+                                            <!--<md-icon class="md-dark" arial-label="ps_name" style="color:#9a7009"><i class="fa fa-user" style="font-size: 20px;"></i></md-icon>-->
+                                            <input type="text"  ng-readonly="readOnlyStatus"  ng-blur="checkpsname(policestation.project_id,policestation.ps_name)"   valid-Name id="ps_name" name="ps_name" ng-model="policestation.ps_name"  minlength="4" maxlength="20" required>
+                                            <div ng-messages="newPoliceStationForm.ps_name.$error" role="alert" class="ng-messages">
+                                                <div ng-message="required">*Mandatory.</div>
+                                                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                    4 to 20 chars.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <md-input-container class="md-block">
+                                            <label style="cursor:pointer">PS Contact Person</label>
+                                            <!--<md-icon class="md-dark" arial-label="ps_contact_person" style="color:#9a7009"><i class="fa fa-user" style="font-size: 20px;"></i></md-icon>-->
+                                            <input type="text" ng-readonly="readOnlyStatus"   valid-Name required id="ps_contact_person" name="ps_contact_person" ng-model="policestation.ps_contact_person" minlength="4" maxlength="30">
+                                            <div ng-messages="newPoliceStationForm.ps_contact_person.$error" role="alert" class="ng-messages">
+                                                <div ng-message="required">*Mandatory.</div>
+                                                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                    4 to 30 chars.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <md-input-container class="md-block">
+                                            <label style="cursor:pointer">Contact Number</label>
+                                            <!--<md-icon class="md-dark" arial-label="contact_person_mobile_no" style="color:#9a7009"><i class="fa fa-user" style="font-size: 20px;"></i></md-icon>-->
+                                            <input mask="+99 9999999999"   ng-readonly="readOnlyStatus" required id="contact_person_mobile_no" name="contact_person_mobile_no" ng-model="policestation.contact_person_mobile_no" minlength="9" maxlength="14">
+                                            <div ng-messages="newPoliceStationForm.contact_person_mobile_no.$error" role="alert" class="ng-messages">
+                                                <div ng-message="required">*Mandatory.</div>
+                                                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                    9 to 14 Digits Only.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                            </md-content>
+                        </div>
+                    <div class="col-md-offset-9" style=" padding: 0 0 14px 143px;">
+                        <input type="button" ng-show="clearbtn" class="btn btn-sm btn-info" ng-click="Clearform()" value="Clear" />
+                        <input type="button" ng-show="hidebtn" class="btn btn-sm btn-info" ng-click="hideUserForm()" value="Cancel" />
+                        <button ng-show="addBtn" class="btn btn-sm btn-info" type="submit">Save</button>
+                        <input type="button" value="Update" ng-show="updateBtn" class="btn btn-sm btn-info" ng-click="UpdatePS()" />
+                    </div>
+                        <div class="panel-footer" style="height:40px; padding-right: 0px; padding-top:5px"></div>
+                </form>
+            </div>
+        </div>
+        <div class="panel panel-default" ng-show="Policestationlist.length != 0">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-lg-10 col-md-10 col-xs-10">
+                        <h3 class="panel-title" style="height: 30px;line-height: 30px;">Police Stations Information</h3>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-xs-2" style="text-align: right;">
+                        <button class="btn btn-sm btn-primary" ng-click="showAddform()" ng-show="addpsbtn">Add Police Station</button>
+                    </div>
+                </div>
+            </div>
+              <form>
+                <div class="row" style="margin-top:20px;">
+                    <div class="col-lg-4">
+                        <md-input-container class="md-block" style="margin-left:15px;">
+                            <label>Project</label>
+                            <md-select name="project_id" ng-model="project_id">
+                                <md-option ng-repeat="project in projectslists" ng-value="project.id">
+                                    {{project.project_name}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+            </form>
+
+          
+            <div class="panel-body">
+                <!--<form>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                            <input type="text" class="form-control" placeholder="Search" ng-model="filterPS">
+                        </div>
+                    </div>
+                </form>-->
+                <table class="table table-bordered table-striped table-hover table-condensed">
+                    <thead style="background:#e3e3e3;color:white;">
+                        <tr style="background:#808080;color:white;">
+                            <!--<th style="width:4%;text-align:center;">SNo</th>-->
+                            <th style="width:10%;text-align:center;">Project</th>
+                            <th style="width:10%;text-align:center;">
+                                <a href="#" class="anchorhover" ng-click="sortType = 'ps_name'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    PS Name
+                                </a>
+                            </th>
+                            <th style="width:10%;text-align:center;">
+                                <a href="#" class="anchorhover" ng-click="sortType = 'ps_contact_person'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    Contact Person
+                                </a>
+                            </th>
+                            <th style="width:10%;text-align:center;">Mobile No</th>
+                            <th style="width:10%;text-align:center;">
+                                <a href="#" class="anchorhover" ng-click="sortType = 'created_date'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    Created Date
+                                </a>
+                            </th>
+                            <th style="width:4%;text-align:center;">Edit</th>
+                        </tr>
+                       
+                    </thead>
+                    <tbody>
+                        <tr dir-paginate="ps in Policestationlist|filter:{project_id:project_id}|filter:filterPS|itemsPerPage:5|orderBy:sortType:sortReverse">
+                            <!--<td style="text-align:center;">{{ps.id}}</td>-->
+                            <td style="text-align:left;">{{getprojectname(ps.project_id)}}</td>
+                            <td style="text-align:left;"><a href="#" ng-click="ViewDetails(ps)">{{ps.ps_name}}</a></td>
+                            <td style="text-align:left;">{{ps.ps_contact_person}}</td>
+                            <td style="text-align:left;">{{ps.contact_person_mobile_no}}</td>
+                            <td style="text-align:left;">{{ps.created_date|date:"MMM d, y"}}</td>
+                            <td style="text-align:center;">
+                                <span ng-click="EditPs(ps,$index)">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row" ng-show="Policestationlist.length>5">
+                    <div class="col-lg-10" style="margin-bottom: 0px -35px -13px">
+                        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                        </dir-pagination-controls>
+                        <!--<select name="level" ng-model="page.levels" ng-options="obj.value as obj.label for obj in page.levelsArr" style="position: absolute;top: 20px;height: 34px;"></select>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

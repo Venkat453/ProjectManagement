@@ -27,45 +27,49 @@ namespace Projects.Data
             {
                 new tbl_menu{name = "Home", url = "/Index", icon = "fa fa-home", tooltip = "Home", parent_menu = 0, menu_order = 1},
                 new tbl_menu{name = "Dashboard", url = "/Dashboard", icon = "fa fa-dashboard", tooltip = "Dashboard", parent_menu = 0, menu_order = 2},
-                new tbl_menu{name = "Super Admin", url = "#", icon = "fa fa-cloud", tooltip = "Super Admin", parent_menu = 0, menu_order = 3},
+                new tbl_menu{name = "Super Admin", url = "#", icon = "fa fa-cloud", tooltip = "Super Admin", parent_menu = 0, menu_order = 3},                
                 new tbl_menu{name = "Admin", url = "#", icon = "fa fa-cloud", tooltip = "Admin", parent_menu = 0, menu_order = 4},
                 new tbl_menu{name = "Master", url = "#", icon = "fa fa-tasks", tooltip = "Master", parent_menu = 0, menu_order = 5},
-                new tbl_menu{name = "Transactions", url = "#", icon = "fa fa-sign-in", tooltip = "Registration", parent_menu = 0, menu_order = 6},
-                new tbl_menu{name = "Reports", url = "/Reports", icon = "fa fa-check-square", tooltip = "Induction", parent_menu = 0, menu_order = 7},
-                
+                new tbl_menu{name = "Registration", url = "#", icon = "fa fa-sign-in", tooltip = "Registration", parent_menu = 0, menu_order = 6},
+                new tbl_menu{name = "Induction", url = "#", icon = "fa fa-check-square", tooltip = "Induction", parent_menu = 0, menu_order = 7},
+                new tbl_menu {name="Site Management",url="#",icon="fa fa-sitemap", tooltip="Site Management",parent_menu=0,menu_order=8 },
+                new tbl_menu {name="Inventory",url="#",icon="fa fa-industry", tooltip="Inventory",parent_menu=0,menu_order=9 },
+                new tbl_menu{name = "Accounts", url = "#", icon = "fa fa-money", tooltip = "Accounts", parent_menu = 0, menu_order = 10},
+                new tbl_menu{name = "RateChart", url = "/RateChart", icon = "fa fa-line-chart", tooltip = "RateChart", parent_menu = 0, menu_order = 11},
+
                 //* SuperAdmin Submenu
-                new tbl_menu {name="Tenant",url="/Tenants",icon="fa fa-user-plus", tooltip="Tenant",parent_menu=3,menu_order=8 },
+                new tbl_menu {name="Tenant",url="/Tenants",icon="fa fa-user-plus", tooltip="Tenant",parent_menu=3,menu_order=12 },
 
                 //* Admin SubMenu
-                new tbl_menu {name="User Management",url="/UserAccess",icon="fa fa-user-plus", tooltip="Create User",parent_menu=4,menu_order=9 },
+                new tbl_menu {name="User Management",url="/UserAccess",icon="fa fa-user-plus", tooltip="Create User",parent_menu=4,menu_order=13 },
 
                 //* Master SubMenu
-                new tbl_menu {name="Project Groups",url="/ProjectGroups",icon="fa fa-user-plus", tooltip="Create User",parent_menu=5,menu_order=10 },
-                new tbl_menu {name="Makers",url="/Makers",icon="fa fa-cog", tooltip="Settings",parent_menu=5,menu_order=11},
-                new tbl_menu {name="Sub Assembly",url="/SubAssembly",icon="fa fa-user-plus", tooltip="Create User",parent_menu=5,menu_order=12},
-                new tbl_menu {name="Activity Report",url="/ActivityReport",icon="fa fa-th", tooltip="Project Components",parent_menu=5,menu_order=13},
-                new tbl_menu {name="Work Center",url="/WorkCenter",icon="fa fa-user", tooltip="Subcontractors",parent_menu=5,menu_order=14 },
-                new tbl_menu {name="Material Grades",url="/MaterialGrades",icon="fa fa-users", tooltip="Labors",parent_menu=5,menu_order=15},
-                new tbl_menu {name="Item Master",url="/ItemMaster",icon="fa fa-truck", tooltip="Vehicle",parent_menu=5,menu_order=16 },
-                new tbl_menu {name="Activity",url="/Activity",icon="fa fa-map-marker", tooltip="Police Stations",parent_menu=5,menu_order=17 },
-                new tbl_menu {name="Variant",url="/Variant",icon="fa fa-arrows", tooltip="Vehicle Junctions",parent_menu=5,menu_order=18 }, 
-                new tbl_menu {name="Resource Master",url="/ResourceMaster",icon="fa fa-check-square", tooltip="Induction",parent_menu=5,menu_order=19 },                  
-                new tbl_menu {name="Activity Master",url="/ActivityMaster",icon="fa fa-gear",tooltip ="Test",parent_menu=5,menu_order=20},
+                 new tbl_menu {name="Project Master",url="/ProjectMaster",icon="fa fa-user-plus", tooltip="Create User",parent_menu=5,menu_order=14 },
+                 new tbl_menu {name="Settings",url="/Settings",icon="fa fa-cog", tooltip="Settings",parent_menu=5,menu_order=15},
+                 new tbl_menu {name="Employee Master",url="/EmployeeMaster",icon="fa fa-user-plus", tooltip="Create User",parent_menu=5,menu_order=16},
+                 new tbl_menu {name="Project Components",url="/ProjectComponents",icon="fa fa-th", tooltip="Project Components",parent_menu=5,menu_order=17},
 
 
-                //* Transactions SubMenu
-                new tbl_menu {name="Project Creations",url="/ProjectCreations",icon="fa fa-dashcube", tooltip="WorkAssignment",parent_menu=6,menu_order=21 },
-                new tbl_menu {name="Project Structure",url="/ProjectStructure",icon="fa fa-tasks", tooltip="WorkProgress",parent_menu=6,menu_order=22 },
-                new tbl_menu {name="Part List",url="/PartList",icon="fa fa-exclamation-triangle", tooltip="WorkVerification",parent_menu=6,menu_order=23 },
+                //* Registration SubMenu
+                new tbl_menu {name="Subcontractors",url="/Subcontractors",icon="fa fa-user", tooltip="Subcontractors",parent_menu=6,menu_order=14 },
+                new tbl_menu {name="Labors",url="/Labors",icon="fa fa-users", tooltip="Labors",parent_menu=6,menu_order=19 },
+                new tbl_menu {name="Vehicle",url="/Vehicle",icon="fa fa-truck", tooltip="Vehicle",parent_menu=6,menu_order=20 },
+                new tbl_menu {name="Police Stations",url="/PoliceStations",icon="fa fa-map-marker", tooltip="Police Stations",parent_menu=6,menu_order=21 },
+                new tbl_menu {name="Junctions",url="/Junctions",icon="fa fa-arrows", tooltip="Vehicle Junctions",parent_menu=6,menu_order=22 }, 
+
+                //* Site Management SubMenu
+                new tbl_menu {name="Work Assignment",url="/WorkAssignment",icon="fa fa-dashcube", tooltip="WorkAssignment",parent_menu=8,menu_order=23 },
+                new tbl_menu {name="Work Progress",url="/WorkProgress",icon="fa fa-tasks", tooltip="WorkProgress",parent_menu=8,menu_order=24 },
+                new tbl_menu {name="Work Verification",url="/WorkVerification",icon="fa fa-exclamation-triangle", tooltip="WorkVerification",parent_menu=8,menu_order=25 },
                 
-                new tbl_menu {name="Landing",url="/Landing",icon="fa fa-object-group", tooltip="Landing",parent_menu=0,menu_order=24 },
-                
-                //* Inventory SubMenu
-                //new tbl_menu {name="Material Management",url="/MaterialManagement",icon="fa fa-dashcube", tooltip="MaterialManagement",parent_menu=9,menu_order=26 },
-                //new tbl_menu {name="Field Work",url="/FieldworkPrice",icon="fa fa-asterisk", tooltip="FieldWork",parent_menu=9,menu_order=27 },
-                //new tbl_menu {name="Create Indent",url="/Indent",icon="fa fa-indent", tooltip="Indent",parent_menu=9,menu_order=28 },
-                //new tbl_menu {name="Warehouse",url="/Warehouse",icon="fa fa-building", tooltip="Warehouse",parent_menu=9,menu_order=29 },
+                 //* Inventory SubMenu
+                new tbl_menu {name="Material Management",url="/MaterialManagement",icon="fa fa-dashcube", tooltip="MaterialManagement",parent_menu=9,menu_order=26 },
+                 new tbl_menu {name="Field Work",url="/FieldworkPrice",icon="fa fa-asterisk", tooltip="FieldWork",parent_menu=9,menu_order=27 },
+                new tbl_menu {name="Create Indent",url="/Indent",icon="fa fa-indent", tooltip="Indent",parent_menu=9,menu_order=28 },
+                new tbl_menu {name="Warehouse",url="/Warehouse",icon="fa fa-building", tooltip="Warehouse",parent_menu=9,menu_order=29 },
 
+                //* Induction SubMenu
+                new tbl_menu {name="Induction",url="/Induction",icon="fa fa-check-square", tooltip="Induction",parent_menu=7,menu_order=30 },                  
                 //* Super Admin
                 //new tbl_menu{name = "Payments", url = "/Payment", icon = "fa fa-inr", tooltip = "Payments", parent_menu = 3, menu_order = 10},
                 //new tbl_menu{name = "Tenants", url = "/Tenants", icon = "fa fa-male", tooltip = "Customer", parent_menu = 3, menu_order =11},
@@ -74,9 +78,7 @@ namespace Projects.Data
                 //new tbl_menu{name = "Error Log", url = "/ErrorLog", icon = "fa fa-bug", tooltip = "Error Log", parent_menu = 3, menu_order = 14},
                 //new tbl_menu{name = "Login Log", url = "/LoginLog", icon = "fa fa-tasks", tooltip = "Login Log", parent_menu = 3, menu_order = 15},
                 //new tbl_menu{name = "Test", url = "/Test", icon = "fa fa-gear", tooltip = "Test", parent_menu = 3, menu_order = 16},
-
-
-
+                                               
             };
             menu.ForEach(mm => DBConnect.MenuSet.Add(mm));
             DBConnect.SaveChanges();

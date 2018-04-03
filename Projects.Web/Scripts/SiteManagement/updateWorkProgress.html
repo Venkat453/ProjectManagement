@@ -1,0 +1,105 @@
+﻿<div role="form" id="clientpopup1">
+  
+        <div class="modal-header" style="padding: 0px 10px 0px 10px;background-color:#808080;background-color: rgba(222, 219, 219, 0.62);">
+            <div class="row">
+                <div class="col-md-11"><h5 style="font-weight: bold;margin-top:14px;">Work Completion</h5> </div>
+                <div class="col-md-1"><button data-dismiss="modal" ng-click="closeclientmodal()" type="button" class="close" style="margin: 10px;">x</button></div>
+            </div> 
+        </div>
+        <form name="workprogressForm" novalidate>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label style="font-size:12px">Junction Name</label>
+                    </div>
+                    <div class="col-md-3">
+                        <label style="font-size:12px">Component</label>
+                    </div>
+                    <div class="col-md-3">
+                        <label style="font-size:12px">Total</label>
+                    </div>
+                    <div class="col-md-3">
+                        <label style="font-size:12px">Pending</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <span class="badge">
+                            {{getJCName(wpdata.junction_id)}}
+                        </span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="badge">
+                            {{wpdata.junction_component}}
+                        </span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="badge">
+                            {{wpdata.total}}
+                        </span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="badge">
+                            {{wpdata.pending}}
+                        </span>
+                    </div> 
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-lg-4">
+                        <md-input-container class="md-block">
+                            <label>Select SubContractor</label>
+                            <md-icon class="md-dark" arial-label="subcontractor" style="color:#4800ff"><i class="fa fa-map-marker" style="font-size: 20px;"></i></md-icon>
+                            <md-select name="subcontractor" ng-model="subcontractor_id" required>
+                                <md-option ng-repeat="subcontractor in WPSCCompList" ng-value="subcontractor.subcontractor_id">
+                                    {{subcontractor.subcontractor_name}}
+                                </md-option>
+                            </md-select>
+                            <div ng-messages="workassignForm.subcontractor.$error" role="alert">
+                                <div ng-message="required">*Required.</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <div class="col-lg-4">
+                        <md-input-container class="md-block">
+                            <label style="cursor:pointer">Completed</label>
+                            <md-icon class="md-dark" arial-label="ProgressNumber" style="color:#0094ff"><i class="fa fa-user" style="font-size: 20px;"></i></md-icon>
+                            <input ng-readonly="ContractorForm" id="ProgressNumber" name="ProgressNumber" ng-model="progress" minlength="1" maxlength="10" required>
+                            <div ng-messages="workprogressForm.ProgressNumber.$error" role="alert" class="ng-messages">
+                                <div ng-message="required">*ProgressNumber is required</div>
+                                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                    1 to 10 Digits only.
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <div class="col-lg-4">
+                        <label style="font-size:12px">Date</label>
+                        <md-datepicker name="date" ng-model="update_date" md-max-date="past" md-placeholder="Enter Date*" md-open-on-focus required></md-datepicker>
+                        <div ng-messages="workprogressForm.update_date.$error" role="alert" class="ng-messages">
+                            <div ng-message="required">*Required</div> 
+                        </div>
+                    </div>
+                </div> 
+            </div>
+            <div class="panel-footer" style="height:40px; padding-right: 0px; padding-top:4px; background-color: rgba(222, 219, 219, 0.62);">
+                <div class="col-lg-offset-11">
+                    <button class="btn btn-sm btn-info" type="submit" ng-click="updateWorkProgress(wpdata)"><b>Update</b></button>
+                </div>
+            </div>
+        </form> 
+</div>
+<style>
+    .modal-dialog {
+        width: 60%;
+    }
+
+    .modal-content {
+        border-radius: 4px;
+    }
+
+    .badge {
+        color: #151414 !important;
+        background-color: rgb(210, 210, 210);
+        float: none;
+    }
+</style>

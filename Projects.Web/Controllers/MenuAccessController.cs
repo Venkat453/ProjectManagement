@@ -163,24 +163,24 @@ namespace Projects.Web.Controllers
 
         }
 
-        //[Route("GetEmployeesList")]
-        //public IHttpActionResult GetEmployeesList(HttpRequestMessage request)
-        //{
-        //    DBConnect contextObj = new DBConnect();
-        //    var EmployeesList = (from e in contextObj.EmployeeMaster
-        //                         select new
-        //                         {
-        //                             UserName = e.emp_name,
-        //                             Role = e.Designation
-        //                         }
-        //                         ).Concat(from s in contextObj.subcontractorset
-        //                                  select new
-        //                                  {
-        //                                      UserName = s.subcontractor_name,
-        //                                      Role = "Subcontractor"
-        //                                  });
-        //    return Ok(EmployeesList);
-        //}
+        [Route("GetEmployeesList")]
+        public IHttpActionResult GetEmployeesList(HttpRequestMessage request)
+        {
+            DBConnect contextObj = new DBConnect();
+            var EmployeesList = (from e in contextObj.EmployeeMaster
+                                 select new
+                                 {
+                                     UserName = e.emp_name,
+                                     Role = e.Designation
+                                 }
+                                 ).Concat(from s in contextObj.subcontractorset
+                                          select new
+                                          {
+                                              UserName = s.subcontractor_name,
+                                              Role = "Subcontractor"
+                                          });
+            return Ok(EmployeesList);
+        }
 
     }
 }

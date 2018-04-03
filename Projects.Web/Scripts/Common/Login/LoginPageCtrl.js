@@ -164,7 +164,7 @@
 
                 $scope.userData.displayUserInfo();
 
-                $location.url("/Landing");
+                $location.url("/Dashboard");
 
                 //if ($rootScope.previousState) {
                 //    $location.path($rootScope.previousState);
@@ -180,7 +180,7 @@
                 notificationService.displayError('Login failed. Please try again.');
             }
 
-            //LoadProjectsList();
+            LoadProjectsList();
         }
 
         function RefMasterLoadComplete(response) {
@@ -205,7 +205,7 @@
             apiService.get('api/MasterData/GetCountryList', null, GetCountriesListComplete, GetCountriesListFailed);
             apiService.get('api/MasterData/GetStateList', null, GetStatesListComplete, GetStatesListFailed);
             apiService.get('api/MasterData/GetCityList', null, GetCitiesListComplete, GetCitiesListFailed);
-            //apiService.get('api/SubContractor/getSubContractorsList/' + $rootScope.tenant.tenant_id, null, SubContractorsListLoadComplete, SubContractorsListLoadFailed);
+            apiService.get('api/SubContractor/getSubContractorsList/' + $rootScope.tenant.tenant_id, null, SubContractorsListLoadComplete, SubContractorsListLoadFailed);
         }
         function GetCountriesListComplete(response) {
             $rootScope.CountriesList = response.data;
@@ -256,7 +256,7 @@
         }
 
         function TenantCreateFailed(response) {
-            if (response.data == "Email is already Exist!")
+            if (response.data == 'Email is already Exist!')
             {
                 notificationService.displayError("Email is already Exist!");
             }
@@ -277,7 +277,7 @@
 
 
         function LoadProjectsList() {
-            //apiService.get('api/ProjectMaster/GetProjectsList/' + $rootScope.tenant.tenant_id, null, GetProjectsListLoadComplete, GetProjectsListLoadFailed);
+            apiService.get('api/ProjectMaster/GetProjectsList/' + $rootScope.tenant.tenant_id, null, GetProjectsListLoadComplete, GetProjectsListLoadFailed);
         }
         function GetProjectsListLoadComplete(response) {
             $rootScope.projectslists = response.data;

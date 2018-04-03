@@ -1,0 +1,35 @@
+﻿
+<div class="modal-dialog">
+    <div class="modal-content" style="border-radius:3px;">
+        <div class="modal-header" style="padding: 0px 10px 0px 10px;background-color:#808080;background-color: rgba(222, 219, 219, 0.62);">
+            <div class="row">
+                <div class="col-md-11"><h4 style="font-weight: bold;margin-top:14px;">WorkProgress List</h4> </div>
+                <div class="col-md-1"><button data-dismiss="modal" ng-click="closeclientmodal()" type="button" class="close" style="margin: 10px;">x</button></div>
+            </div>
+        </div>
+        <div class="modal-body" style="padding:0px;"> 
+            <table class="table table-responsive table-bordered table-striped table-hover table-condensed" style="margin-bottom:0px;">
+                <thead style="display: table; width: 100%; table-layout: fixed; width: calc( 100% - 1em );">
+                    <tr style="background:#808080;color:white;"> 
+                        <th style="width:15%;text-align:center;vertical-align:middle;">Component</th>
+                        <th style="width:15%;text-align:center;vertical-align:middle;">Total</th>
+                        <th style="width:15%;text-align:center;vertical-align:middle;">Completed</th>
+                        <th style="width:15%;text-align:center;vertical-align:middle;">Pending</th> 
+                    </tr>
+                </thead>
+                <tbody style="display: block; height: 290px;overflow: auto;">
+                    <tr style="display:table;width:100%; table-layout: fixed;" ng-repeat="workprogress in Workprogresspopuplist"> 
+                        <td style="width:15%;text-align:center;vertical-align:middle;">{{workprogress.junction_component}}</td>
+                        <td style="width:15%;text-align:center;vertical-align:middle;">{{workprogress.total}}</td>
+                        <td style="width:15%;text-align:center;vertical-align:middle;">{{workprogress.completed}}</td>
+                        <td style="width:15%;text-align:center;vertical-align:middle;">{{workprogress.pending}}</td> 
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="panel-footer" style="height:40px; padding-right: 0px; background-color: rgba(222, 219, 219, 0.62);">
+            <div class="col-lg-12" style="text-align:right;">
+            </div>
+        </div>
+    </div>
+</div>

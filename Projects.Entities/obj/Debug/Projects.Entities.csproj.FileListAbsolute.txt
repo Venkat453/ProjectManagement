@@ -3,3 +3,8 @@ E:\PHONE DATA\ProjectManagement\Projects.Entities\bin\Debug\Projects.Entities.pd
 E:\PHONE DATA\ProjectManagement\Projects.Entities\obj\Debug\Projects.Entities.csprojResolveAssemblyReference.cache
 E:\PHONE DATA\ProjectManagement\Projects.Entities\obj\Debug\Projects.Entities.dll
 E:\PHONE DATA\ProjectManagement\Projects.Entities\obj\Debug\Projects.Entities.pdb
+E:\PM ORIGINAL\Projects.Entities\bin\Debug\Projects.Entities.dll
+E:\PM ORIGINAL\Projects.Entities\bin\Debug\Projects.Entities.pdb
+E:\PM ORIGINAL\Projects.Entities\obj\Debug\Projects.Entities.csprojResolveAssemblyReference.cache
+E:\PM ORIGINAL\Projects.Entities\obj\Debug\Projects.Entities.dll
+E:\PM ORIGINAL\Projects.Entities\obj\Debug\Projects.Entities.pdb

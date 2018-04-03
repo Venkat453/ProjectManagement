@@ -1,0 +1,160 @@
+﻿<style>
+    .modal-dialog {
+      border-radius:4px;
+          
+    }
+</style>
+<div role="document" id="clientpopup">
+    <div>
+        <div class="modal-header" style="padding-top:10px;background-color:aquamarine;">
+            <button data-dismiss="modal" style="background-color:red;" ng-click="closeclientmodal()" type="button" class="close">x</button>
+            <h3 class="modal-title" id="myModalLabel" >Document Details</h3>
+        </div>
+        <div class="modal-body">
+            <h3 class="modal-title" id="myModalLabel">Pollution Document Details</h3>
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="control-label" style="font-size:15px">Validity:</label>
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label" style="text-align:left!important;">
+                        <span style="border-radius:50px;  background-color:rgba(220, 210, 183, 0.53); font-weight:bold; border-color:#b3b3b2; padding:4px 10px; color: #0a0a0a; text-align:left!important;">
+                            {{vehicle.pollution_validdate|date:"MMM d, y"}}
+                        </span>
+                    </label>
+                </div>
+           </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="control-label" style="font-size:15px">File:</label>
+                </div>
+                <div class="col-md-4">
+                    <!--<label class="control-label" style="text-align:left!important;">
+                        <span style="border-radius:50px; background-color:rgba(220, 210, 183, 0.53); font-weight:bold; border-color:#b3b3b2; padding:4px 10px; color: #0a0a0a; text-align:left!important;">
+                            {{vehicle.pollutionimage}}
+                        </span>
+                    </label>-->
+                    <div class="col-lg-2" style="text-align:center;">
+                        <img id="imgpollutelogo" data-ng-src="{{Pollutionlogo}}" style="height:70px;" />
+                        <input ng-readonly="readOnlyStatus" name="p_file" type="file" id="p_file" ng-model="pollution_file" base-sixty-four-input style="opacity: 0;">
+                    </div>
+                </div>
+            </div>
+                  <div class="row">
+                <div class="col-md-2">
+                    <label class="control-label" style="font-size:15px">File-type:</label>
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label" style="text-align:left!important;">
+                        <span style="border-radius:50px; background-color:rgba(220, 210, 183, 0.53); font-weight:bold; border-color:#b3b3b2; padding:4px 10px; color: #0a0a0a; text-align:left!important; word-break: break-all;">
+                            {{vehicle.pollutionimage_filetype}}
+                        </span>
+                    </label>
+                </div>
+               
+            </div>
+            <!--<h3 class="modal-title" id="myModalLabel">Vehicle Insurance Document Details</h3>
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="control-label" style="font-size:15px">Validity</label>
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label" style="text-align:left!important;">
+                        <span style="border-radius:50px;  background-color:rgba(220, 210, 183, 0.53); font-weight:bold; border-color:#b3b3b2; padding:4px 10px; color: #0a0a0a; text-align:left!important;">
+                            {{vehicle.insurence_validdate|date:"MMM d, y"}}
+                        </span>
+                    </label>
+                </div>
+            </div>-->
+            <!--<div class="row">
+                <div class="col-md-2">
+                    <label class="control-label" style="font-size:15px">file:</label>
+                </div>
+                <div class="col-md-4">
+                     <div class="col-lg-2" style="text-align:center;">
+                        <img id="imginsurelogo" data-ng-src="{{Insurencelogo}}" style="height:70px" />
+                        <input ng-readonly="readOnlyStatus" type="file" name="i_file" id="i_file" ng-disabled="!insurence_validdate" ng-model="insurence_file" base-sixty-four-input style="opacity: 0;">
+                   </div>
+                </div>
+            </div>-->
+            <!--<div class="row">
+                <div class="col-md-2">
+                    <label class="control-label" style="font-size:15px">file-type:</label>
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label" style="text-align:left!important;">
+                       <span style="border-radius:50px; background-color:rgba(220, 210, 183, 0.53); font-weight:bold; border-color:#b3b3b2; padding:4px 10px; color: #0a0a0a; text-align:left!important; word-break: break-all;">
+                                 {{vehicle.insurenceimage_filetype}}
+                        </span>
+              </label>
+                </div>
+
+            </div>-->
+            
+            <!--<h3 class="modal-title" id="myModalLabel">Vehicle Fitness Document Details</h3>-->
+            <!--<div class="row">
+                <div class="col-md-2">
+                    <label class="control-label" style="font-size:15px">Validity</label>
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label" style="text-align:left!important;">
+                        <span style="border-radius:50px;  background-color:rgba(220, 210, 183, 0.53); font-weight:bold; border-color:#b3b3b2; padding:4px 10px; color: #0a0a0a; text-align:left!important;">
+                            {{vehicle.fitness_validdate|date:"MMM d, y"}}
+                        </span>
+                    </label>
+                </div>
+            </div>-->
+            <!--<div class="row">
+                <div class="col-md-2">
+                    <label class="control-label" style="font-size:15px">file:</label>
+                </div>
+                <div class="col-md-4">
+                     <div class="col-sm-3" style="text-align:center;">
+                        <img id="imgfitnesslogo" data-ng-src="{{Fitnesslogo}}" style="height:70px" />
+                        <input ng-readonly="readOnlyStatus" type="file" name="f_file" id="f_file" ng-disabled="!fitness_validdate" ng-model="fitness_file" base-sixty-four-input style="opacity: 0;">
+                    </div>
+                </div>
+            </div>-->
+            <!--<div class="row">
+                <div class="col-md-2">
+                    <label class="control-label" style="font-size:15px">file-type:</label>
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label" style="text-align:left!important;">
+                        <span style="border-radius:50px; background-color:rgba(220, 210, 183, 0.53); font-weight:bold; border-color:#b3b3b2; padding:4px 10px; color: #0a0a0a; text-align:left!important; word-break: break-all;">
+                            {{vehicle.fitnessimage_filetype}}
+                        </span>
+                    </label>
+                </div>
+               </div>-->
+            <!--<h3 class="modal-title" id="myModalLabel">Vehicle driver Document Details</h3>-->
+            <!--<div class="row">
+                <div class="col-md-2">
+                    <label class="control-label" style="font-size:15px">Name</label>
+                </div>
+                <div class="col-md-4">
+                    <label class="control-label" style="text-align:left!important;">
+                        <span style="border-radius:50px;  background-color:rgba(220, 210, 183, 0.53); font-weight:bold; border-color:#b3b3b2; padding:4px 10px; color: #0a0a0a; text-align:left!important;">
+                            {{vehicle.driver_name}}
+                        </span>
+                    </label>
+                </div>
+            </div>-->
+            <!--<div class="row">
+                <div class="col-md-2">
+                    <label class="control-label" style="font-size:15px">photo</label>
+                </div>
+                <div class="col-md-4">
+                    <div class="col-lg-4">
+                        <img id="imgdriverlogo" data-ng-src="{{driverlogo}}" style="height:70px;border-style: groove;border-color: aqua;border-width: medium;" />
+                        <input type="file" ng-readonly="readOnlyStatus" name="d_file" id="d_file" ng-model="driver_photo" base-sixty-four-input style="opacity: 0;">
+                    </div>
+                </div>
+            </div>-->
+        </div>
+        <div class="modal-footer">
+             <button data-dismiss="modal" ng-click="closeclientmodal()" class="btn btn-warning" type="button">Ok</button>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,76 @@
+﻿<div>
+    <div class="row" style="margin-top:4%">
+        <div class="col-md-3">
+            <label style="font-size:12px;color:black">Project</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px">{{getProjectName(expiredVehicleList.project_id)}}</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px;color:black">Subcontractor Name</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px">{{getSubName(expiredVehicleList.subcontractor_id)}}</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label style="font-size:12px;color:black">Driver Name</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px">{{expiredVehicleList.driver_name}}</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px;color:black">Driver Lic_no</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px">{{expiredVehicleList.driver_lic_no}}</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label style="font-size:12px;color:black">Driver Contact_No</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px">{{expiredVehicleList.driver_contact_no}}</label>
+        </div>
+        
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label style="font-size:12px;color:black">Create Date</label>
+        </div>
+        <div class="col-md-3">
+            <label style="font-size:12px">{{expiredVehicleList.created_date| date :  "MMM d, y"}}</label>
+        </div>
+        <!--<div class="col-md-3" style="margin-top:-3%">
+            <label style="font-size:12px;color:black">Photo</label>
+        </div>
+        <div class="col-md-3">
+            <img data-ng-src="{{getImageinView(expiredVehicleList.driver_photo)}}" style="width:40%; margin-top:-32%" />
+        </div>-->
+    </div>
+</div>
+<style>
+    .popover {
+        width: 100%;
+        margin-top: 10%;
+        max-width: 80%;
+    }
+
+        .popover.right > .arrow {
+            top: 13%;
+        }
+
+    .popover-title {
+        color: black;
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    .popover-content {
+        color: #808080;
+        font-size: 10px;
+    }
+</style>
+

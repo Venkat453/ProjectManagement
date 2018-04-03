@@ -103,7 +103,16 @@
             notificationService.displayError("Title is not updated!");
         }
 
-        
+        GetWorkProgressList();
+        function GetWorkProgressList() {
+            apiService.get('api/Workprogress/getworkprogress', null, GetWorkProgressListLoadComplete, GetWorkProgressListLoadFailed);
+        }
+        function GetWorkProgressListLoadComplete(response) {
+            $scope.Workprogresspopuplist = response.data;
+        }
+        function GetWorkProgressListLoadFailed() {
+            notificationService.displayError('fetching junctions list failed');
+        }
 
         $scope.Updatedashboard = function () {
             if ($scope.charttitle.length == 0) {
@@ -116,6 +125,14 @@
                     'charts_title': "Empty Data"
                 });
             }
+            //$scope.dashboardchecklist = {
+            //    'id': chartdetails.id,
+            //    'userid': $rootScope.tenant.user_id,
+            //    'user_name': $rootScope.tenant.username,
+            //    'chart_id': chartdetails.chart_id,
+            //    'is_active': chartdetails.is_active,
+            //    'charts_title': chartdetails.charts_title
+            //} 
 
             apiService.post('api/ChartTitle/UpdateChartTitleList', $scope.charttitle, updatechecklistComplete, updatechecklistFailed);
         };
@@ -219,22 +236,22 @@
         };
 
         function MasterLoad(fid) {
-            //apiService.get('api/Dashboard/JunctionWiseWorkProgress/' + fid + '/' + 0, null, WorkProgressListComplete, WorkProgressListFailed);
-            //apiService.get('api/PoliceStation/getPoliceStationListByProjId/' + fid, null, PoliceStationsListLoadComplete, PoliceStationsListLoadFailed);
-            //apiService.get('api/Dashboard/ScWiseTotalEmployesList/' + fid, null, ScWiseTotalEmployesListComplete, ScWiseTotalEmployesListFailed);
-            //apiService.get('api/Dashboard/IndentsStatusList/' + fid, null, IndentsStatusListComplete, IndentsStatusListFailed);
-            //apiService.get('api/Dashboard/LabourTestCertificates/' + fid, null, LabourTestCertificatesListComplete, LabourTestCertificatesListFailed);
-            //apiService.get('api/Dashboard/SubContractorWiseIndentcost/' + fid, null, IndentCostListComplete, IndentCostListFailed);
-            //apiService.get('api/Dashboard/WorkProgressVerifList/' + fid, null, WorkProgressVerifListComplete, WorkProgressVerifListFailed);
-            //apiService.get('api/Dashboard/SCwithTotalIndentCost/' + fid, null, SCwithTotalIndentCostComplete, SCwithTotalIndentCostFailed);
-            //apiService.get('api/Dashboard/SCTotalMaterials/' + fid, null, SCTotalMaterialsComplete, SCTotalMaterialsFailed);
+            apiService.get('api/Dashboard/JunctionWiseWorkProgress/' + fid + '/' + 0, null, WorkProgressListComplete, WorkProgressListFailed);
+            apiService.get('api/PoliceStation/getPoliceStationListByProjId/' + fid, null, PoliceStationsListLoadComplete, PoliceStationsListLoadFailed);
+            apiService.get('api/Dashboard/ScWiseTotalEmployesList/' + fid, null, ScWiseTotalEmployesListComplete, ScWiseTotalEmployesListFailed);
+            apiService.get('api/Dashboard/IndentsStatusList/' + fid, null, IndentsStatusListComplete, IndentsStatusListFailed);
+            apiService.get('api/Dashboard/LabourTestCertificates/' + fid, null, LabourTestCertificatesListComplete, LabourTestCertificatesListFailed);
+            apiService.get('api/Dashboard/SubContractorWiseIndentcost/' + fid, null, IndentCostListComplete, IndentCostListFailed);
+            apiService.get('api/Dashboard/WorkProgressVerifList/' + fid, null, WorkProgressVerifListComplete, WorkProgressVerifListFailed);
+            apiService.get('api/Dashboard/SCwithTotalIndentCost/' + fid, null, SCwithTotalIndentCostComplete, SCwithTotalIndentCostFailed);
+            apiService.get('api/Dashboard/SCTotalMaterials/' + fid, null, SCTotalMaterialsComplete, SCTotalMaterialsFailed);
         }
 
 
         LoadMaster();
         function LoadMaster() {
-            //apiService.get('api/ProjectMaster/GetProjectsList/' + $rootScope.tenant.tenant_id, null, GetProjectsListLoadComplete, GetProjectsListLoadFailed);
-            //apiService.get('api/SubContractor/getSubContractorsList/' + $rootScope.tenant.tenant_id, null, SubContractorsListLoadComplete, SubContractorsListLoadFailed);
+            apiService.get('api/ProjectMaster/GetProjectsList/' + $rootScope.tenant.tenant_id, null, GetProjectsListLoadComplete, GetProjectsListLoadFailed);
+            apiService.get('api/SubContractor/getSubContractorsList/' + $rootScope.tenant.tenant_id, null, SubContractorsListLoadComplete, SubContractorsListLoadFailed);
             //apiService.get('api/Dashboard/ScWiseTotalEmployesList', null, ScWiseTotalEmployesListComplete, ScWiseTotalEmployesListFailed);
             //apiService.get('api/Dashboard/InductionDoneList', null, InductionDoneListComplete, InductionDoneListFailed);
 
@@ -281,7 +298,7 @@
         function ScWiseTotalEmployesListComplete(response) {
             $scope.ScWiseTotalEmployesList = response.data;
             //$scope.project_id = fid;
-            //apiService.get('api/Dashboard/InductionDoneList/' + $scope.project_id, null, InductionDoneListComplete, InductionDoneListFailed);
+            apiService.get('api/Dashboard/InductionDoneList/' + $scope.project_id, null, InductionDoneListComplete, InductionDoneListFailed);
             //$scope.notDoneList = [];
             //for (var i = 0; i < $scope.ScWiseTotalEmployesList.length; i++) {
             //    var ndone = $scope.ScWiseTotalEmployesList[i].Total;
@@ -341,20 +358,20 @@
 
 
         $scope.getChartDataByProjId = function (project_id) {
-            //apiService.get('api/Dashboard/JunctionWiseWorkProgress/' + $scope.project_id + '/' + 0, null, WorkProgressListComplete, WorkProgressListFailed);
-            //apiService.get('api/PoliceStation/getPoliceStationListByProjId/' + $scope.project_id, null, PoliceStationsListLoadComplete, PoliceStationsListLoadFailed);
-            //apiService.get('api/Dashboard/ScWiseTotalEmployesList/' + $scope.project_id, null, ScWiseTotalEmployesListComplete, ScWiseTotalEmployesListFailed);
-            //apiService.get('api/Dashboard/IndentsStatusList/' + $scope.project_id, null, IndentsStatusListComplete, IndentsStatusListFailed);
-            //apiService.get('api/Dashboard/LabourTestCertificates/' + $scope.project_id, null, LabourTestCertificatesListComplete, LabourTestCertificatesListFailed);
-            //apiService.get('api/Dashboard/SubContractorWiseIndentcost/' + $scope.project_id, null, IndentCostListComplete, IndentCostListFailed);
-            //apiService.get('api/Dashboard/WorkProgressVerifList/' + $scope.project_id, null, WorkProgressVerifListComplete, WorkProgressVerifListFailed);
-            //apiService.get('api/Dashboard/SCwithTotalIndentCost/' + $scope.project_id, null, SCwithTotalIndentCostComplete, SCwithTotalIndentCostFailed);
-            //apiService.get('api/Dashboard/SCTotalMaterials/' + $scope.project_id, null, SCTotalMaterialsComplete, SCTotalMaterialsFailed);
+            apiService.get('api/Dashboard/JunctionWiseWorkProgress/' + $scope.project_id + '/' + 0, null, WorkProgressListComplete, WorkProgressListFailed);
+            apiService.get('api/PoliceStation/getPoliceStationListByProjId/' + $scope.project_id, null, PoliceStationsListLoadComplete, PoliceStationsListLoadFailed);
+            apiService.get('api/Dashboard/ScWiseTotalEmployesList/' + $scope.project_id, null, ScWiseTotalEmployesListComplete, ScWiseTotalEmployesListFailed);
+            apiService.get('api/Dashboard/IndentsStatusList/' + $scope.project_id, null, IndentsStatusListComplete, IndentsStatusListFailed);
+            apiService.get('api/Dashboard/LabourTestCertificates/' + $scope.project_id, null, LabourTestCertificatesListComplete, LabourTestCertificatesListFailed);
+            apiService.get('api/Dashboard/SubContractorWiseIndentcost/' + $scope.project_id, null, IndentCostListComplete, IndentCostListFailed);
+            apiService.get('api/Dashboard/WorkProgressVerifList/' + $scope.project_id, null, WorkProgressVerifListComplete, WorkProgressVerifListFailed);
+            apiService.get('api/Dashboard/SCwithTotalIndentCost/' + $scope.project_id, null, SCwithTotalIndentCostComplete, SCwithTotalIndentCostFailed);
+            apiService.get('api/Dashboard/SCTotalMaterials/' + $scope.project_id, null, SCTotalMaterialsComplete, SCTotalMaterialsFailed);
         };
 
         $scope.psWiseWP = function (ps_id) {
             if (ps_id == null) { ps_id = 0; }
-            //apiService.get('api/Dashboard/JunctionWiseWorkProgress/' + $scope.project_id + '/' + ps_id, null, WorkProgressListComplete, WorkProgressListFailed);
+            apiService.get('api/Dashboard/JunctionWiseWorkProgress/' + $scope.project_id + '/' + ps_id, null, WorkProgressListComplete, WorkProgressListFailed);
 
         };
         $scope.junctions = [];
@@ -512,7 +529,7 @@
         $scope.SCwiseMaterialDetailsList = [];
         function SCTotalMaterialsComplete(response) {
             $scope.SCwiseMaterialDetailsList = response.data;
-            //apiService.get('api/Dashboard/SCWiseTotalMaterialsList/' + $scope.project_id, null, ScWisetotalIndentswiseDetailsComplete, ScWisetotalIndentswiseDetailsFailed);
+            apiService.get('api/Dashboard/SCWiseTotalMaterialsList/' + $scope.project_id, null, ScWisetotalIndentswiseDetailsComplete, ScWisetotalIndentswiseDetailsFailed);
         }
         function SCTotalMaterialsFailed() {
             notificationService.displayError('fetching SC wise Total Materials list failed');
@@ -520,7 +537,7 @@
 
         function ScWisetotalIndentswiseDetailsComplete(response) {
             $scope.SCwiseTotalMaterialList = response.data;
-            //apiService.get('api/Dashboard/IndentStatusWiseMaterialsList/' + $scope.project_id, null, IndentStatusWiseMaterialsListComplete, IndentStatusWiseMaterialsListFailed);
+            apiService.get('api/Dashboard/IndentStatusWiseMaterialsList/' + $scope.project_id, null, IndentStatusWiseMaterialsListComplete, IndentStatusWiseMaterialsListFailed);
             if ($scope.SCwiseTotalMaterialList.length == 0) { $scope.showMatrlChart = false; } else { $scope.showMatrlChart = true; }
 
         }
@@ -1125,7 +1142,7 @@
         ////////grids belongs to validity dates of vehicle///////
         GetVehiclesListt();
         function GetVehiclesListt() {
-            //apiService.get('api/Vehicle/GetVehiclesList/' + $rootScope.tenant.tenant_id, null, vehicleListLoadComplete, vehicleListLoadFailed);
+            apiService.get('api/Vehicle/GetVehiclesList/' + $rootScope.tenant.tenant_id, null, vehicleListLoadComplete, vehicleListLoadFailed);
         }
         function vehicleListLoadComplete(response) {
             $scope.vehicleslists = response.data;
@@ -1229,7 +1246,7 @@
         /////grid belongs to labour age///////
         GetLabourWiseList();
         function GetLabourWiseList() {
-            //apiService.get('api/Labour/GetLaboursWiseList/' + $rootScope.tenant.tenant_id, null, LoadLabourWiseSucceess, LoadLabourWiseFailed);
+            apiService.get('api/Labour/GetLaboursWiseList/' + $rootScope.tenant.tenant_id, null, LoadLabourWiseSucceess, LoadLabourWiseFailed);
         }
         function LoadLabourWiseSucceess(response) {
             $scope.LabourswiseList = response.data;
@@ -1367,7 +1384,7 @@
         //indent popup 
         GetindentList();
         function GetindentList() {
-            //apiService.get('api/indent/GetIndentStatus/' + $rootScope.tenant.tenant_id, null, IndentListLoadComplete, IndentListLoadFailed);
+            apiService.get('api/indent/GetIndentStatus/' + $rootScope.tenant.tenant_id, null, IndentListLoadComplete, IndentListLoadFailed);
         };
         function IndentListLoadComplete(response) {
             $scope.IndentLists = response.data;

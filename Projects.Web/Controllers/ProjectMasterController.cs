@@ -4,6 +4,7 @@ using Projects.Data.Repositories;
 using Projects.Entities.Membership;
 using Projects.Entities.Projects;
 using Projects.Web.Infrastructure.Core;
+using Projects.Web.Infrastructure.Extensions;
 using Projects.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -12,50 +13,65 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using static System.Console;
+
 
 namespace Projects.Web.Controllers
 {
     [RoutePrefix("api/ProjectMaster")]
+
     public class ProjectMasterController : ApiControllerBase
     {
-        public readonly IEntityBaseRepository<tbl_project_master> _projectMasterRepository;
-        public readonly IEntityBaseRepository<tbl_project_master_child> _projectMasterChildRepository;
 
-        public ProjectMasterController(IEntityBaseRepository<tbl_project_master> projectMasterRepository,
-            IEntityBaseRepository<tbl_project_master_child> projectMasterChildRepository,
-            IEntityBaseRepository<tbl_error> _errorsRepository,
-            IUnitOfWork _unitOfWork)
-            : base(_errorsRepository, _unitOfWork)
-        {
-            _projectMasterRepository = projectMasterRepository;
-            _projectMasterChildRepository = projectMasterChildRepository;
-        }
+            public readonly IEntityBaseRepository<tbl_project_master> _projectRepository;
+            
 
-        [HttpGet]
-        [Route("GetProjectMasterList")]
-        public HttpResponseMessage GetProjectMasterList(HttpRequestMessage request)
+            public ProjectMasterController(IEntityBaseRepository<tbl_project_master> projectRepository,
+                IEntityBaseRepository<tbl_error> _errorsRepository, IUnitOfWork _unitOfWork)
+                : base(_errorsRepository, _unitOfWork)
+            {
+             _projectRepository = projectRepository;
+               
+            }
+
+
+
+        [HttpPost]
+        [Route("SaveProjectMaster")]
+        public HttpResponseMessage SaveProjectMaster(HttpRequestMessage request, ProjectMasterViewModel project)
         {
             return CreateHttpResponse(request, () =>
             {
                 HttpResponseMessage response = null;
-                var projectMasterList = _projectMasterRepository.GetAll();
-                IEnumerable<ProjectMasterViewModel> projectMastervm = Mapper.Map<IEnumerable<tbl_project_master>, IEnumerable<ProjectMasterViewModel>>(projectMasterList);
-                response = request.CreateResponse<IEnumerable<ProjectMasterViewModel>>(HttpStatusCode.OK, projectMastervm);
+                if (!ModelState.IsValid)
+                {
+                    response = request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                }
+                else
+                {
+                    
+                    tbl_project_master newProjectMaster = new tbl_project_master();
+                    newProjectMaster.AddProjectMaster(project);
+                    _projectRepository.Add(newProjectMaster);
+                    _unitOfWork.Commit();
+                    response = request.CreateResponse<ProjectMasterViewModel>(HttpStatusCode.Created, project);
+                }
                 return response;
             });
         }
-
+         
         [HttpGet]
-        [Route("GetProjectMasterList")]
-        public HttpResponseMessage GetProjectMasterChildList(HttpRequestMessage request)
+        [Route("GetProjectsList/{tenant_id:int}")]
+        public HttpResponseMessage GetProjectsList(HttpRequestMessage request, int tenant_id)
         {
             return CreateHttpResponse(request, () =>
             {
                 HttpResponseMessage response = null;
-                var projectMasterChildList = _projectMasterChildRepository.GetAll();
-                IEnumerable<ProjectMasterChildViewModel> projectMasterChildvm = Mapper.Map<IEnumerable<tbl_project_master_child>, IEnumerable<ProjectMasterChildViewModel>>(projectMasterChildList);
-                response = request.CreateResponse<IEnumerable<ProjectMasterChildViewModel>>(HttpStatusCode.OK, projectMasterChildvm);
+                var ProjectsList = _projectRepository.GetAll().Where(x => x.tenant_id == tenant_id);
+                IEnumerable<ProjectMasterViewModel> Projectslistvm = Mapper.Map<IEnumerable<tbl_project_master>, IEnumerable<ProjectMasterViewModel>>(ProjectsList);
+                response = request.CreateResponse<IEnumerable<ProjectMasterViewModel>>(HttpStatusCode.OK, Projectslistvm);
                 return response;
+
             });
         }
 

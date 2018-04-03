@@ -1,0 +1,80 @@
+﻿<div role="form" id="clientpopup1">
+    <div>
+        <div class="modal-header" style="padding-top:10px;background-color:#808080;background-color: rgba(222, 219, 219, 0.62);">
+            <button data-dismiss="modal" ng-click="closeclientmodal()" type="button" class="close">x</button>
+        </div>
+        <form name="workassignForm" style="margin-bottom:0px;">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label style="font-size:12px">Junction Name</label> 
+                    </div>
+                    <div class="col-md-4">
+                        <label style="font-size:12px">PoliceStation Name</label> 
+                    </div>
+                    <div class="col-md-4">
+                        <label style="font-size:12px">Existed SubContractor</label> 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"> 
+                        <span class="badge">
+                            {{jnAssign.junction_name}}
+                        </span>
+                    </div>
+                    <div class="col-md-4"> 
+                        <span class="badge">
+                            {{getPSName1(jnAssign.ps_id)}}
+                        </span>
+                    </div>
+                    <div class="col-md-4"> 
+                        <span class="badge">
+                            {{getSCName(jnAssign.junction_id)}}
+                        </span>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px;">
+                    <div class="col-lg-4">
+                        <md-input-container class="md-block">
+                            <label>Select SubContractor</label>
+                            <md-icon class="md-dark" arial-label="subcontractor" style="color:#4800ff"><i class="fa fa-map-marker" style="font-size: 20px;"></i></md-icon>
+                            <md-select name="subcontractor" ng-model="subcontractor_id" required>
+                                <md-option ng-repeat="subcontractor in SubContractorsList" ng-value="subcontractor.id">
+                                    {{subcontractor.subcontractor_name}}
+                                </md-option>
+
+                            </md-select>
+                            <div ng-messages="workassignForm.subcontractor.$error" role="alert">
+                                <div ng-message="required">* Mandatory.</div>
+                            </div>
+                        </md-input-container>  
+                    </div>
+                    <div class="col-lg-8">
+                        <label style="font-size:12px">Assigned Date:</label> 
+                        <md-datepicker name="date" ng-model="assign_date" placeholder="Update Date"></md-datepicker>
+                    </div>
+                </div> 
+            </div>
+            <div class="panel-footer" style="height:40px; padding-right: 0px;background-color: rgba(222, 219, 219, 0.62); padding-top:5px">
+                <div class="col-lg-12" style="text-align:right;">
+                    <button class="btn btn-sm btn-info" type="submit" ng-click="updateWorkAssign()"><b>Update</b></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<style>
+    .modal-dialog {
+        width: 50%;
+    }
+
+    .modal-content {
+        border-radius: 4px;
+    }
+
+    .badge {
+        color: #151414 !important; 
+        background-color: rgb(210, 210, 210);    
+        float: none;
+    }
+</style>

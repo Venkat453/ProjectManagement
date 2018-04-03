@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MappingRepository.Interfaces</name>
+    </assembly>
+    <members>
+        <member name="T:MappingRepository.Interfaces.IMappingRepositoryDestination`1">
+            <summary>
+            Have your destination objects implement this interface.
+            </summary>
+            <typeparam name="TKey">The type of the key that your destination objects use.</typeparam>
+        </member>
+        <member name="P:MappingRepository.Interfaces.IMappingRepositoryDestination`1.Id">
+            <summary>
+            The key that uniquely identifies your destination objects.
+            </summary>
+        </member>
+        <member name="T:MappingRepository.Interfaces.IMappingRepositoryEntity`1">
+            <summary>
+            Have your entities implement this interface.
+            </summary>
+            <typeparam name="TKey">The type of the key that your entities use.</typeparam>
+        </member>
+        <member name="P:MappingRepository.Interfaces.IMappingRepositoryEntity`1.Id">
+            <summary>
+            The key that uniquely identifies your entities within their sets.
+            </summary>
+        </member>
+    </members>
+</doc>

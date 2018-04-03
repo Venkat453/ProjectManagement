@@ -1,0 +1,98 @@
+﻿<style>
+    .modal-dialog {
+        width: 56% !important;
+        height: 80% !important;
+    }
+
+    select {
+        width: 100% !important;
+        border-radius: 3px;
+    }
+
+    .modal-content {
+        border-radius: 6px !important;
+        border: none;
+        margin: -3px 0px 0px 0px;
+        padding: 0 0 200px 0px;
+        height: 80%;
+    }
+
+    .modal-header {
+        background-color: #009688;
+        color: #FFFFFF;
+        border-radius: 6px 6px 0px 0px !important;
+        padding: 8px !important;
+    }
+
+    .col-md-4 {
+        width: 20% !important;
+        word-break: break-all;
+    }
+</style>
+
+<div role="document" id="Paymentpopup">
+    <div>
+        <div class="modal-header">
+            <button data-dismiss="modal" style="background-color:#009688;padding: 7px !important;" ng-click="closeclientmodal()" type="button" class="close">x</button>
+            <h4 class="modal-title" id="myModalLabel">Payment Request Form</h4>
+        </div>
+        <div class="modal-body">
+            <form name="form1" action="https://test.payu.in/_payment" method=POST class="form-horizontal" target="_blank">
+                <input type="hidden" name="key" value="{{key}}" />
+                <input type="hidden" name="hash" value="{{hashCode}}" />
+                <input type="hidden" name="hash_string" value="key|txnid|amount|productInfo|firstName|email|||||||||||salt" />
+                <input type="hidden" name="txnid" value="{{transID}}" />
+                <input type="hidden" name="amount" value="{{order.amount}}" />
+                <input type="hidden" name="productinfo" value="{{order.productinfo}}" />
+                <input type="hidden" name="firstname" value="{{order.firstname}}" />
+                <input type="hidden" name="email" value="{{order.email}}" />
+                <input type="hidden" name="phone" value="{{order.phone}}" />
+                <input type="hidden" name="surl" value="{{surl}}" />
+                <input type="hidden" name="furl" value="{{furl}}" />
+                <input type="hidden" name="service_provider" value="{{service_provider}}" />
+
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Amount :</label>
+                    <div class="col-lg-10">
+                        <input type="number" ng-model="order.amount" class="form-control" placeholder="Enter Order Amount (eg 100)" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">First Name :</label>
+                    <div class="col-lg-10">
+                        <input type="text" ng-model="order.firstname" class="form-control" placeholder="Enter First Name (eg Venkat)" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Email ID :</label>
+                    <div class="col-lg-10">
+                        <input type="email" ng-model="order.email" class="form-control" placeholder="Enter Email (eg venkat.kareti@gmail.com)" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Product Information :</label>
+                    <div class="col-lg-10">
+                        <input type="text" ng-model="order.productinfo" class="form-control" placeholder="Enter Product information (eg Buying Microsoft product.)" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Phone :</label>
+                    <div class="col-lg-10">
+                        <input type="number" ng-model="order.phone" class="form-control" placeholder="Enter Phone Number (eg 8985839936)" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-2" style="text-align:right;top: 7px !important;left: 20px;">
+                        <input type="checkbox" ng-model="order.checkOrder" ng-change="SendOrderDetails()" placeholder="Please check it To accept the agreement." required />
+                    </div>
+                    <label class="col-lg-10 control-label" style="text-align:left;">I accept that agreement to buy the Licence</label>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-10" style="text-align:right;">
+                        <input class="btn btn-sm btn-primary" type="submit" value="Pay" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

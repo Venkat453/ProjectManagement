@@ -115,50 +115,70 @@ namespace Projects.Web
                 ));
             
             bundles.Add(new StyleBundle("~/bundles/Projects").Include(
-                // Admin
-                "~/Scripts/Admin/createuserCtrl.js",
-                // Common
-                "~/Scripts/Common/Error/ErrorLogCtrl.js",
                 "~/Scripts/Common/Login/indexCtrl.js",
                 "~/Scripts/Common/Login/LoginPageCtrl.js",
+                "~/Scripts/Tenant/tenantCtrl.js",
                 "~/Scripts/Common/Login/register_userCtrl.js",
                 "~/Scripts/Common/Login/changepwdCtrl.js",
-                "~/Scripts/Common/Login/forgotPasswordCtrl.js",
-                "~/Scripts/Common/Profile/myprofileCtrl.js",
+                "~/Scripts/Common/Error/ErrorLogCtrl.js",
                 "~/Scripts/Common/Settings/smtpConfigurationCtrl.js",
                 "~/Scripts/Common/Settings/ReferenceMasterCtrl.js",
-                // Dashboard
+                "~/Scripts/Common/Login/forgotPasswordCtrl.js",
+
+                "~/Scripts/SuperAdmin/tenantsCtrl.js",
+                "~/Scripts/SuperAdmin/refmasterCtrl.js",
+                "~/Scripts/SuperAdmin/usermenuaccessCtrl.js",
+                 "~/Scripts/SuperAdmin/loginlogCtrl.js",
+
+                "~/Scripts/Test/floatlableCtrl.js",
+                "~/Scripts/Company/register_companyCtrl.js",
+                "~/Scripts/Representative/add_representativeCtrl.js",
+                "~/Scripts/Customer/add_customerCtrl.js",
+                "~/Scripts/Invoice/invoiceCtrl.js",
+                "~/Scripts/Product/productsCtrl.js",
+                "~/Scripts/Rack/rackCtrl.js",
+                "~/Scripts/PurchaseOrder/poCtrl.js",
+                "~/Scripts/Common/Profile/myprofileCtrl.js",
+                "~/Scripts/Admin/createuserCtrl.js",
+                "~/Scripts/Registration/subcontractorsCtrl.js",
+                 "~/Scripts/Registration/VEhicleviewdetailsCtrl.js",
+                  "~/Scripts/Registration/labourviewdetailsCtrl.js",
+                "~/Scripts/Registration/laborsCtrl.js",
+                "~/Scripts/Registration/policestationsCtrl.js",
+                "~/Scripts/Registration/vehicleCtrl.js",
+                "~/Scripts/Registration/junctionsCtrl.js",
+                "~/Scripts/SiteManagement/workassignmentCtrl.js",
+                "~/Scripts/SiteManagement/addJunctionToScCtrl.js",
+                "~/Scripts/SiteManagement/updateJunctionToScCtrl.js",
+                "~/Scripts/SiteManagement/workprogressCtrl.js", 
+                "~/Scripts/SiteManagement/updateWorkProgressCtrl.js",
+                "~/Scripts/SiteManagement/workprogresshistoryCtrl.js", 
+                "~/Scripts/SiteManagement/workverificationCtrl.js",
+                "~/Scripts/SiteManagement/workVerificationPopupCtrl.js",
+
+                "~/Scripts/SiteManagement/workassignhistoryCtrl.js",
+                "~/Scripts/Induction/inductionCtrl.js",
+                "~/Scripts/Induction/WbilabourCtrl.js",
+                "~/Scripts/Induction/WbidriverCtrl.js",
+                "~/Scripts/Inventory/materialManagementCtrl.js",
+                "~/Scripts/Inventory/fieldworkpriceCtrl.js",
+                "~/Scripts/Inventory/createIndentCtrl.js",
+                "~/Scripts/Inventory/warehouseCtrl.js",
+                "~/Scripts/Inventory/warehousePopupCtrl.js",
+
+                "~/Scripts/Registration/ViewpollutiondetailsCtrl.js",
+                "~/Scripts/Master/projectmasterCtrl.js",
+                "~/Scripts/RateChart/ratechartCtrl.js",
+                "~/Scripts/Master/employeemasterCtrl.js",
+                "~/Scripts/Master/settingsCtrl.js",
+                "~/Scripts/Master/projectComponentsCtrl.js",
                 "~/Scripts/Dashboard/dashboardCtrl.js",
                 "~/Scripts/Dashboard/sampleReportsCtrl.js",
-                // Employee
-                "~/Scripts/Employee/employeemasterCtrl.js",
-                // Landing
-                "~/Scripts/Landing/landingCtrl.js",
-                "~/Scripts/Landing/passwordVerificationCtrl.js",
-                // Master
-                "~/Scripts/Master/Activity/activityCtrl.js",
-                "~/Scripts/Master/ActivityReport/activityReportCtrl.js",
-                "~/Scripts/Master/ItemMaster/itemMasterCtrl.js",
-                "~/Scripts/Master/Makers/makersCtrl.js",
-                "~/Scripts/Master/MaterialGrades/materialGradesCtrl.js",
-                "~/Scripts/Master/ProjectGroups/projectGroupsCtrl.js",
-                "~/Scripts/Master/ResourceMaster/resourceMasterCtrl.js",
-                "~/Scripts/Master/SubAssembly/subAssemblyCtrl.js",
-                "~/Scripts/Master/Variant/variantCtrl.js",
-                "~/Scripts/Master/WorkCenter/workCenterCtrl.js",
-                // Reports
-                "~/Scripts/Reports/reportsCtrl.js",
-                 // SuperAdmin
-                 "~/Scripts/SuperAdmin/loginlogCtrl.js",
-                "~/Scripts/SuperAdmin/refmasterCtrl.js",
-                "~/Scripts/SuperAdmin/tenantsCtrl.js",
-                "~/Scripts/SuperAdmin/usermenuaccessCtrl.js",
-                // Tenant
-                "~/Scripts/Tenant/tenantCtrl.js",
-                // Transactions
-                "~/Scripts/Transactions/PartList/partListCtrl.js",
-                "~/Scripts/Transactions/ProjectCreations/projectCreationsCtrl.js",
-                "~/Scripts/Transactions/ProjectStructure/projectStructureCtrl.js"
+
+                //"~/Scripts/PayuMoney/payumoneyCtrl.js",
+                "~/Scripts/PayuMoney/orderFormCtrl.js",
+                "~/Scripts/PayuMoney/returnSuccessCtrl.js",
+                "~/Scripts/PayuMoney/returnFailureCtrl.js"
                 ));
             
             BundleTable.EnableOptimizations = false;

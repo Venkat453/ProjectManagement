@@ -53,12 +53,86 @@
                 templateUrl: "Scripts/SuperAdmin/refmaster.html", controller: "refmasterCtrl"
             })
 
+            .when("/Company", {
+                templateUrl: "Scripts/Company/register_company.html", controller: "register_companyCtrl"
+            })
+
+            .when("/Representative", {
+                templateUrl: "Scripts/Representative/add_representative.html", controller: "add_representativeCtrl"
+            })
+
+            .when("/Customer", {
+                templateUrl: "Scripts/Customer/add_customer.html", controller: "add_customerCtrl"
+            })
+
+            .when("/Invoice", {
+                templateUrl: "Scripts/Customer/invoice.html", controller: "invoiceCtrl"
+            })
+
+            .when("/Product", {
+                templateUrl: "Scripts/Product/products.html", controller: "productsCtrl"
+            })
+
+            .when("/PurchaseOrder", {
+                templateUrl: "Scripts/PurchaseOrder/po.html", controller: "poCtrl"
+            })
+
+            .when("/CreateUser", {
+                templateUrl: "Scripts/Admin/createuser.html", controller: "createuserCtrl"
+            })
+            .when("/Subcontractors", {
+                templateUrl: "Scripts/Registration/subcontractors.html", controller: "subcontractorsCtrl"
+            })
+            .when("/Labors", {
+                templateUrl: "Scripts/Registration/labors.html", controller: "laborsCtrl"
+            })
+            .when("/Vehicle", {
+                templateUrl: "Scripts/Registration/vehicle.html", controller: "vehicleCtrl"
+            })
+            .when("/PoliceStations", {
+                templateUrl: "Scripts/Registration/policestations.html", controller: "policestationsCtrl"
+            })
+            .when("/Junctions", {
+                templateUrl: "Scripts/Registration/junctions.html", controller: "junctionsCtrl"
+            })
             .when("/EmployeeMaster", {
                 templateUrl: "Scripts/Master/employeemaster.html", controller: "employeemasterCtrl"
             })
+            .when("/WorkAssignment", {
+                templateUrl: "Scripts/SiteManagement/workassignment.html", controller: "workassignmentCtrl"
+            })
+            .when("/WorkProgress", {
+                templateUrl: "Scripts/SiteManagement/workprogress.html", controller: "workprogressCtrl"
+            })
+            .when("/WorkVerification", {
+                templateUrl: "Scripts/SiteManagement/workverification.html", controller: "workverificationCtrl"
+            })
+            .when("/Induction", {
+                templateUrl: "Scripts/Induction/induction.html", controller: "inductionCtrl"
+            })
+            .when("/MaterialManagement", {
+                templateUrl: "Scripts/Inventory/materialManagement.html", controller: "materialManagementCtrl"
+            })
+              .when("/FieldworkPrice", {
+                  templateUrl: "Scripts/Inventory/fieldworkprice.html", controller: "fieldworkpriceCtrl"
+              })
+            .when("/Indent", {
+                templateUrl: "Scripts/Inventory/createIndent.html", controller: "createIndentCtrl"
+            })
+            .when("/ProjectMaster", {
+                templateUrl: "Scripts/Master/projectmaster.html", controller: "projectmasterCtrl"
+            })
+
+             .when("/RateChart", {
+                 templateUrl: "Scripts/RateChart/ratechart.html", controller: "ratechartCtrl"
+             })
 
             .when("/Settings", {
                 templateUrl: "Scripts/Master/settings.html", controller: "settingsCtrl"
+            })
+
+            .when("/ProjectComponents", {
+                templateUrl: "Scripts/Master/projectComponents.html", controller: "projectComponentsCtrl"
             })
 
             .when("/Dashboard", {
@@ -67,71 +141,18 @@
             .when("/SampleReports", {
                 templateUrl: "Scripts/Dashboard/sampleReports.html", controller: "sampleReportsCtrl"
             })
-
-            .when("/Landing", {
-                templateUrl: "Scripts/Landing/landing.html", controller: "landingCtrl"
+            .when("/Warehouse", {
+                templateUrl: "Scripts/Inventory/warehouse.html", controller: "warehouseCtrl"
             })
-
-            .when("/Activity", {
-                templateUrl: "Scripts/Master/Activity/activity.html", controller: "activityCtrl"
+            .when("/OrderForm", {
+                templateUrl: "Scripts/PayuMoney/orderForm.html", controller: "orderFormCtrl"
             })
-
-            .when("/ActivityReport", {
-                templateUrl: "Scripts/Master/ActivityReport/activityReport.html", controller: "activityReportCtrl"
+            .when("/ReturnSuccess", {
+                templateUrl: "Scripts/PayuMoney/returnSuccess.html", controller: "returnSuccessCtrl"
             })
-
-            .when("/ItemMaster", {
-                templateUrl: "Scripts/Master/ItemMaster/itemMaster.html", controller: "itemMasterCtrl"
+            .when("/ReturnFails", {
+                templateUrl: "Scripts/PayuMoney/returnFailure.html", controller: "returnFailureCtrl"
             })
-
-            .when("/Makers", {
-                templateUrl: "Scripts/Master/Makers/makers.html", controller: "makersCtrl"
-            })
-
-            .when("/MaterialGrades", {
-                templateUrl: "Scripts/Master/MaterialGrades/materialGrades.html", controller: "materialGradesCtrl"
-            })
-
-            .when("/ProjectGroups", {
-                templateUrl: "Scripts/Master/ProjectGroups/projectGroups.html", controller: "projectGroupsCtrl"
-            })
-
-            .when("/ResourceMaster", {
-                templateUrl: "Scripts/Master/ResourceMaster/resourceMaster.html", controller: "resourceMasterCtrl"
-            })
-
-            .when("/SubAssembly", {
-                templateUrl: "Scripts/Master/SubAssembly/subAssembly.html", controller: "subAssemblyCtrl"
-            })
-
-            .when("/Variant", {
-                templateUrl: "Scripts/Master/Variant/variant.html", controller: "variantCtrl"
-            })
-
-            .when("/WorkCenter", {
-                templateUrl: "Scripts/Master/WorkCenter/workCenter.html", controller: "workCenterCtrl"
-            })
-
-            .when("/ActivityMaster", {
-                templateUrl: "Scripts/Master/ActivityMaster/activityMaster.html", controller: "activityMasterCtrl"
-            })
-
-            .when("/Reports", {
-                templateUrl: "Scripts/Reports/reports.html", controller: "reportsCtrl"
-            })
-
-            .when("/PartList", {
-                templateUrl: "Scripts/Transactions/PartList/partList.html", controller: "partListCtrl"
-            })
-
-            .when("/ProjectCreations", {
-                templateUrl: "Scripts/Transactions/ProjectCreations/projectCreations.html", controller: "projectCreationsCtrl"
-            })
-
-            .when("/ProjectStructure", {
-                templateUrl: "Scripts/Transactions/ProjectStructure/projectStructure.html", controller: "projectStructureCtrl"
-            })
-
             .otherwise({ redirectTo: "/" });
 
     }

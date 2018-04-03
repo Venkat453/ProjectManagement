@@ -1,0 +1,84 @@
+﻿<div class="row">
+    <div id="empCodeForm" class="col-lg-10">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <table style="width:100%;">
+                    <tr style="background:none;">
+                        <td style="width:100%">
+                            <h3 class="panel-title">
+                                <a data-toggle="collapse" href="#empCodeDiv" ng-click="toggleEmpCode = !toggleEmpCode">Employee Code</a>
+                            </h3>
+                        </td>
+                        <td style="width:10px">
+                            <a data-toggle="collapse" href="#empCodeDiv" ng-click="toggleEmpCode = !toggleEmpCode">
+                                <span class={{toggleEmpCodeIcon}} style="font-size: 15px; width: 30px; top: 10px;"></span>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="empCodeDiv" class="panel-body">
+                <form name="empCodeForm" style="margin-bottom:0px;" novalidate>
+                    <div id="inputContainer" ng-cloak>
+                        <md-content layout-padding>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <md-input-container class="md-block">
+                                        <md-checkbox ng-model="empCodeSettings.auto_empcode">
+                                            Auto Employee Code?
+                                        </md-checkbox>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div ng-if="empCodeSettings.auto_empcode" class="row">
+                                <div class="col-md-3">
+                                    <md-input-container class="md-block">
+                                        <label>Employee Code</label>
+                                        <md-icon class="md-dark" style="color:darkorange"><i class="fa fa-braille" style="font-size: 20px;"></i></md-icon>
+                                        <input name="eCode" id="autosave" valid-Name ng-model="empCodeSettings.emp_code" minlength="3"  style="color:black; font-weight:bold" ng-keypress="limitKeypress($event,empCodeSettings.emp_code,4)" required>
+                                        <div ng-messages="empCodeForm.eCode.$error" role="alert" class="ng-messages">
+                                            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']"> minimum 3 chars.</div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-3">
+                                    <md-input-container class="md-block">
+                                        <label>Code Separation</label>
+                                        <md-icon class="md-dark" style="color:darkorange"><i class="fa fa-arrows-h" style="font-size: 20px;"></i></md-icon>
+                                        <input type="text" name="eCodeSeparation" id="autosave" ng-model="empCodeSettings.code_seperation" ng-init="empCodeSettings.code_seperation='-'" disabled ng-keypress="limitKeypress($event,empCodeSettings.code_seperation,4)" style="width: 50%;text-align: center;color:black;font-weight:bold;" >
+                                        <!--<div ng-messages="empCodeForm.eCodeSeparation.$error" role="alert" class="ng-messages">
+                                            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">Range: Max 1 chars.</div>
+                                        </div>-->
+                                    </md-input-container>
+                                </div>
+                                <div class="col-md-3">
+                                    <md-input-container class="md-block">
+                                        <label>start from</label>
+                                        <md-icon class="md-dark" style="color:darkorange"><i class="fa fa-sort-numeric-asc" style="font-size: 20px;"></i></md-icon>
+                                        <input name="eCodeNumber" numbers-only="numbers-only" type="text" ng-model="empCodeSettings.emp_num" maxlength="50" style="color:black; font-weight:bold" required>
+                                    </md-input-container>
+                                </div>
+                                <!--<div class="col-md-3">
+                                    <md-input-container>
+                                        <label>IsActive</label>
+                                        <md-select ng-model="empCodeSettings.IsActive">
+                                            <md-option ng-value="opt.id" ng-repeat="opt in options">{{ opt.name }}</md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </div>-->
+                                <div class="row" style="text-align:center;">
+                                    <button class="btn btn-sm btn-info" ng-click="SaveEmpCodeSettings()" type="submit" style="margin-top: 20px;">Save</button>
+                                </div>
+                            </div>
+
+
+                        </md-content>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,99 @@
+﻿<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Induction</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-3">
+                <md-input-container class="md-block">
+                    <label>Project</label>
+                    <md-select name="project_id" ng-model="project" required>
+                        <md-option ng-repeat="project in projectslists" ng-value="project.id">
+                            {{project.project_name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+        </div>
+        <table class="table table-bordered table-hover table-condensed" style="border:none;">
+            <thead>
+                <tr>
+                    <th style="margin-top:0px;color:black;font-weight:bold;font-size: 15px;padding-left: 6px;">Subcontractor List</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr dir-paginate-start="subcontractor in SCList|unique:'id'|itemsPerPage:5|filter:{project_id:project}:true">
+                    <td>
+                        <button ng-click="showDetails(subcontractor)" expand>
+                            <i ng-hide="active==subcontractor" class="fa fa-plus"></i>
+                            <i ng-show="active==subcontractor" class="fa fa-minus"></i>
+                        </button>
+                        <span style="margin-left:10px;margin-top:-17px;font-weight:bold;">{{subcontractor.subcontractor_name}}</span>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr dir-paginate-end="" ng-show="active==subcontractor">
+                    <td>
+                        Labours List:
+                        <table class="table table-bordered table-striped table-hover table-condensed">
+                            <thead>
+                                <tr style="background:#808080;color:white;">
+                                    <th style="width:5%;text-align:center;">Emp Code</th>
+                                    <th style="width:5%;text-align:center;">Name</th>
+                                    <th style="width:5%;text-align:center;">Date of Joining</th>
+                                    <th style="width:5%;text-align:center;">WbiNo</th>
+                                    <th style="width:5%;text-align:center;">Induction</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="labors in LaboursList| filter:{subcontractor_id:subcontractor.id} ">
+                                    <td style="width:2%;text-align:center;">{{labors.empcode}}</td>
+                                    <td style="width:2%;text-align:center;">{{labors.name}}</td>
+                                    <td style="width:5%;text-align:center;">{{labors.created_date|date :  "MMM d, y"}}</td>
+                                    <td style="width:2%;text-align:center;">{{getWbiNo(labors.master_emp_id)}}</td>
+                                    <td style="text-align:center;">
+                                        <input id="checkval1" type="checkbox" ng-change="getdata(labors)" ng-show="showwbino(labors.master_emp_id)" ng-model="labors.Is_active"
+                                               ng-disabled="labors.CheckedOnly" ng-checked="labors.IsChecked">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>
+                        Drivers List:
+                        <table class="table table-bordered table-striped table-hover table-condensed">
+                            <thead>
+                                <tr style="background:#808080;color:white;">
+                                    <th style="width:5%;text-align:center;">empcode</th>
+                                    <th style="width:5%;text-align:center;">Name</th>
+                                    <th style="width:5%;text-align:center;">Date of Joining</th>
+                                    <th style="width:5%;text-align:center;">WbiNo</th>
+                                    <th style="width:5%;text-align:center;">Induction</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="vehicle in vehicleslists|filter:{subcontractor_id:subcontractor.id}">
+                                    <td style="width:2%;text-align:center;">{{vehicle.empcode}}</td>
+                                    <td style="width:2%;text-align:center;">{{vehicle.driver_name}}</td>
+                                    <td style="width:5%;text-align:center;">{{vehicle.created_date|date :  "MMM d, y"}}</td>
+                                    <td style="width:2%;text-align:center;">{{getdrvrWbiNo(vehicle.master_emp_id)}}</td>
+                                    <td style="text-align:center;">
+                                        <input id="checkval2" type="checkbox" ng-change="getdriverdata(vehicle)"
+                                               ng-readonly="readOnlyStatus" ng-disabled="vehicle.CheckedOnly" ng-show="showdrvrwbino(vehicle.master_emp_id)" ng-checked="vehicle.IsChecked" ng-model="driver.Is_active" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col-lg-10" style="margin-bottom: 0px -35px -13px">
+                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                </dir-pagination-controls>
+                <!--<select name="level" ng-model="page.levels" ng-options="obj.value as obj.label for obj in page.levelsArr" style="position: absolute;top: 20px;height: 34px;"></select>-->
+            </div>
+        </div>
+    </div>
+</div>

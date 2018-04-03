@@ -1,0 +1,81 @@
+﻿<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Work Assignment</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-3">
+                <md-input-container class="md-block">
+                    <label>Project</label>
+                    <md-select name="project_id" ng-model="project" ng-disabled="!projectslists.length" required>
+                        <md-option ng-repeat="project in projectslists" ng-value="project.id">
+                            {{project.project_name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+        </div>
+        <div class="panel-body panel-body-data">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form ng-show="JunctionsList.length!=0">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                    <input type="text" class="form-control" placeholder="Search" ng-model="filterjunctions">
+                                </div>
+                            </div>
+                        </form>
+                        <table class="table table-bordered table-striped table-hover table-condensed" ng-show="JunctionsList.length!=0">
+                            <thead>
+                                <tr style="background:#e3e3e3;color:white;">
+                                    <!--<th></th>-->
+                                    <th style="padding: 0px 0px 0px 0px; margin: -7px 0px 0px 0px; width:10% ;" background:#808080;color:white;">
+                                        <select ng-model="search.ps_name" class="form-control" ng-options="junc.ps_name as junc.ps_name  for junc in JunctionsList|filter:{project_id:project}:true| unique:'ps_name'" style="font-size: 12px;height: 25px;padding: 4px 12px !important;">
+                                            <option value="">All</option>
+                                        </select>
+                                    </th>
+                                    <th style="padding: 0px 0px 0px 0px; margin: -7px 0px 0px 0px; width:10% ;" background:#808080;color:white;">
+                                        <select ng-model="search.junction_name" class="form-control" ng-options="junc.junction_name as junc.junction_name for junc in JunctionsList|filter:{ps_name:search.ps_name}|filter:{project_id:project}:true" style="font-size: 12px;height: 25px;padding: 4px 12px !important;">
+                                            <option value=''>All</option>
+                                        </select>
+                                    </th>
+                                    <th style="width:10%;"></th>
+                                    <th style="width:06%;"></th>
+                                </tr>
+                                <tr style="background:#808080;color:white;">
+                                    <!--<th style="text-align: center;vertical-align: middle;width:1%;">SNo</th>-->
+                                    <th style="text-align: center;vertical-align: middle;width:10%;">PoliceStation</th>
+                                    <th style="text-align: center;vertical-align: middle;width:10%;">Junction</th>
+                                    <th style="text-align: center;vertical-align: middle;width:10%;">SubContractor</th>
+                                    <th style="text-align: center;vertical-align: middle;width:06%;">Assign</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="jnAssign in JunctionsList|filter:{project_id:project}:true|filter:filterjunctions|itemsPerPage:5|filter:{ps_name: search.ps_name || undefined,
+                                                junction_name: search.junction_name || undefined,}:true">
+                                    <!--<td style="text-align: center;vertical-align: middle;width:11%;">{{$index+1}}</td>-->
+                                    <td style="text-align: left;vertical-align: middle;width:10%;">{{jnAssign.ps_name}}</td>
+                                    <td style="text-align: left;vertical-align: middle;width:10%;"><a href="#"ng-click="WorkassignHistory(jnAssign)">{{jnAssign.junction_name}}</a></td>
+                                    <td style="text-align: left;vertical-align: middle;width:10%;">{{getSubcontractor(jnAssign)}}</td>
+                                    <td style="text-align: center;vertical-align: middle;width:06%;">
+                                        <button style="color:black;" ng-show="showAssignBtn(jnAssign.junction_id)" ng-model="jnAssign.junction_id" ng-click="assignJunction(jnAssign)">Assign</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="row" ng-show="JunctionsList.length>5">
+                            <div class="col-lg-4">
+                                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                                </dir-pagination-controls>
+                                <!--<select name="level" ng-model="page.levels" ng-options="obj.value as obj.label for obj in page.levelsArr" style="position: absolute;top: 20px;height: 34px;"></select>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

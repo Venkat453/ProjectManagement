@@ -1,0 +1,175 @@
+﻿<style>
+    .anchorhover:hover {
+        color: deepskyblue !important;
+    }
+</style>
+<div class="panel-group">
+    <div class="panel panel-default" ng-show="empForm||EmployeesList.length == 0">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-lg-10 col-md-10 col-xs-10">
+                    <h3 class="panel-title">
+                        <i class="fa fa-plus-circle" aria-hidden="true" ng-click="showEmpform()"></i>
+                        Employee Registration
+                    </h3>
+                </div>
+                <div class="col-lg-2 col-md-2 col-xs-2" style="text-align: right;">
+                    <i class="fa fa-expand" aria-hidden="true" ng-click="showEmpform()"></i>
+                </div>
+            </div>
+        </div>
+        <form name="empRegForm" novalidate ng-submit="Saveemp()" style="margin-bottom:0px;">
+            <div class="panel-body">
+                <div id="inputContainer" ng-cloak>
+                    <md-content layout-padding>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <md-input-container class="md-block">
+                                    <label>Project</label>
+                                    <!--<md-icon class="md-dark" arial-label="project_id" style="color:#ff006e"><i class="fa fa-map-marker" style="font-size: 20px;"></i></md-icon>-->
+                                    <md-select name="project_id" ng-model="project_id" ng-disabled="!projectslists.length" required>
+                                        <md-option ng-repeat="project in projectslists" ng-value="project.id">
+                                            {{project.project_name}}
+                                        </md-option>
+                                    </md-select>
+                                    <div ng-messages="empRegForm.project_id.$error" role="alert" class="ng-messages">
+                                        <div ng-message="required">* Mandatory.</div>
+                                        <!--<div ng-message-exp="['required', 'pattern']">
+                                            10 Chars.
+                                        </div>-->
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div class="col-sm-3">
+                                <md-input-container class="md-block">
+                                    <label>Employee Name</label>
+                                    <!--<md-icon class="md-dark" arial-label="location" style="color:#b200ff"><i class="fa fa-building" style="font-size: 20px;"></i></md-icon>-->
+                                    <input type="text" name="Emp_Name" valid-Name ng-model="emp.emp_name" ng-keypress="limitKeypress($event,emp.emp_name,15)" required>
+                                    <div ng-messages="empRegForm.Emp_Name.$error" role="alert" class="ng-messages">
+                                        <div ng-message="required">* Mandatory.</div>
+                                        <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                            1 to 15 chars
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-3">
+                                <md-input-container class="md-block">
+                                    <label>Designation</label>
+                                    <!--<md-icon class="md-dark" style="color:darkorange"><i class="fa fa-id-badge" style="font-size: 20px;"></i></md-icon>-->
+                                    <input name="desg" valid-Name type="text" ng-model="emp.Designation" ng-keypress="limitKeypress($event,emp.Designation,15)" style="color:black;" required>
+                                    <div ng-messages="empRegForm.desg.$error" role="alert" class="ng-messages">
+                                        <div ng-message="required">* Mandatory.</div>
+                                        <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">  1 to 15 chars </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div class="col-md-3">
+                                <!--<h4>Created Date</h4>-->
+                                <md-datepicker ng-model="emp.date_created" md-placeholder="Created date" md-min-date="minDate" md-max-date="maxDate" required></md-datepicker>
+                            </div>
+                        </div>
+                        <!--<div class="row">
+                            <div class="col-md-3" >
+                                <h4>Created Date</h4>
+                                <md-datepicker ng-model="emp.date_created" md-placeholder="Created date" md-min-date="minDate" md-max-date="maxDate" required></md-datepicker>
+                            </div>
+                            <div class="col-md-3">
+                                <md-input-container class="md-block">
+                                    <label>Created By</label>
+                                    <input name="Created-By" type="text" valid-Name ng-model="emp.CreatedBy" ng-keypress="limitKeypress($event,emp.CreatedBy,15)" required>
+                                    <div ng-messages="empRegForm.Created-By.$error" role="alert" class="ng-messages">
+                                        <div ng-message="required">* Mandatory.</div>
+                                        <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                            1 to 15 chars
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                        </div>-->
+                        <!--<div class="col-md-2">
+                            <md-input-container>
+                                <label>IsActive</label>
+                                <md-select ng-model="emp.IsActive">
+                                    <md-option ng-value="opt.id" ng-repeat="opt in options">{{ opt.name }}</md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>-->
+
+
+                    </md-content>
+                </div>
+            </div>
+            <div>
+                <div class="panel-footer" style="padding: 6px 0 5px 950px;">
+                    <input type="button" ng-show="clearbtn" class="btn btn-sm btn-info" ng-click="Clearform()" value="Clear" />
+                    <input type="button" ng-show="hidebtn" class="btn btn-sm btn-info" ng-click="hideUserForm()" value="Cancel" />
+                    <button class="btn btn-sm btn-info" type="submit" style="margin-left: 3%;">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="panel panel-default" ng-show="EmployeesList.length != 0">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-lg-10 col-md-10 col-xs-10">
+                <h3 class="panel-title" style="height: 30px;line-height: 30px;">Employee Information</h3>
+            </div>
+            <div class="col-lg-2 col-md-2 col-xs-2" style="text-align: right;">
+                <button class="btn btn-sm btn-primary" ng-click="showEmpform()" ng-show="addemp">Add Employee</button>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                    <input type="text" class="form-control" placeholder="employee" ng-model="search">
+                </div>
+            </div>
+        </form>
+        <table class="table table-bordered table-striped table-hover table-condensed">
+            <tr style="background:#808080;color:white;">
+                <!--<th style="width:3%;text-align:center;">SNo</th>-->
+                <th style="width:10%;text-align:center;">
+                    <a href="#" class="anchorhover" ng-click="sortType = 'emp_name'; sortReverse = !sortReverse" style="color:cornsilk;">
+                        Employee Name
+                    </a>
+                </th>
+                <th style="width:10%;text-align:center;">Employee Code</th>
+                <th style="width:10%;text-align:center;">Project</th>
+                <th style="width:10%;text-align:center;">
+                    <a href="#" class="anchorhover" ng-click="sortType = 'Designation'; sortReverse = !sortReverse" style="color:cornsilk;">
+                        Designation
+                    </a>
+                </th>
+                <th style="width:10%;text-align:center;">Created Date</th>
+                <!--<th style="width:10%;text-align:center;">Created By</th>-->
+            </tr>
+            <!--<tr>
+                <th colspan="6" style="text-align:center; background-color: #337ab7;" ng-show="result==false">No records found</th>
+            </tr>-->
+            <tr dir-paginate="Employees in EmployeesList|filter:search|itemsPerPage:5|orderBy:sortType:sortReverse">
+                <!--<td style="text-align:center">{{$index+1}}</td>-->
+                <td style="text-align:left">{{Employees.emp_name}}</td>
+                <td style="text-align:center">{{Employees.emp_code|uppercase}}{{Employees.code_seperation}}{{Employees.emp_num}}</td>
+                <td style="text-align:left">{{getProjectName(Employees)}}</td>
+                <td style="text-align:left">{{Employees.Designation}}</td>
+                <td style="text-align:center">{{Employees.date_created| date :  "MMM d, y"}}</td>
+                <!--<td style="text-align:center">{{Employees.CreatedBy}}</td>-->
+            </tr>
+        </table>
+        <div class="row">
+            <div class="col-lg-10" style="margin-bottom: 0px -35px -13px">
+                <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                </dir-pagination-controls>
+                <!--<select name="level" ng-model="page.levels" ng-options="obj.value as obj.label for obj in page.levelsArr" style="position: absolute;top: 20px;height: 34px;"></select>-->
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+

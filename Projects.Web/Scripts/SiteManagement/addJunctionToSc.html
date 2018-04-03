@@ -1,0 +1,93 @@
+﻿
+<style>
+    /*.md-select-menu-container {
+        z-index: 9999!important;
+    }*/
+</style>
+
+<div role="form" id="clientpopup1">
+    <div>
+        <div class="modal-header" style="padding: 0px 10px 0px 10px;background-color:#808080;background-color: rgba(222, 219, 219, 0.62);">
+            <div class="row">
+                <div class="col-md-11"><h5 style="font-weight: bold;margin-top:14px;">Work Assignment Details</h5> </div>
+                <div class="col-md-1"><button data-dismiss="modal" ng-click="closeclientmodal()" type="button" class="close" style="margin: 10px;">x</button></div>
+            </div>
+        </div>
+        <form name="workassignForm" style="margin-bottom:0px;">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-5">
+                        <label style="font-size:12px">PoliceStation Name</label>
+                        <span class="badge">
+                            {{getPSName(jnAssign.ps_id)}}
+                        </span>
+                    </div>
+                    <div class="col-md-5">
+                        <label style="font-size:12px">Junction Name</label>
+                        <span class="badge">
+                            {{jnAssign.junction_name}}
+                        </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-5">
+                        <label>Select SubContractor</label>
+                        <!--<select id="subcontractor" name="subcontractor" ng-model="subcontractor_id" required>
+                                 <option ng-repeat="subcontractor in JNCompSubContractorsList" ng-value="subcontractor.sc_id">
+                                     {{subcontractor.sc_name}}
+                                 </option>
+                        </select>-->
+                        <select ng-model="subcontractor_id" ng-value="subcontractor.sc_id" ng-options="subcontractor.sc_id as subcontractor.sc_name for subcontractor in JNCompSubContractorsList"><option value="">Select SubContractor</option></select>
+
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer" style="height:40px; padding-right: 0px; background-color: rgba(222, 219, 219, 0.62); padding-top:5px">
+                <div class="col-lg-12" style="text-align:right;">
+                    <button class="btn btn-sm btn-info" type="submit" ng-click="saveWorkAssign()"><b>Save</b></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="row" style="margin-top:15px;">
+    <div class="col-md-12">
+        <table style="font-size:10px" class="table table-bordered table-hover">
+            <tr>
+                <!--<th>sn</th>-->
+                <th>Workassign Id</th>
+                <th>junction</th>
+                <th>Subcontractor</th>
+                <th>Assigned Date</th>
+                <th>Unassign</th>
+            </tr>
+            <tr ng-repeat="assign in AssignedList|filter:{junction_id:jnAssign.junction_id}:true ">
+                <!--<td>{{$index+1}}</td>-->
+                <td>{{assign.id}}</td>
+                <td>{{getjunctionname(assign.junction_id)}}</td>
+                <td>{{getscname(assign.subcontractor_id)}}</td>
+                 <td>{{assign.assigned_date| date :  "MMM d, y"}}</td>
+                 <td><a href="javascript:;" data-ng-click="Deleteassigning(assign.id)"><span style="height:15px; font-weight:bold" class="fa fa-trash"></span></a></td>
+            </tr>
+        </table>
+
+
+    </div>
+</div>
+<style>
+    .modal-dialog {
+        width: 50%;
+    }
+
+    .modal-content {
+        border-radius: 4px;
+    }
+
+    .badge {
+        color: #151414 !important;
+        background-color: rgb(210, 210, 210);
+        float: none;
+    }
+</style>

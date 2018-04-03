@@ -57,9 +57,13 @@
     <Compile Include="Configurations\CityConfiguration.cs" />
     <Compile Include="Configurations\CountryConfiguration.cs" />
     <Compile Include="Configurations\EntityBaseConfiguration.cs" />
+    <Compile Include="Configurations\FieldworkConfiguration.cs" />
+    <Compile Include="Configurations\LabourConfiguration.cs" />
     <Compile Include="Configurations\LoginTrackConfiguration.cs" />
+    <Compile Include="Configurations\MaterialpriceConfiguration.cs" />
     <Compile Include="Configurations\MenuConfiguration.cs" />
     <Compile Include="Configurations\ModuleConfiguration.cs" />
+    <Compile Include="Configurations\ProjectMasterConfiguration.cs" />
     <Compile Include="Configurations\ReferenceGroupMasterConfiguration.cs" />
     <Compile Include="Configurations\ReferenceMasterConfiguration.cs" />
     <Compile Include="Configurations\RoleConfiguration.cs" />

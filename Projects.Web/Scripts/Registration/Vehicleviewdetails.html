@@ -1,0 +1,121 @@
+﻿<style>
+    .modal-dialog {
+        width: 56% !important;
+        height: 80% !important;
+    }
+
+    select {
+        width: 100% !important;
+        border-radius: 3px;
+    }
+
+    .modal-content {
+        border-radius: 6px !important;
+        border: none;
+        margin: -3px 0px 0px 0px;
+        padding: 0 0 200px 0px;
+        height: 75%;
+    }
+
+    .modal-header {
+        background-color: #009688;
+        color: #FFFFFF;
+        border-radius: 6px 6px 6px 6px !important;
+    }
+
+    .col-md-4 {
+        width: 20% !important;
+        word-break: break-all;
+    }
+</style>
+
+<div role="document" id="clientpopup">
+    <div>
+        <div class="modal-header">
+            <button data-dismiss="modal" style="background-color:#009688;" ng-click="closeclientmodal()" type="button" class="close">x</button>
+            <h3 class="modal-title" id="myModalLabel">Vehicle Details</h3>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-4"><label style="font-size:15px;">Vehicle Reg No:</label></div>
+                <div class="col-md-4"><b>{{vehicle.vehicle_reg_no}}</b></div>
+                <div class="col-md-4"><label style="font-size:15px;">Vehicle type:</label></div>
+                <div class="col-md-4"><b>{{vehicle.vehiclename}}</b></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><label style="font-size:15px;">Project:</label></div>
+                <div class="col-md-4"><b>{{vehicle.projectname}}</b></div>
+                <div class="col-md-4"><label style="font-size:15px;">Subcontractor:</label></div>
+                <div class="col-md-4"><b>{{vehicle.subcontractorname}}</b></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><label style="font-size:15px;">Driver Name:</label></div>
+                <div class="col-md-4"><b>{{vehicle.driver_name}}</b></div>
+                <div class="col-md-4"><label style="font-size:15px;">Driver Contact No:</label></div>
+                <div class="col-md-4"><b>{{vehicle.driver_contact_no}}</b></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><label style="font-size:15px;">Licence No:</label></div>
+                <div class="col-md-4"><b>{{vehicle.driver_lic_no}}</b></div>
+                <div class="col-md-4"><label style="font-size:15px;">Licence Validity:</label></div>
+                <div class="col-md-4"><b>{{vehicle.driver_lic_validdate| date :  "MMM d, y"}}</b></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><label style="font-size:15px;">Aadhar No:</label></div>
+                <div class="col-md-4"><b>{{vehicle.driver_aadharnumber}}</b></div>
+                <div class="col-md-4"><label style="font-size:15px;">Pollution Validity:</label></div>
+                <div class="col-md-4"><b>{{vehicle.pollution_validdate| date :  "MMM d, y"}}</b></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><label style="font-size:15px;">Insurance Validity:</label></div>
+                <div class="col-md-4"><b>{{vehicle.insurence_validdate| date :  "MMM d, y"}}</b></div>
+                <div class="col-md-4"><label style="font-size:15px;">Fittness Validity:</label></div>
+                <div class="col-md-4"><b>{{vehicle.fitness_validdate| date :  "MMM d, y"}}</b></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><label style="font-size:15px;">Licence File:</label></div>
+                <div class="col-md-4">
+                    <a target="_self" href="" ng-click="downLoadImage(vehicle.driverlicimage,vehicle.driverlicimage_filetype)" title="Click here to download Licence File.">
+                        <i class="fa fa-file-o" aria-hidden="true" style="font-size:20px;color: #000000;"></i>&nbsp;
+                    {{vehicle.driver_lic_filename|limitTo : "10"}}</a>
+                </div>
+                <div class="col-md-4"><label style="font-size:15px;">File type:</label></div>
+                <div class="col-md-4"><b>{{vehicle.driverlicimage_filetype}}</b></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><label style="font-size:15px;">Pollution File:</label></div>
+                <div class="col-md-4">
+                    <a target="_self" href="" ng-click="downLoadImage(vehicle.pollutionimage,vehicle.pollutionimage_filetype)" title="Click here to download Pollution File.">
+                        <i class="fa fa-file-o" aria-hidden="true" style="font-size:20px;color: #000000;"></i>&nbsp;
+                        {{vehicle.pollution_filename|limitTo : "10"}}
+                    </a>
+                </div>
+                <div class="col-md-4"><label style="font-size:15px;">File type:</label></div>
+                <div class="col-md-4"><b>{{vehicle.pollutionimage_filetype}}</b></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><label style="font-size:15px;">Insurance File:</label></div>
+                <div class="col-md-4">
+                    <a target="_self" href="" ng-click="downLoadImage(vehicle.insurenceimage,vehicle.insurenceimage_filetype)" title="Click here to download Insurance File.">
+                        <i class="fa fa-file-o" aria-hidden="true" style="font-size:20px;color: #000000;"></i>&nbsp;
+                        {{vehicle.insurence_filename|limitTo : "10"}}
+                    </a>
+                </div>
+                <div class="col-md-4"><label style="font-size:15px;">File type:</label></div>
+                <div class="col-md-4"><b>{{vehicle.insurenceimage_filetype}}</b></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><label style="font-size:15px;">Fittness File:</label></div>
+                <div class="col-md-4">
+                    <a target="_self" href="" ng-click="downLoadImage(vehicle.fitnessimage,vehicle.fitnessimage_filetype)" title="Click here to download Fittness File.">
+                        <i class="fa fa-file-o" aria-hidden="true" style="font-size:20px;color: #000000;"></i>&nbsp;
+                        {{vehicle.fitness_filename|limitTo : "10"}}
+                    </a>
+                </div>
+                <div class="col-md-4"><label style="font-size:15px;">File type:</label></div>
+                <div class="col-md-4"><b>{{vehicle.fitnessimage_filetype}}</b></div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,57 @@
+﻿
+<div role="form" id="clientpopup1">
+    <div>
+        <div class="modal-header" style="padding: 0px 10px 0px 10px;background-color:#808080;background-color: rgba(222, 219, 219, 0.62);">
+            <div class="row">
+                <div class="col-md-11"><h4 style="font-weight: bold;margin-top:14px;">Labours Certificates Checklist</h4> </div>
+                <div class="col-md-1"><button data-dismiss="modal" ng-click="closeclientmodal()" type="button" class="close" style="margin: 10px;">x</button></div>
+            </div>
+        </div>
+        <div class="modal-body" style="padding:0px;">
+            <table class="table table-responsive table-bordered table-striped table-hover table-condensed" style="margin-bottom:0px;">
+                <thead style="display: table; width: 100%; table-layout: fixed; width: calc( 100% - 1em );">
+                    <tr style="background:#808080;color:white;">
+                        <th style="text-align: center;vertical-align: middle;">Emp Code</th>
+                        <th style="text-align: center;vertical-align: middle; word-break:break-all;">Subcontractor</th>
+                        <th style="text-align: center;vertical-align: middle;">Labour Name</th>
+                        <th style="text-align: center;vertical-align: middle;">Aadhar</th>
+                        <th style="text-align: center;vertical-align: middle;">Bank</th>
+                        <th style="text-align: center;vertical-align: middle;">Medical</th>
+                        <th style="text-align: center;vertical-align: middle;">Eye</th>
+                    </tr>
+                </thead>
+                <tbody style="display: block; height: 150px;overflow: auto;">
+                    <tr style="display:table;width:100%; table-layout: fixed;" ng-repeat="readytoretired in labourCertificatesList|filter:{subcontractor_name:subContractorName}">
+                        <td style="text-align: center;vertical-align: middle;">{{readytoretired.emp_code}}{{readytoretired.code_seperation}}-{{readytoretired.emp_num}}</td>
+                        <td style="text-align: left;vertical-align: middle;">{{readytoretired.subcontractor_name}}</td>
+                        <td style="text-align: left;vertical-align: middle;">{{readytoretired.name}}</td>
+                        <td style="text-align: center;vertical-align: middle;"><i ng-class="{'fa fa-close' : readytoretired.aadhar_filename==null,'fa fa-check' : readytoretired.aadhar_filename!=null}" ng-style="{'color': (( readytoretired.aadhar_filename!=null) ? 'green' : ( readytoretired.aadhar_filename==null) ? 'red' : '') }"></i></td>
+                        <td style="text-align: center;vertical-align: middle;"><i ng-class="{'fa fa-close' : readytoretired.bank_filename==null,'fa fa-check' : readytoretired.bank_filename!=null}" ng-style="{'color': (( readytoretired.bank_filename!=null) ? 'green' : ( readytoretired.bank_filename==null) ? 'red' : '') }"></i></td>
+                        <td style="text-align: center;vertical-align: middle;"><i ng-class="{'fa fa-close' : readytoretired.medical_filename==null,'fa fa-check' : readytoretired.medical_filename!=null}" ng-style="{'color': (( readytoretired.medical_filename!=null) ? 'green' : ( readytoretired.medical_filename==null) ? 'red' : '') }"></i></td>
+                        <td style="text-align: center;vertical-align: middle;"><i ng-class="{'fa fa-close' : readytoretired.eye_certificate_filenmae==null,'fa fa-check' : readytoretired.eye_certificate_filenmae!=null}" ng-style="{'color': (( readytoretired.eye_certificate_filenmae!=null) ? 'green' : ( readytoretired.eye_certificate_filenmae==null) ? 'red' : '') }"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="panel-footer" style="height:40px; padding-right: 0px; padding-top:5px; background-color: rgba(222, 219, 219, 0.62);">
+            <div class="col-lg-12" style="text-align:right;">
+                <button class="btn btn-primary btn-xs" ng-click="closeclientmodal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+   
+
+    .modal-content {
+        border-radius: 4px;
+    }
+
+    .badge {
+        color: #151414 !important;
+        background-color: rgb(210, 210, 210);
+        float: none;
+    }
+</style>
+

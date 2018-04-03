@@ -44,6 +44,32 @@ namespace Projects.Data
         public DbSet<tbl_state> stateset { get; set; }
         public DbSet<tbl_city> cityset { get; set; }
 
+        public DbSet<tbl_subcontractor> subcontractorset { get; set; }
+        public DbSet<tbl_labour> labourset { get; set; }
+        public DbSet<tbl_vehicle> vehicleset { get; set; }
+        public DbSet<tbl_policestation> policestatoinset { get; set; }
+        public DbSet<tbl_junction> junctionset { get; set; }
+        public DbSet<tbl_indent_header> indentheader { get; set; }
+        public DbSet<tbl_indent_details> indentdetails { get; set; } 
+        public DbSet<tbl_project_master> ProjectMaster { get; set; }
+        public DbSet<tbl_employee> EmployeeMaster { get; set; }
+        public DbSet<tbl_fieldwork_price> fieldworkset { get; set; }
+        public DbSet<tbl_material_price> materialpricekset { get; set; }
+        public DbSet<tbl_workassigns> WorkAssignments { get; set; }
+        public DbSet<tbl_settings> Settingset { get; set; }
+        public DbSet<tbl_workprogress> workprogressset { get; set; }
+        public DbSet<tbl_subcontractor_ratechart> subcontractorratechartset { get; set; }
+        public DbSet<tbl_induction> inductionset { get; set; }
+        public DbSet<tbl_indentstatus> IndentStatus { get; set; }
+        public DbSet<tbl_project_components> ProjectsComponentsSet { get; set; }
+        public DbSet<tbl_junctionComponents> junComponents { get; set; }
+        public DbSet<tbl_Workprogress_History> workprogresshistoryset { get; set; }
+        public DbSet<tbl_workassigns_log> workassignhistorySet { get; set; }
+        public DbSet<tbl_workverification> workverificationSet { get; set; }
+        public DbSet<tbl_subcontractor_components> subcontractorcomponentsset { get; set; }
+        public DbSet<tbl_workverification_history> workverificationhistoryset { get; set; }
+        public DbSet<tbl_nonconfirmity_works> nonconfirmityworksset { get; set; }
+        public DbSet<tbl_nonconfirmity_history> nonconfirmityhistoryset { get; set; }
 
         public DbSet<tbl_chartsorder> chartsorderset { get; set; }
 
@@ -51,17 +77,6 @@ namespace Projects.Data
 
         public DbSet<tbl_charts_titles> chartstitleset { get; set; }
         public DbSet<tbl_users_profiles> usersprofileset { get; set; }
-
-        // New tables
-        public DbSet<tbl_project_master> projectmasterset { get; set; }
-        public DbSet<tbl_project_master_child> projectmasterchildset { get; set; }
-        public DbSet<tbl_project_structure> projectstructureset { get; set; }
-        public DbSet<tbl_project_structure_main> projectstructuremainset { get; set; }
-        public DbSet<tbl_project_technical_data> projecttechnicaldataset { get; set; }
-        public DbSet<tbl_project_technical_data_child> projecttechnicaldatachildset { get; set; }
-        public DbSet<tbl_project_commercial_data> projectcommercialdataset { get; set; }
-        public DbSet<tbl_part_list> partlistset { get; set; }
-        public DbSet<tbl_part_list_item> partlistitemset { get; set; }
 
 
 
@@ -90,6 +105,7 @@ namespace Projects.Data
             modelBuilder.Configurations.Add(new CityConfiguration());
             modelBuilder.Configurations.Add(new ReferenceGroupMasterConfiguration());
             modelBuilder.Configurations.Add(new ReferenceMasterConfiguration());
+            modelBuilder.Configurations.Add(new ProjectMasterConfiguration());
 
 
         }

@@ -1,0 +1,56 @@
+﻿<div class="panel-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title" ng-click="showAddIndentform()">
+                <!--<i class="fa fa-plus-circle" aria-hidden="true"></i>-->
+                Warehouse Material Details
+                <button data-dismiss="modal" style="float:right;" ng-click="closewarehousemodal()" type="button" class="close">x</button>
+            </h3>
+        </div>
+        <div class="row" style="margin-left:20px;margin-top:10px;">
+            <div class="col-sm-4">Indent No: <b>{{indentNo}}</b></div>
+            <div class="col-sm-8">Indent Created Date: <b>{{created_Date| date :  "MMM d, y"}}</b></div>
+        </div>
+        <form name="newForm" novalidate ng-submit="updateMaterialDetails()">
+            <div class="panel-body">
+                <div id="inputContainer" ng-cloak>
+                    <md-content layout-padding>
+                        <h4>Materials List</h4>
+                        <table class="table table-bordered table-striped table-hover table-condensed">
+                            <thead>
+                                <tr style="background:teal;color:white;">
+                                    <th style="width:2%;text-align:center;">SNo</th>
+                                    <th style="width:3%;text-align:center;">Material</th>
+                                    <th style="width:3%;text-align:center;">Raised Quantity</th>
+                                    <th style="width:3%;text-align:center;">Released Quantity</th>
+                                    <th style="width:3%;text-align:center;">Status Changed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="warehouse in WarehouseDetailsList|filter:{indent_no:indentNo}:true" >
+                                    <td style="text-align:center;">{{$index+1}}</td>
+                                    <td style="width:2%;text-align:center;">{{warehouse.material_name}}</td>
+                                    <td style="width:2%;text-align:center;">{{warehouse.raised_quantity}}</td>
+                                    <td style="width:2%;text-align:center;">
+                                        <input type="text" valid-Number id="given_quantity" name="given_quantity" ng-model="warehouse.given_quantity" ng-blur="comparefunc(warehouse)" required />
+                                        <div ng-show="newForm.given_quantity.$invalid"></div>
+                                    </td>
+                                    <td style="width:2%;text-align:center;">
+                                        <input type="checkbox" id="checkbox"  name="material_released_status" ng-disabled="!warehouse.given_quantity" ng-model="warehouse.material_released_status" ng-change="getdetails(warehouse)" required />
+                                     </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </md-content>
+                </div>
+            </div>
+
+            <div class="panel-footer" style="height:40px; padding-right: 0px; padding-top:5px">
+                <div class="col-lg-12" style="text-align:right;">
+                    <button class="btn btn-sm btn-info"  aria-hidden="false">Update</button>
+                    <button class="btn btn-sm btn-info" ng-click="closewarehousemodal()" aria-hidden="false">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

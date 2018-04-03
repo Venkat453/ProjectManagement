@@ -1,0 +1,208 @@
+﻿<style>
+    .anchorhover:hover {
+        color: deepskyblue !important;
+    }
+</style>
+<div class="content-header">
+    <div class="panel-group">
+        <div class="panel panel-default" ng-show="showfddForm||FieldworksList.length==0">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-lg-10 col-md-10 col-xs-10">
+                        <h3 class="panel-title">
+                            <i class="fa fa-plus-circle" aria-hidden="true" ng-click="showfieldform()" tooltip-html-unsafe="add fieldwork price" tooltip-placement="bottom"></i>
+                            Add FieldWork Price
+                        </h3>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-xs-2" style="text-align: right;">
+                        <i class="fa fa-expand" aria-hidden="true" ng-click="showfieldform()"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <form name="addFieldWorkForm" novalidate ng-submit="addfieldwork()" style="margin-bottom:0px;">
+                    <div id="inputContainer" ng-cloak>
+                        <md-content layout-padding>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <md-input-container class="md-block">
+                                        <label>Project</label>
+                                        <!--<md-icon class="md-dark" arial-label="project_id" style="color:#ff006e"><i class="fa fa-map-marker" style="font-size: 20px;"></i></md-icon>-->
+                                        <md-select name="project_id" ng-model="FieldWork.project_id" required ng-disabled="!projectslists.length" ng-change="GetAllJunctions(project)">
+                                            <md-option ng-repeat="project in projectslists" ng-value="project.id">
+                                                {{project.project_name}}
+                                            </md-option>
+                                        </md-select>
+                                        <div ng-messages="addFieldWorkForm.project_id.$error" role="alert" class="ng-messages">
+                                            <div ng-message="required">* Mandatory.</div>
+                                            <div ng-message-exp="['required', 'pattern']">
+                                                10 Chars.
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                                <div class="col-lg-4">
+                                    <md-input-container class="md-block">
+                                        <label style="cursor:pointer">FieldWork Name</label>
+                                        <!--<md-icon class="md-dark" arial-label="FieldWorkName" style="color:#0094ff"><i class="fa fa-user" style="font-size: 20px;"></i></md-icon>-->
+                                        <input required id="FieldWorkName" valid-Name name="FieldWorkName" ng-model="FieldWork.fieldwork_name" ng-blur="checkfield(FieldWork.project_id,FieldWork.fieldwork_name)" minlength="4" maxlength="20" ng-keypress="limitKeypress($event,FieldWork.fieldwork_name,20)">
+                                        <div ng-messages="addFieldWorkForm.FieldWorkName.$error" role="alert" class="ng-messages">
+                                            <div ng-message="required">*Mandatory.</div>
+                                            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                4 to 20 chars.
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                                <div class="col-lg-4">
+                                    <md-input-container class="md-block">
+                                        <label style="cursor:pointer">FieldWork Description</label>
+                                        <!--<md-icon class="md-dark" arial-label="FieldWorkDescription" style="color:#0094ff"><i class="fa fa-file-text" style="font-size: 20px;"></i></md-icon>-->
+                                        <input required id="FieldWorkdescription" valid-Name name="FieldWorkdescription" ng-model="FieldWork.fieldwork_description" minlength="4" maxlength="200" ng-keypress="limitKeypress($event,FieldWork.fieldwork_description,200)">
+                                        <div ng-messages="addFieldWorkForm.FieldWorkdescription.$error" role="alert" class="ng-messages">
+                                            <div ng-message="required">*Mandatory.</div>
+                                            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                4 to 200 chars.
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <md-input-container class="md-block">
+                                        <label>Unit Of Measurement</label>
+                                        <!--<md-icon class="md-dark" arial-label="uom" style="color:#4800ff"><i class="fa fa-map-marker" style="font-size: 20px;"></i></md-icon>-->
+                                        <md-select name="uom" ng-model="FieldWork.unit_of_measurement"  required>
+                                            <md-option ng-repeat="ref in Refmaster| filter:{ group_id: 12 }" ng-value="ref.id">
+                                                {{ref.reference_value}}
+                                            </md-option>
+                                        </md-select>
+                                        <div ng-messages="addFieldWorkForm.uom.$error" role="alert">
+                                            <div ng-message="required">* Mandatory.</div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                                <div class="col-lg-4">
+                                    <md-input-container class="md-block">
+                                        <label>Material Price (&#x20b9;)</label>
+                                        <!--<md-icon class="md-dark" arial-label="materialprice"  style="color:#0094ff"><i class="fa fa-inr" style="font-size: 20px; margin: 5px 0px 0px 15px"></i></md-icon>-->
+                                        <input type="text" required id="materialprice" name="materialprice" ng-model="FieldWork.fieldwork_price" valid-Number>
+                                        <div ng-messages="addFieldWorkForm.materialprice.$error" role="alert" class="ng-message">
+                                            <div ng-message="required">*Mandatory.</div>
+                                            <div ng-message-exp="['required', 'minlength', 'maxlength']">
+                                                10 chars
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                        </md-content>
+                    </div>
+                    <div class="panel-footer" style="padding:7px 0 7px 946px;">
+                        <input type="button" ng-show="clearbtn" class="btn btn-sm btn-info" ng-click="Clearform()" value="Clear" />
+                        <input type="button" ng-show="hidebtn" class="btn btn-sm btn-info" ng-click="hideUserForm()" value="Cancel" />
+                        <button class="btn btn-sm btn-info" ng-show="savebtn" type="submit">Save</button>
+                    </div> 
+                </form>
+            </div>
+        </div>
+        <div class="panel panel-default" ng-show="FieldworksList.length != 0">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-lg-10 col-md-10 col-xs-10">
+                        <h3 class="panel-title" style="height: 30px;line-height: 30px;">FieldWork Information</h3>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-xs-2" style="text-align: right;">
+                        <button class="btn btn-sm btn-primary" ng-click="showfieldform()" ng-show="addFWP">Add FieldWork Price</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top:20px;">
+                <div class="col-lg-4">
+                    <md-input-container class="md-block" style="margin-left:15px;">
+                        <label>Select Project</label>
+                        <md-select name="project_id" ng-model="project_id" ng-disabled="!projectslists.length" required ng-change="getFieldworkByProjId(project_id)">
+                            <md-option ng-repeat="project in projectslists" ng-value="project.id">
+                                {{project.project_name}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+            </div>
+            <div class="panel-body">
+                <form>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                            <input type="text" class="form-control" placeholder="Search" ng-model="filterfieldwork">
+                        </div>
+                    </div>
+                </form>
+                <table class="table table-bordered table-striped table-hover table-condensed" >
+                    <thead>
+                        <tr style="background:#808080;color:white;">
+                            <!--<th>SNo</th>-->
+                            <th>Project</th>
+                            <th>
+                                <a href="#" class="anchorhover" ng-click="sortType = 'fieldwork_name'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    FieldWork
+                                </a>
+                            </th>
+                            <th>
+                                <a href="#" class="anchorhover" ng-click="sortType = 'fieldwork_description'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    Description
+                                </a>
+                            </th>
+                            <th>
+                                <a href="#" class="anchorhover" ng-click="sortType = 'UOM'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    UOM
+                                </a>
+                            </th>
+                            <th>
+                                <a href="#" class="anchorhover" ng-click="sortType = 'fieldwork_price'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    Price (&#x20b9;)
+                                </a>
+                            </th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr dir-paginate="fields in FieldworksList|filter:{project_id:project_id}:true|filter:filterfieldwork|itemsPerPage:5|orderBy:sortType:sortReverse">
+                           <!--<td>{{$index+1}}</td>-->
+                            <td>{{fields.project_name}}</td>
+                            <td>{{fields.fieldwork_name}}</td>
+                            <td>{{fields.fieldwork_description}}</td>
+                            <td>{{fields.UOM}}</td>
+                            <td style="text-align:right;">
+                                <span editable-text="fields.fieldwork_price" e-valid-Number e-name="fieldwork_price" e-form="rowform" onbeforesave="checkName($data, fields.fieldwork_price) || validateRequired($data)" e-required>
+                                    {{fields.fieldwork_price}}
+                                </span>
+                            </td>
+                            <td style="white-space: nowrap">
+                                <form editable-form name="rowform" onbeforesave="saveUser($data, fields.id)" ng-show="rowform.$visible" class="form-buttons form-inline checkVisible" shown="inserted == fields" style="margin-bottom:0px!important">
+                                    <button type="submit" ng-disabled="rowform.$waiting" class="fa fa-save"
+                                            style="font-size:15px; height:15px;background-color: Transparent; background-repeat:no-repeat; border: none;"></button>
+                                    <button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="fa fa-times"
+                                            style="font-size:15px; height:15px;background-color: Transparent; background-repeat:no-repeat; border: none;"></button>
+                                </form>
+                                <div class="buttons" ng-show="!rowform.$visible">
+                                    <button ng-click="editCall(rowform)" class="fa fa-edit"
+                                            style="font-size:15px; height:15px;background-color: Transparent; background-repeat:no-repeat; border: none;"></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row" ng-show="FieldworksList.length>5">
+                    <div class="col-lg-10" style="margin-bottom: 0px -35px -13px">
+                        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                        </dir-pagination-controls>
+                        <!--<select name="level" ng-model="page.levels" ng-options="obj.value as obj.label for obj in page.levelsArr" style="position: absolute;top: 20px;height: 34px;"></select>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,128 @@
+﻿<style>
+    .anchorhover:hover {
+        color: deepskyblue !important;
+    }
+</style>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Work Verification Information</h3>
+    </div>
+    <div class="row" style="margin-top:20px;">
+        <div class="col-lg-3">
+            <md-input-container class="md-block" style="margin-left:15px;">
+                <label>Project</label>
+                <md-select name="project_id" ng-model="project" ng-disabled="!projectslists.length" required>
+                    <md-option ng-repeat="project in projectslists" ng-value="project.id">
+                        {{project.project_name}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                    <input type="text" class="form-control" placeholder="Search" ng-model="filterWV">
+                </div>
+            </div>
+        </form>
+        <table class="table table-bordered table-striped table-condensed">
+            <thead>
+                <tr style="background:#e3e3e3;color:white;">
+                    <th colspan="1"></th>
+                    <th style="padding: 0px 0px 0px 0px; margin: -7px 0px 0px 0px; width:11% ;" background:#808080;color:white;">
+                        <select ng-model="search.ps_name" class="form-control" ng-options="junc.ps_name as junc.ps_name  for junc in JunctionsList|unique:'ps_name'|filter:{project_id:project}:true" style="font-size: 12px;height: 25px;padding: 4px 12px !important;">
+                            <option value="">All</option>
+                        </select>
+                    </th>
+                    <th style="padding: 0px 0px 0px 0px; margin: -7px 0px 0px 0px; width:11% ;" background:#808080;color:white;">
+                        <select ng-model="search.junction_name" class="form-control" ng-options="junc.junction_name as junc.junction_name for junc in JunctionsList|filter:{ps_name:search.ps_name}:true|filter:{project_id:project}:true" style="font-size: 12px;height: 25px;padding: 4px 12px !important;">
+                            <option value=''>All</option>
+                        </select>
+                    </th>
+                    <th></th>
+                </tr>
+                <tr style="background:#808080;color:white;">
+                    <th style="width:2%;text-align:center;vertical-align:middle;"></th>
+                    <!--<th style="width:2%;text-align:center;vertical-align:middle;">SNo</th>-->
+                    <th style="width:25%;text-align:center;vertical-align:middle;">
+                        <a href="#" class="anchorhover" ng-click="sortType = 'ps_name'; sortReverse = !sortReverse" style="color:cornsilk;">
+                            Police Station
+                        </a>
+                    </th>
+                    <th style="width:25%;text-align:center;vertical-align:middle;">
+                        <a href="#" class="anchorhover" ng-click="sortType = 'junction_name'; sortReverse = !sortReverse" style="color:cornsilk;">
+                            Junction
+                        </a>
+                        <span style="color:#bfe0ff;">(Components)</span>&nbsp;(<span style="color:rgb(197,17,98);">NC</span>)
+                    </th>
+                    <th style="width:25%;text-align:center;">
+                        <a href="#" class="anchorhover" ng-click="sortType = 'indent_no'; sortReverse = !sortReverse" style="color:cornsilk;">
+                            SubContractor
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tr dir-paginate-start="jn in JunctionsList|filter:{project_id:project}:true|filter:filterWV|itemsPerPage:5|orderBy:sortType:sortReverse
+                     |filter:{ps_name: search.ps_name || undefined,
+                     junction_name: search.junction_name || undefined,}:true" ng-hide="(WorkverificationList|filter:{junction_id:jn.j_id}:true).length == 0" pagination-id="workvrfcn">
+                <td style="width:3%;vertical-align:middle;">
+                    <button ng-click="showDetails(jn)" expand>
+                        <i ng-hide="active==jn" class="fa fa-plus"></i>
+                        <i ng-show="active==jn" class="fa fa-minus"></i>
+                    </button>
+                </td>
+                <!--<td style="width:2%;text-align:center;vertical-align:middle;">{{$index+1}}</td>-->
+                <td style="width:25%;text-align:left;vertical-align:middle;">{{jn.ps_name}}</td>
+                <td style="width:25%;text-align:left;vertical-align:middle;line-height: 26px;">{{jn.junction_name}}
+                    <span class="badgeTwo">{{(WorkverificationList|filter:{junction_id:jn.j_id}:true).length}}</span>
+                    <span class="badgeTwo" style="background: rgb(197,17,98) !important;">{{(WorkverificationList|filter:{junction_id:jn.j_id}:true|filter:{verification_status:57}:true).length}}</span>
+                </td>
+                <td style="width:25%;text-align:center;vertical-align:middle;">{{getscname(jn.j_id)||'not assigned'}}</td>
+            </tr>
+            <tr dir-paginate-end="" ng-show="active==jn">
+                <td></td>
+                <td colspan="4">
+                    <table style="width: 100%;" class="table table-bordered table-striped table-condensed">
+                        <thead>
+                            <tr style="background:teal;color:white;">
+                                <!--<th style="width:2%;text-align:center;vertical-align:middle;">SNo</th>-->
+                                <th style="width:8%;text-align:center;vertical-align:middle;">Component</th>
+                                <th style="width:8%;text-align:center;vertical-align:middle;">Total</th>
+                                <th style="width:5%;text-align:center;vertical-align:middle;">Status</th>
+                                <th style="width:3%;text-align:center;vertical-align:middle;">NC</th>
+                                <th style="width:5%;text-align:center;vertical-align:middle;">Comments</th>
+                                <th style="width:8%;text-align:center;vertical-align:middle;">Verified Date</th>
+                                <th style="width:2%;text-align:center;vertical-align:middle;">Update</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="workverification in WorkverificationList|filter:{junction_id:jn.j_id}:true">
+                                <!--<td style="width:2%;text-align:center;vertical-align:middle;">{{$index+1}}</td>-->
+                                <td style="width:8%;text-align:center;vertical-align:middle;">{{workverification.jun_component}}</td>
+                                <td style="width:8%;text-align:center;vertical-align:middle;">{{workverification.total}}&nbsp;({{workverification.uom}})</td>
+                                <td style="width:8%;text-align:center;vertical-align:middle;">{{getstatus(workverification.verification_status)}}</td>
+                                <td style="width:8%;text-align:center;vertical-align:middle;">{{workverification.nc_quantity}}</td>
+                                <td style="width:8%;text-align:center;vertical-align:middle;">{{workverification.comments}}</td>
+                                <td style="width:8%;text-align:center;vertical-align:middle;">{{workverification.created_date| date : "MMM d, y"}}</td>
+                                <td style="width:2%;text-align:center;vertical-align:middle;">
+                                    <button ng-click="UpdateWorkVerification(workverification)" class="fa fa-pencil-square-o" ng-disabled="workverification.verification_status===57||workverification.verification_status===55"
+                                            style="background-color: Transparent; background-repeat:no-repeat; border: none; overflow: hidden; outline:none; font-size: 15px; width:30px;"></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <div class="row" ng-show="JunctionsList.length>5">
+            <div class="col-lg-4">
+                <dir-pagination-controls max-size="5" pagination-id="workvrfcn" direction-links="true" boundary-links="true">
+                </dir-pagination-controls>
+               <!-- <select name="level" ng-model="page.levels" ng-options="obj.value as obj.label for obj in page.levelsArr" style="position: absolute;top: 20px;height: 34px;"></select>-->
+            </div>
+        </div>
+    </div>
+</div>

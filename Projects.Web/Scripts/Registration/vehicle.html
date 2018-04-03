@@ -1,0 +1,617 @@
+﻿<style>
+    .anchorhover:hover {
+        color: deepskyblue !important;
+    }
+
+    
+
+    .panel-heading {
+        padding: 10px 15px;
+        background: #AAAAA6 !important;
+        border-bottom: 1px solid transparent;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+    }
+
+    .panel-body {
+        padding: 15px;
+        background-color: #e3e3e3;
+    }
+
+    @media (min-width: 992px) {
+        .col-md-4 {
+            width: 29.333333%;
+            margin: 0% 2% 0% 2%;
+        }
+
+        .col-md-3 {
+            width: 22%;
+            margin: 0% 1.5% 0% 1.5%;
+        }
+
+        .palabel {
+            width: 18.666667%;
+        }
+
+        .dp-left-margin {
+            margin-left: -6%;
+        }
+
+        md-input-container {
+            display: inline-block;
+            position: relative;
+            padding: 2px;
+            margin: 10px 0;
+            vertical-align: middle;
+        }
+    }
+
+
+    md-input-container .md-input {
+        border-radius: 4px;
+    }
+
+    md-input-container > md-select {
+        border-radius: 5px;
+        border-bottom: 1px solid rgba(0,0,0,0.12);
+    }
+
+    .panel-body h4 {
+        color: #ED521C;
+        padding-bottom: .6%;
+    }
+</style>
+<div>
+    <!--||vehicleslists.length == 0-->
+    <div class="panel-group">
+        <div class="panel panel-default" ng-show="showVHForm||vehicleslists.length == 0">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-lg-10 col-md-10 col-xs-10">
+                        <h3 class="panel-title">
+                            <i class="fa fa-plus-circle" aria-hidden="true" ng-click="showAddform()" tooltip-html-unsafe="add vehicle" tooltip-placement="bottom"></i>
+                            Add Vehicle
+                        </h3>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-xs-2" style="text-align: right;">
+                        <i class="fa fa-expand" aria-hidden="true" ng-click="showAddform()"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <form name="newVehicleForm" novalidate ng-submit="addvehicle()" style="margin-bottom:0px;" ng-disabled="!isEditable">
+                    <fieldset ng-disabled="!isEditable">
+                        <div id="inputContainer" ng-cloak>
+                            <md-content layout-padding>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <h4 style="margin-left: 5%;">Project Information</h4>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <label>Project Name</label>
+                                                <md-select name="project_id" ng-model="vehicles.project_id" ng-disabled="!projectslists.length" required>
+                                                    <md-option ng-repeat="project in projectslists" ng-value="project.id">
+                                                        {{project.project_name}}
+                                                    </md-option>
+                                                </md-select>
+                                                <div ng-messages="newVehicleForm.project_id.$error" role="alert" class="ng-messages">
+                                                    <div ng-message="required">* Mandatory.</div>
+                                                    <div ng-message-exp="['required', 'pattern']">
+                                                        10 Chars.
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <label>Select SubContractor</label>
+                                                <md-select ng-readonly="readOnlyStatus" name="subcontractor" ng-model="vehicles.subcontractor_id" ng-disabled="!SCList.length" required>
+                                                    <md-option ng-repeat="subcontractor in SCList |filter:{project_id:vehicles.project_id}:true"  ng-value="subcontractor.id">
+                                                        {{subcontractor.subcontractor_name}}
+                                                    </md-option>
+                                                </md-select>
+                                                <div ng-messages="newVehicleForm.subcontractor.$error" role="alert">
+                                                    <div ng-message="required">* Mandatory.</div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <h4 style="margin-left: 5%;">Driver Information</h4>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <label>Driver Name</label>
+                                                <input ng-readonly="readOnlyStatus" valid-Name required id="drivername" name="drivername" ng-model="vehicles.driver_name" minlength="4" maxlength="30">
+                                                <div ng-messages="newVehicleForm.drivername.$error" role="alert" class="ng-messages">
+                                                    <div ng-message="required">*Mandatory.</div>
+                                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                        4 to 30 chars.
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <label>Contact No.</label>
+                                                <input mask="+99 9999999999" ng-readonly="readOnlyStatus" required id="contactno" name="contactno1" ng-model="vehicles.driver_contact_no" minlength="10" maxlength="15">
+                                                <div ng-messages="newVehicleForm.contactno1.$error" role="alert" class="ng-messages">
+                                                    <div ng-message="required">*Mandatory.</div>
+                                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                        10 to 15 chars.
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <label>Aadhar Number</label>
+                                                <input id="aaadhar" valid-Number ng-readonly="readOnlyStatus" name="aaadhar" ng-model="vehicles.driver_aadharnumber" minlength="12" maxlength="12" required>
+                                                <div ng-messages="newLabourEnrollmentForm.aaadhar.$error" role="alert" class="ng-messages">
+                                                    <div ng-message="required">*Mandatory.</div>
+                                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                         12 chars length.
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <label>Driver License Number</label>
+                                                <input ng-readonly="readOnlyStatus" allow-pattern="(\d|[a-z])" required id="driverlicNmbr" name="driverlicNmbr" ng-model="vehicles.driver_lic_no" minlength="4" maxlength="10">
+                                                <div ng-messages="newVehicleForm.driverlicNmbr.$error" role="alert" class="ng-messages">
+                                                    <div ng-message="required">*Mandatory.</div>
+                                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                        4 to 10 chars.
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-datepicker class="dp-left-margin" style="padding: 15px 0 0 15px;"  db-left-margin name="license validate" ng-model="driver_lic_validdate" ng-disabled="!vehicles.driver_lic_no" md-placeholder="Valid Upto" md-min-date="minDate" md-max-date="maxDate" md-open-on-focus></md-datepicker>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <input type="file" name="drv_file" id="drv_file" ng-disabled="!driver_lic_validdate" ng-model="drilic_file" base-sixty-four-input>
+                                            </md-input-container>
+                                            <div ng-show="namefile" style=" padding: 0 0 10px 60px;margin-top: -27px;">
+                                                <a href="#" ng-click="downLoadImage1()">{{drilicnce_file}}</a>
+                                            </div>
+                                        </div>
+                                        <h4 style="margin-left: 5%;">Current Address</h4>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <label>Street</label>
+                                                <input ng-readonly="readOnlyStatus" required id="crntstreet" name="crntstreet" ng-model="vehicles.current_street" minlength="4" maxlength="20">
+                                                <div ng-messages="newVehicleForm.crntstreet.$error" role="alert" class="ng-messages">
+                                                    <div ng-message="required">*Mandatory.</div>
+                                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <label>Country</label>
+                                                <md-select name="Country" ng-model="vehicles.current_country" ng-change="getCountryStates1(vehicles.current_country)" required>
+                                                    <md-option ng-repeat="country in CountriesList" ng-value="country.id">
+                                                        {{country.country_name}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <label>State</label>
+                                                <md-select name="state" ng-model="vehicles.current_state" ng-disabled="!vehicles.current_country" ng-change="getStateCities1(vehicles.current_state)" required>
+                                                    <md-option ng-repeat="state in states1" ng-value="state.id"> {{state.state_name}} </md-option>
+                                                </md-select>
+
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <label>City</label>
+                                                <md-select name="tenantCity" ng-disabled="!vehicles.current_state" ng-model="vehicles.current_city" required>
+                                                    <md-option ng-repeat="city in cities1" ng-value="city.id">
+                                                        {{city.city_name}}
+                                                    </md-option>
+                                                </md-select>
+
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <label>ZIP #</label>
+                                                <input type="text" valid-Number ng-readonly="readOnlyStatus" name="zip" ng-model="vehicles.current_zip" ng-keypress="limitKeypress($event,vehicles.current_zip,6)">
+                                            </md-input-container>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h4 style="margin-left: 5%;">Vehicle Information</h4>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <label> Vehicle Reg Number</label>
+                                                <input required ng-readonly="readOnlyStatus" allow-pattern="(\d|[a-z])" id="vehregiNmbr" name="vehregiNmbr" ng-model="vehicles.vehicle_reg_no" minlength="4" maxlength="10">
+                                                <div ng-messages="newVehicleForm.vehregiNmbr.$error" role="alert" class="ng-messages">
+                                                    <div ng-message="required">*Mandatory.</div>
+                                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                        4 to 10 chars.
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <label>Vehicle Type</label>
+                                                <md-select name="vehicletype" ng-model="vehicles.vehicle_type" required>
+                                                    <md-option ng-repeat="ref in Refmaster|filter:{group_id:10}" ng-value="ref.id">
+                                                        {{ref.reference_value}}
+                                                    </md-option>
+                                                </md-select>
+                                                <div ng-messages="newVehicleForm.vehicletype.$error" role="alert" class="ng-messages">
+                                                    <div ng-message="required">* Mandatory.</div>
+                                                    <div ng-message-exp="['required']">
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-checkbox style="padding: 10px 0px 0px 0px;" ng-model="vehicles.pollution_clearance" aria-label="Pollution Clearance">
+                                                Pollution Clearance
+                                            </md-checkbox>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-datepicker class="dp-left-margin" style="padding: 15px 0 0 15px;" ng-model="pollution_validdate" md-min-date="minDate" md-max-date="maxDate" ng-disabled="!vehicles.pollution_clearance" md-placeholder="Valid Upto" md-open-on-focus></md-datepicker>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <input type="file" name="p_file" id="p_file" ng-disabled="!pollution_validdate" ng-model="pollution_file" base-sixty-four-input>
+                                            </md-input-container>
+                                            <div ng-show="namefile" style=" padding: 0 0 10px 60px;margin-top: -27px;">
+                                                <a href="#" ng-click="downLoadImage2()">{{pollu_file}}</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-checkbox id="checkbox2" style="padding: 10px 0px 0px 0px;" ng-model="vehicles.insurence_clearance" aria-label="Insurance Clearance">
+                                                Insurance Clearance
+                                            </md-checkbox>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-datepicker class="dp-left-margin" style="padding: 15px 0 0 15px;" ng-model="insurence_validdate" md-min-date="minDate" md-max-date="maxDate" ng-disabled="!vehicles.insurence_clearance" md-placeholder="Valid Upto" md-open-on-focus></md-datepicker>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <input type="file" name="i_file" id="i_file" ng-model="insurence_file" ng-disabled="!insurence_validdate" base-sixty-four-input>
+                                            </md-input-container>
+                                            <div ng-show="namefile" style=" padding: 0 0 10px 60px;margin-top: -27px;">
+                                                <a href="#" ng-click="downLoadImage3()">{{insu_file}}</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-checkbox style="padding: 10px 0px 0px 0px;" ng-model="vehicles.fitness_clearance" aria-label="Vehicle Fitness Clearance">
+                                                Vehicle Fitness Clearance
+                                            </md-checkbox>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-datepicker class="dp-left-margin" style="padding: 15px 0 0 15px;" ng-model="fitness_validdate" md-min-date="minDate" md-max-date="maxDate" ng-disabled="!vehicles.fitness_clearance" md-placeholder="Valid Upto" md-open-on-focus></md-datepicker>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <input type="file" name="f_file" id="f_file" ng-model="fitness_file" ng-disabled="!fitness_validdate" base-sixty-four-input>
+                                            </md-input-container>
+                                            <div ng-show="namefile" style=" padding: 0 0 10px 60px;margin-top: -27px;">
+                                                <a href="#" ng-click="downLoadImage4()">{{fitn_file}}</a>
+                                            </div>
+                                        </div>
+                                        <h4 style="margin-left: 5%;">Perminant Address</h4>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <label>Street</label>
+                                                <input ng-readonly="readOnlyStatus" required id="prmntstreet" name="prmntstreet" ng-model="vehicles.permanent_street" minlength="4" maxlength="20">
+                                                <div ng-messages="newVehicleForm.prmntstreet.$error" role="alert" class="ng-messages">
+                                                    <div ng-message="required">*Mandatory.</div>
+                                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <label>Country</label>
+                                                <md-select name="Country" ng-model="vehicles.permanent_country" ng-change="getCountryStates2(vehicles.permanent_country)" required>
+                                                    <md-option ng-repeat="country in CountriesList" ng-value="country.id">
+                                                        {{country.country_name}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <label>State</label>
+                                                <md-select name="state" ng-model="vehicles.permanent_state" ng-disabled="!vehicles.permanent_country" ng-change="getStateCities2(vehicles.permanent_state)" required>
+                                                    <md-option ng-repeat="state in states2" ng-value="state.id"> {{state.state_name}} </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <label>City</label>
+                                                <md-select name="tenantCity" ng-disabled="!vehicles.permanent_state" ng-model="vehicles.permanent_city" required>
+                                                    <md-option ng-repeat="city in cities2" ng-value="city.id">
+                                                        {{city.city_name}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <label>ZIP #</label>
+
+                                                <input type="text" valid-Number ng-readonly="readOnlyStatus" name="zip" ng-model="vehicles.permanent_zip" ng-keypress="limitKeypress($event,vehicles.permanent_zip,6)">
+                                            </md-input-container>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="col-md-12">
+                                            Select Driver image
+                                            <img id="imgdriverlogo" data-ng-src="{{driverlogo}}" style="height:70px;cursor: pointer;" />
+                                            <input type="file" ng-readonly="readOnlyStatus" name="d_file" id="d_file" ng-model="driver_photo" base-sixty-four-input style="opacity: 0;">
+                                        </div>
+                                        <h4 style="margin-left: 5%;">Contact Person Details</h4>
+                                        <div class="col-md-12"></div>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <label>Name</label>
+                                                <input ng-readonly="readOnlyStatus" valid-Name required id="contactname" name="contactname" ng-model="vehicles.contact_person_name" minlength="4" maxlength="30">
+                                                <div ng-messages="newVehicleForm.contactname.$error" role="alert" class="ng-messages">
+                                                    <div ng-message="required">*Mandatory.</div>
+                                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                        4 to 30 chars.
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <label>Contact No.</label>
+                                                <input ng-readonly="readOnlyStatus" mask="+99 9999999999" required id="contactno" name="contactno" ng-model="vehicles.contact_person_contact_number" minlength="10" maxlength="15">
+                                                <div ng-messages="newVehicleForm.contactno.$error" role="alert" class="ng-messages">
+                                                    <div ng-message="required">*Mandatory.</div>
+                                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                        10 to 15 chars.
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <label>Relationship</label>
+                                                <md-select name="relation" ng-model="vehicles.contact_person_relationship_id" required>
+                                                    <md-option ng-repeat="relation in ReferenceMasterData|filter:{group_id:9}" ng-value="relation.id">
+                                                        {{relation.reference_value}}
+                                                    </md-option>
+                                                </md-select>
+                                                <div ng-messages="newVehicleForm.relation.$error" role="alert">
+                                                    <div ng-message="required">* Mandatory.</div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <label>Street</label>
+                                                <input ng-readonly="readOnlyStatus" required id="cnctstreet" name="cnctstreet" ng-model="vehicles.contact_person_street" minlength="4" maxlength="20">
+                                                <div ng-messages="newVehicleForm.cnctstreet.$error" role="alert" class="ng-messages">
+                                                    <div ng-message="required">*Mandatory.</div>
+                                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <label>Country</label>
+                                                <md-select name="Country" ng-model="vehicles.contact_person_country" ng-change="getCountryStates3(vehicles.contact_person_country)" required>
+                                                    <md-option ng-repeat="country in CountriesList" ng-value="country.id">
+                                                        {{country.country_name}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <label>State</label>
+                                                <md-select name="state" ng-model="vehicles.contact_person_state" ng-disabled="!vehicles.contact_person_country" ng-change="getStateCities3(vehicles.contact_person_state)" required>
+                                                    <md-option ng-repeat="state in states3" ng-value="state.id"> {{state.state_name}} </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <label>City</label>
+                                                <md-select name="tenantCity" ng-model="vehicles.contact_person_city" ng-disabled="!vehicles.contact_person_state" required>
+                                                    <md-option ng-repeat="city in cities3" ng-value="city.id">
+                                                        {{city.city_name}}
+                                                    </md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <md-input-container class="md-block">
+                                                <label>ZIP #</label>
+                                                <input ng-readonly="readOnlyStatus" type="text" valid-Number name="zip" ng-model="vehicles.contact_person_zip" ng-keypress="limitKeypress($event,vehicles.contact_person_zip,6)">
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-12" style="text-align:right; padding: 256px 14px 0px 0px;">
+                                            <input type="button" ng-show="clearbtn" class="btn btn-sm btn-info" ng-click="Clearform()" value="Clear" />
+                                            <input type="button" ng-show="hidebtn" class="btn btn-sm btn-info" ng-click="hideUserForm()" value="Cancel" />
+                                            <button ng-show="addBtn" class="btn btn-sm btn-info" type="submit">Register Vehicle</button>
+                                            <input type="button" value="Update Vehicle" ng-show="updateBtn" class="btn btn-sm btn-info" ng-click="UpdateVehicle()" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </md-content>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div class="panel panel-default" ng-show="vehicleslists.length != 0">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-lg-10 col-md-10 col-xs-10">
+                        <h3 class="panel-title" style="height: 30px;line-height: 30px;">Vehicle Information</h3>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-xs-2" style="text-align: right;">
+                        <button class="btn btn-sm btn-primary" ng-click="showAddform()" ng-show="addveh">Add Vehicle</button>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body" id="tableDiv">
+                <form>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                            <input type="text" class="form-control" placeholder="Search" ng-model="search">
+                        </div>
+                    </div>
+                </form>
+                <table class="table table-bordered table-striped table-hover table-condensed" id="myTable">
+                    <thead style="background:#e3e3e3;color:white;">
+                        <tr  style="background:#e3e3e3;color:white;">
+                            <!--<th></th>-->
+                            <th style="padding: 0px 0px 0px 0px; margin: -7px 0px 0px 0px; width:10% ;">
+                                <select ng-model="search.projectname" class="form-control" ng-options="vhlist.projectname as vhlist.projectname  for vhlist in vehicleslists|unique:'projectname'" style="font-size: 12px;height: 25px;padding: 4px 12px !important;">
+                                    <option value=""> All</option>
+                                </select>
+                            </th>
+                            <th style="padding: 0px 0px 0px 0px; margin: -7px 0px 0px 0px; width:6% ;">
+                                <select ng-model="search.subcontractorname" class="form-control" ng-options="vhlist.subcontractorname as vhlist.subcontractorname for vhlist in vehicleslists|unique:'subcontractorname'" style="font-size: 12px;height: 25px;padding: 4px 12px !important;">
+                                    <option value=''>All</option>
+                                </select>
+                            </th>
+                            <th style="padding: 0px 0px 0px 0px; margin: -7px 0px 0px 0px; width:8% ;">
+                                <select ng-model="search.vehiclename" class="form-control" ng-options="vhlist.vehiclename as vhlist.vehiclename for vhlist in vehicleslists|unique:'vehiclename'" style="font-size: 12px;height: 25px;padding: 4px 12px !important;">
+                                    <option value=''>All</option>
+                                </select>
+                            </th>
+                            <th style="padding: 0px 0px 0px 0px; margin: -7px 0px 0px 0px; width:8% ;">
+                                <select ng-model="search.vehicle_reg_no" class="form-control" ng-options="vhlist.vehicle_reg_no as vhlist.vehicle_reg_no for vhlist in vehicleslists" style="font-size: 12px;height: 25px;padding: 4px 12px !important;">
+                                    <option value=''>All</option>
+                                </select>
+                            </th>
+                            <th style="padding: 0px 0px 0px 0px; margin: -7px 0px 0px 0px; width:8% ;">
+                                <select ng-model="search.driver_name" class="form-control" ng-options="vhlist.driver_name as vhlist.driver_name for vhlist in vehicleslists" style="font-size: 12px;height: 25px;padding: 4px 12px !important;">
+                                    <option value=''>All</option>
+                                </select>
+                            </th>
+                            <th style="padding: 0px 0px 0px 0px; margin: -7px 0px 0px 0px; width:8% ;">
+                                <select ng-model="search.currentcity" class="form-control" ng-options="vhlist.currentcity as vhlist.currentcity for vhlist in vehicleslists|unique:'currentcity'" style="font-size: 12px;height: 25px;padding: 4px 12px !important;">
+                                    <option value=''>All</option>
+                                </select>
+                            </th>
+                            <th style="padding: 0px 0px 0px 0px; margin: -7px 0px 0px 0px; width:8% ;">
+                                <select ng-model="search.driver_contact_no" class="form-control" ng-options="vhlist.driver_contact_no as vhlist.driver_contact_no for vhlist in vehicleslists" style="font-size: 12px;height: 25px;padding: 4px 12px !important;">
+                                    <option value=''>All</option>
+                                </select>
+                            </th>
+                            <th colspan="5" style="padding: 0px 0px 0px 0px; margin: -7px 0px 0px 0px; width:11%;"></th>
+                        </tr>
+                        <tr  style="background:#808080;color:white;">
+                            <!--<th style="width:2%;text-align:center;vertical-align:middle;" rowspan="2">SNo</th>-->
+                            <th style="width:8%;text-align:center;vertical-align:middle;" rowspan="2">
+                                <a href="#" class="anchorhover" ng-click="sortType = 'projectname'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    Project
+                                </a>
+                            </th>
+                            <th style="width:6%;text-align:center;vertical-align:middle;" rowspan="2">
+                                <a href="#" class="anchorhover" ng-click="sortType = 'subcontractorname'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    SubContractor
+                                </a>
+                            </th>
+                            <th style="width:10%;text-align:center;vertical-align:middle;" colspan="2">Vehicle Information</th>
+                            <th style="width:16%;text-align:center;vertical-align:middle;" colspan="3">Driver Information</th>
+                            <th style="width:16%;text-align:center;vertical-align:middle;" colspan="3">Documents Validity</th>
+                            <th style="width:8%;text-align:center;vertical-align:middle;" rowspan="2">
+                                <a href="#" class="anchorhover" ng-click="sortType = 'created_date'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    Created Date
+                                </a>
+                            </th>
+                            <th style="width:3%;text-align:center;vertical-align:middle;" rowspan="2">Edit</th>
+                        </tr>
+                        <tr >
+                            <th style="width:5%; background-color:chocolate;text-align:center;vertical-align:middle;">Type</th>
+                            <th style="width:5%; background-color:chocolate;text-align:center;vertical-align:middle;">
+                                <a href="#" class="anchorhover" ng-click="sortType = 'vehicle_reg_no'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    Reg_No
+                                </a>
+                            </th>
+                            <th style="width:8%; background-color:burlywood;text-align:center;vertical-align:middle;" rowspan="2">
+                                <a href="#" class="anchorhover" ng-click="sortType = 'driver_name'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    Name
+                                </a>
+                            </th>
+                            <th style="width:8%; background-color:burlywood;text-align:center;vertical-align:middle;">City</th>
+                            <th style="width:8%; background-color:burlywood;text-align:center;vertical-align:middle;">Contact No</th>
+                            <th style="width:8%; background-color:chocolate;text-align:center;vertical-align:middle;">
+                                <a href="#" class="anchorhover" ng-click="sortType = 'pollution_validdate'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    Pollution
+                                </a>
+                            </th>
+                            <th style="width:8%; background-color:chocolate;text-align:center;vertical-align:middle;">
+                                <a href="#" class="anchorhover" ng-click="sortType = 'insurence_validdate'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    Insurance
+                                </a>
+                            </th>
+                            <th style="width:8%; background-color:chocolate;text-align:center;vertical-align:middle;">
+                                <a href="#" class="anchorhover" ng-click="sortType = 'fitness_validdate'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    Fitness
+                                </a>
+                            </th>
+                        </tr>
+                        <!--<tr>
+                            <th colspan="8" style="text-align:center; background-color: #337ab7;" ng-show="result==false">No records found</th>
+                        </tr>-->
+                    </thead>
+                    <tbody>
+                        <tr dir-paginate="vehicle in vehicleslists|filter:search|itemsPerPage:5|orderBy:sortType:sortReverse
+                            |filter:{projectname: search.projectname || undefined,
+                            subcontractorname:search.subcontractorname||undefined,
+                            vehiclename:search.vehiclename||undefined,
+                             vehicle_reg_no:search.vehicle_reg_no||undefined,
+                             driver_name:search.driver_name||undefined,
+                             currentcity:search.currentcity||undefined,
+                            driver_contact_no:search.driver_contact_no||undefined,
+                            }:true">
+                        
+                            <!--<td style="width:2%;text-align:center;vertical-align:middle;">{{vehicle.id}}</td>-->
+                            <td style="width:6%;text-align:left;vertical-align:middle;">{{vehicle.projectname}}</td>
+                            <td style="width:5%;text-align:left;vertical-align:middle;">{{vehicle.subcontractorname}}</td>
+                            <td style="width:5%;text-align:left;vertical-align:middle;">{{vehicle.vehiclename}}</td>
+                            <td style="width:5%;text-align:left;vertical-align:middle;">
+                                <a href="#" ng-click="showvehicleDetails(vehicle)" title="Click here to view Vehicle Details.">{{vehicle.vehicle_reg_no}}</a>
+                            </td>
+                            <td style="width:6%;text-align:left;vertical-align:middle;">{{vehicle.driver_name}}</td>
+                            <td style="width:5%;text-align:left;vertical-align:middle;">{{vehicle.currentcity}}</td>
+                            <td style="width:8%;text-align:left;vertical-align:middle;">{{vehicle.driver_contact_no}}</td>
+                            <td style="width:8%;text-align:left;vertical-align:middle;">{{vehicle.pollution_validdate|date:"MMM d, y"}}</td>
+                            <td style="width:8%;text-align:left;vertical-align:middle;">{{vehicle.insurence_validdate|date:"MMM d, y"}}</td>
+                            <td style="width:8%;text-align:left;vertical-align:middle;">{{vehicle.fitness_validdate|date:"MMM d, y"}}</td>
+                            <td style="width:5%;text-align:left;vertical-align:middle;">{{vehicle.created_date|date:"MMM d, y"}}</td>
+                            <td style="width:5%;text-align:center;vertical-align:middle;">
+                                <span ng-click="EditVehicle(vehicle)">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row"  ng-show="vehicleslists.length>5">
+                    <div class="col-lg-10" style="margin-bottom: 0px -35px -13px">
+                        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                        </dir-pagination-controls>
+                        <!--<select name="level" ng-model="page.levels" ng-options="obj.value as obj.label for obj in page.levelsArr" style="position: absolute;top: 20px;height: 34px;"></select>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

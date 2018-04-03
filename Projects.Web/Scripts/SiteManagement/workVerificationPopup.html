@@ -1,0 +1,99 @@
+﻿<div role="form" id="clientpopup1">
+    <div>
+        <div class="modal-header" style="padding: 0px 10px 0px 10px;background-color:#808080;background-color: rgba(222, 219, 219, 0.62);">
+            <div class="row">
+                <div class="col-md-11"><h5 style="font-weight: bold;margin-top:14px;">Verification Details</h5> </div>
+                <div class="col-md-1"><button data-dismiss="modal" ng-click="closeclientmodal()" type="button" class="close" style="margin: 10px;">x</button></div>
+            </div>
+        </div> 
+        <form name="workprogressForm">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label style="font-size:12px">Junction Name</label>
+                    </div>
+                    <div class="col-md-3">
+                        <label style="font-size:12px">Componant</label>
+                    </div>
+                    <div class="col-md-3">
+                        <label style="font-size:12px">Total</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <span class="badge">
+                            {{getJCName(wvdata.junction_id)}}
+                        </span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="badge">
+                            {{wvdata.jun_component}}
+                        </span>
+                    </div>
+                    <div class="col-md-3">
+                        <span class="badge">
+                            {{wvdata.total}}
+                        </span>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 15px;">
+                    <div class="col-lg-4">
+                        <md-input-container class="md-block">
+                            <label>Status</label>
+                            <md-select name="project_id" ng-model="status" required>
+                                <md-option ng-repeat="refdata in RefMasterData|filter:{group_id:14}:true" ng-value="refdata.id">
+                                    {{refdata.reference_value}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div class="col-lg-4" ng-show="status==57">
+                        <md-input-container class="md-block">
+                            <label style="cursor:pointer">NC (Quantity)</label>
+                            <input ng-readonly="ContractorForm" id="nc" name="nc" ng-model="nc_quantity" minlength="1" maxlength="10" ng-blur="checkncQuantity(nc_quantity)">
+                            <div ng-messages="workprogressForm.nc.$error" role="alert" class="ng-messages">
+                                <div ng-message="required">comments is required</div>
+                                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                    1 to 10 Digits only.
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    <div class="col-lg-4" ng-show="status==57">
+                        <md-input-container class="md-block">
+                            <label style="cursor:pointer">Comments</label>
+                            <input ng-readonly="ContractorForm" id="comments" name="comments" ng-model="comments" minlength="1" maxlength="100" required>
+                            <div ng-messages="workprogressForm.comments.$error" role="alert" class="ng-messages">
+                                <div ng-message="required">comments is required</div>
+                                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                    1 to 100 Digits only.
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer" style="height:40px; padding-right: 0px; padding-top:5px; background-color: rgba(222, 219, 219, 0.62);">
+                <div class="col-lg-12" style="text-align:right;">
+                    <button class="btn btn-sm btn-info" type="submit" ng-click="updateWorkVerification(wvdata)"><b>Update</b></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<style>
+    .modal-dialog {
+        width: 50%;
+    }
+
+    .modal-content {
+        border-radius: 4px;
+    }
+
+    .badge {
+        color: #151414 !important;
+        background-color: rgb(210, 210, 210);
+        float: none;
+    }
+</style>
+

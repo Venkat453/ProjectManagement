@@ -38,29 +38,8 @@
 
         function logout() {
             membershipService.removeCredentials();
-            $scope.userData.displayUserInfo();
-
-            $rootScope.tenant = {};
-            $rootScope.user = {};
-            $rootScope.ReferenceMasterData = {};
-            $rootScope.MenuList = {};
-            $rootScope.StatesList = {};
-            $rootScope.CitiesList = {};
-            $rootScope.CountriesList = {};
-            $scope.savelog = {};
-            $rootScope.Loadsaveuserlog = {};
-
-            $rootScope.SCMasterList = {};
-            $rootScope.projectslists = {};
-            $sessionStorage.MenuList = {};
-            $sessionStorage.CitiesList = {};
-            $sessionStorage.StatesList = {};
-            $sessionStorage.tenant = {};
-            $sessionStorage.ReferenceMasterData = {};
-            $sessionStorage.CountriesList = {};
-
-            console.log($rootScope.projectslists);
             $location.path('/');
+            $scope.userData.displayUserInfo();
         }
 
         $scope.userData.displayUserInfo();

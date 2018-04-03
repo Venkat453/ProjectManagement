@@ -12,3 +12,17 @@ E:\PHONE DATA\ProjectManagement\Projects.Data\bin\Debug\EntityFramework.SqlServe
 E:\PHONE DATA\ProjectManagement\Projects.Data\obj\Debug\Projects.Data.csprojResolveAssemblyReference.cache
 E:\PHONE DATA\ProjectManagement\Projects.Data\obj\Debug\Projects.Data.dll
 E:\PHONE DATA\ProjectManagement\Projects.Data\obj\Debug\Projects.Data.pdb
+E:\PM ORIGINAL\Projects.Data\bin\Debug\Projects.Data.dll.config
+E:\PM ORIGINAL\Projects.Data\bin\Debug\Projects.Data.dll
+E:\PM ORIGINAL\Projects.Data\bin\Debug\Projects.Data.pdb
+E:\PM ORIGINAL\Projects.Data\bin\Debug\EntityFramework.dll
+E:\PM ORIGINAL\Projects.Data\bin\Debug\EntityFramework.SqlServer.dll
+E:\PM ORIGINAL\Projects.Data\bin\Debug\Projects.Entities.dll
+E:\PM ORIGINAL\Projects.Data\bin\Debug\Projects.Library.dll
+E:\PM ORIGINAL\Projects.Data\bin\Debug\Projects.Entities.pdb
+E:\PM ORIGINAL\Projects.Data\bin\Debug\Projects.Library.pdb
+E:\PM ORIGINAL\Projects.Data\bin\Debug\EntityFramework.xml
+E:\PM ORIGINAL\Projects.Data\bin\Debug\EntityFramework.SqlServer.xml
+E:\PM ORIGINAL\Projects.Data\obj\Debug\Projects.Data.csprojResolveAssemblyReference.cache
+E:\PM ORIGINAL\Projects.Data\obj\Debug\Projects.Data.dll
+E:\PM ORIGINAL\Projects.Data\obj\Debug\Projects.Data.pdb

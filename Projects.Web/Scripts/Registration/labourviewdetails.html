@@ -1,0 +1,100 @@
+﻿<style>
+    .modal-dialog {
+        width: 56% !important;
+        height: 80% !important;
+    }
+
+    select {
+        width: 100% !important;
+        border-radius: 3px;
+    }
+
+    .modal-content {
+        border-radius: 6px !important;
+        border: none;
+        margin: -3px 0px 0px 0px;
+        padding: 0 0 200px 0px;
+        height: 70%;
+    }
+
+    .modal-header {
+        background-color: #009688;
+        color: #FFFFFF;
+        border-radius: 6px 6px 6px 6px !important;
+    }
+
+    .col-md-4 {
+        width: 20% !important;
+        word-break: break-all;
+    }
+</style>
+
+<div role="document" id="clientpopup">
+    <div>
+        <div class="modal-header">
+            <button data-dismiss="modal" style="background-color:#009688;" ng-click="closeclientmodal()" type="button" class="close">x</button>
+            <h3 class="modal-title" id="myModalLabel">Labour Details</h3>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-4"><label style="font-size:15px;">Name:</label></div>
+                <div class="col-md-4"><b>{{labors.name}}</b></div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><label style="font-size:15px;">Project:</label></div>
+                <div class="col-md-4"><b>{{labors.project_name}}</b></div>
+                <div class="col-md-4"><label style="font-size:15px;">Subcontractor:</label></div>
+                <div class="col-md-4"><b>{{labors.subcontractor_name}}</b></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><label style="font-size:15px;">Father's Name:</label></div>
+                <div class="col-md-4"><b>{{labors.fathers_name}}</b></div>
+                <div class="col-md-4"><label style="font-size:15px;">Labour Age:</label></div>
+                <div class="col-md-4"><b>{{labors.age| date :  "MMM d, y"}}</b></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><label style="font-size:15px;">Aadhar No:</label></div>
+                <div class="col-md-4"><b>{{labors.aadhar}}</b></div>
+                <div class="col-md-4"><label style="font-size:15px;">PAN No:</label></div>
+                <div class="col-md-4"><b>{{labors.pan}}</b></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><label style="font-size:15px;">Contact No:</label></div>
+                <div class="col-md-4"><b>{{labors.current_contact_number}}</b></div>
+                <div class="col-md-4"><label style="font-size:15px;">EPF No:</label></div>
+                <div class="col-md-4"><b>{{labors.epf_no}}</b></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><label style="font-size:15px;">ESI No:</label></div>
+                <div class="col-md-4"><b>{{labors.esi_no}}</b></div>
+                <div class="col-md-4"><label style="font-size:15px;">City:</label></div>
+                <div class="col-md-4"><b>{{labors.currentcity_name}}</b></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><label style="font-size:15px;">Bank Name:</label></div>
+                <div class="col-md-4"><b>{{labors.bank_name}}</b></div>
+                <div class="col-md-4"><label style="font-size:15px;">Bank Branch:</label></div>
+                <div class="col-md-4"><b>{{labors.bank_branch}}</b></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><label style="font-size:15px;">Created By:</label></div>
+                <div class="col-md-4"><b>{{labors.created_name}}</b></div>
+                <div class="col-md-4"><label style="font-size:15px;">Date Created:</label></div>
+                <div class="col-md-4"><b>{{labors.created_date| date :  "MMM d, y"}}</b></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><label style="font-size:15px;">Aaadhar File:</label></div>
+                <div class="col-md-4">
+                    <a target="_self" href="" ng-click="downLoadImage(labors.aadhar_encode,labors.aadhar_encode_file_type)" title="Click here to Download Aaadhar.">
+                        <i class="fa fa-file-o" aria-hidden="true" style="font-size:20px;color: #000000;"></i>&nbsp;
+                        {{labors.aadhar_filename|limitTo : "10"}}
+                    </a>
+                </div>
+                <div class="col-md-4"><label style="font-size:15px;">File Type:</label></div>
+                <div class="col-md-4"><b>{{labors.aadhar_encode_file_type}}</b></div>
+            </div>
+        </div>
+    </div>
+</div>

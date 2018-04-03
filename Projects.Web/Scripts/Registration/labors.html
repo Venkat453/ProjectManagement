@@ -1,0 +1,748 @@
+﻿<style>
+    .anchorhover:hover {
+        color: deepskyblue !important;
+    }
+
+   
+
+    .panel-heading {
+        padding: 10px 15px;
+        background: #AAAAA6 !important;
+        border-bottom: 1px solid transparent;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+    }
+
+    .panel-body {
+        padding: 15px;
+        background-color: #e3e3e3;
+    }
+
+    @media (min-width: 992px) {
+        .col-md-4 {
+            width: 29.333333%;
+            margin: 0% 2% 0% 2%;
+        }
+
+        .col-md-3 {
+            width: 22%;
+            margin: 0% 1.5% 0% 1.5%;
+        }
+
+        .palabel {
+            width: 18.666667%;
+        }
+    }
+
+    md-input-container .md-input {
+        /*-webkit-box-ordinal-group: 3;
+        -webkit-order: 2;
+        order: 2;
+        display: block;
+        margin-top: 0;
+        background: none;
+        padding-top: 2px;
+        padding-bottom: 1px;
+        padding-left: 2px;
+        padding-right: 2px;
+        border-width: 0 0 1px 0;
+        line-height: 26px;
+        height: 30px;
+        -ms-flex-preferred-size: 26px;
+        border-radius: 0;
+        border-style: solid;
+        width: 100%;
+        box-sizing: border-box;
+        float: left;*/
+        border-radius: 4px;
+    }
+
+    md-input-container > md-select {
+        border-radius: 5px;
+        border-bottom: 1px solid rgba(0,0,0,0.12);
+    }
+
+    .panel-body h4 {
+        color: #ED521C;
+        padding-bottom: .6%;
+    }
+    
+
+    md-checkbox {
+        margin: 0px 0px -20px 0px !important;
+    }
+</style>
+<div id="refresh">
+    <div class="panel-group">
+        <div class="panel panel-default" ng-show="showSBForm||LabourswiseList.length == 0">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-lg-10 col-md-10 col-xs-10">
+                        <h3 class="panel-title">
+                            <i class="fa fa-plus-circle" aria-hidden="true" ng-click="showAddform()" tooltip-html-unsafe="add Labour" tooltip-placement="bottom"></i>
+                           Add Labor
+                        </h3>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-xs-2" style="text-align: right;">
+                        <i class="fa fa-expand" aria-hidden="true" ng-click="showAddform()"></i>
+                    </div>
+                </div>
+            </div>
+
+            <form name="newLabourEnrollmentForm" style="margin-bottom:0px;" novalidate ng-submit="SaveLabour()" ng-disabled="!isEditable">
+                <fieldset ng-disabled="!isEditable">
+                    <div class="panel-body">
+                        <div id="inputContainer" ng-cloak>
+                            <md-content layout-padding>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <md-input-container class="md-block">
+                                            <label>Project Name</label>
+                                            <md-select name="project_id" ng-model="labour.project_id" ng-disabled="!projectslists.length" required>
+                                                <md-option ng-repeat="project in projectslists" ng-value="project.id">
+                                                    {{project.project_name}}
+                                                </md-option>
+                                            </md-select>
+                                            <div ng-messages="newLabourEnrollmentForm.project_id.$error" role="alert" class="ng-messages">
+                                                <div ng-message="required">* Mandatory.</div>
+                                                <div ng-message-exp="['required', 'pattern']">
+                                                    10 Chars.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <md-input-container class="md-block">
+                                            <label>Select SubContractor</label>
+                                            <md-select ng-readonly="readOnlyStatus" name="subcontractor" ng-model="labour.subcontractor_id" ng-disabled="!SCList.length" required>
+                                                <md-option ng-repeat="subcontractor in SCList|filter:{project_id:labour.project_id}:true" ng-value="subcontractor.id">
+                                                    {{subcontractor.subcontractor_name}}
+                                                </md-option>
+                                            </md-select>
+                                            <div ng-messages="newLabourEnrollmentForm.Country.$error" role="alert">
+                                                <div ng-message="required">* Mandatory.</div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <img class="img-sqquare" id="imglabourlogo" data-ng-src="{{labourlogo}}" style="height:80px; cursor:pointer; "/>
+                                        <input type="file" ng-readonly="readOnlyStatus" name="l_file" id="l_file" ng-model="labour_photo" style="opacity: 0;" base-sixty-four-input>
+                                    </div>
+                                </div>
+                                <h4 style="margin-left: 2%;">Personal Information</h4>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <md-input-container class="md-block">
+                                            <label style="cursor:pointer">Labour Name</label>
+                                            <input id="labourname" valid-Name ng-readonly="readOnlyStatus" name="labourname" ng-model="labour.name" minlength="3" maxlength="30" required>
+                                            <div ng-messages="newLabourEnrollmentForm.labourname.$error" role="alert" class="ng-messages">
+                                                <div ng-message="required">*Mandatory.</div>
+                                                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                    3 to 30 chars.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <md-input-container class="md-block">
+                                            <label style="cursor:pointer">Father Name</label>
+                                            <input id="fathersname" valid-Name ng-readonly="readOnlyStatus" name="fathersname" ng-model="labour.fathers_name" minlength="4" maxlength="30" required>
+                                            <div ng-messages="newLabourEnrollmentForm.fathersname.$error" role="alert" class="ng-messages">
+                                                <div ng-message="required">*Mandatory.</div>
+                                                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                    4 to 30 chars.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <md-input-container class="md-block">
+                                            <label>Select Gender</label>
+                                            <md-select name="gender" ng-readonly="readOnlyStatus" ng-model="labour.gender" required>
+                                                <md-option ng-repeat="ref in Refmaster| filter:{ group_id: 7 }" ng-value="ref.id">
+                                                    {{ref.reference_value}}
+                                                </md-option>
+                                            </md-select>
+                                            <div ng-messages="newLabourEnrollmentForm.gender.$error" role="alert">
+                                                <div ng-message="required">* Mandatory.</div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label>Date of Birth:</label>
+                                        <md-datepicker name="age" ng-model="labour.age" ng-readonly="readOnlyStatus" md-min-date="minDate"  md-max-date="maxDate" md-open-on-focus></md-datepicker>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <md-input-container class="md-block">
+                                            <label>Select BloodGroup</label>
+                                            <md-select name="bloodgroup" ng-readonly="readOnlyStatus" ng-model="labour.blood_group">
+                                                <md-option ng-repeat="ref in Refmaster| filter:{ group_id: 8 }" ng-value="ref.id">
+                                                    {{ref.reference_value}}
+                                                </md-option>
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <md-input-container class="md-block">
+                                            <label>Mother Tongue</label>
+                                            <input id="mothertongue" ng-readonly="readOnlyStatus" name="mothertongue" ng-model="labour.mother_tongue" minlength="4" maxlength="10">
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <h4 style="margin-left: 3.5%;">Contact Information(Current Address)</h4>
+                                </div>
+                                <div class="row" style="margin: auto!important;">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <md-input-container class="md-block">
+                                                <label>Street</label>
+                                                <input id="currentstreet" ng-readonly="readOnlyStatus" name="currentstreet" ng-model="labour.current_street" minlength="4" maxlength="30" required>
+                                                <div ng-messages="newLabourEnrollmentForm.currentstreet.$error" role="alert" class="ng-messages">
+                                                    <div ng-message="required">*Mandatory.</div>
+                                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                        4 to 30 chars.
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <md-input-container class="md-block">
+                                                <label>Country</label>
+                                                <md-select name="currentcountry" ng-readonly="readOnlyStatus" ng-model="labour.current_country" ng-change="getCountryStates(labour.current_country)" required>
+                                                    <md-option ng-repeat="country in CountriesList" ng-value="country.id">
+                                                        {{country.country_name}}
+                                                    </md-option>
+                                                </md-select>
+                                                <div ng-messages="newLabourEnrollmentForm.currentcountry.$error" role="alert">
+                                                    <div ng-message="required">* Mandatory.</div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <md-input-container class="md-block">
+                                                <label>State</label>
+                                                <md-select name="currentstate" ng-disabled="!states.length" ng-readonly="readOnlyStatus" ng-model="labour.current_state" ng-change="getStateCities(labour.current_state)" required>
+                                                    <md-option ng-repeat="state in states" ng-value="state.id"> {{state.state_name}} </md-option>
+                                                </md-select>
+                                                <div ng-messages="newLabourEnrollmentForm.currentstate.$error" role="alert">
+                                                    <div ng-message="required">* Mandatory.</div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <md-input-container class="md-block">
+                                                <label>City</label>
+                                                <md-select name="currentcity" ng-disabled="!cities.length" ng-readonly="readOnlyStatus" ng-model="labour.current_city" required>
+                                                    <md-option ng-repeat="city in cities" ng-value="city.id">
+                                                        {{city.city_name}}
+                                                    </md-option>
+                                                </md-select>
+                                                <div ng-messages="newLabourEnrollmentForm.currentcity.$error" role="alert">
+                                                    <div ng-message="required">* Mandatory.</div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <md-input-container class="md-block">
+                                                <label>ZIP</label>
+                                                <input type="text" valid-Number name="currentzip" ng-readonly="readOnlyStatus" ng-model="labour.current_zip" ng-keypress="limitKeypress($event,labour.current_zip,6)" required>
+                                                <div ng-messages="newLabourEnrollmentForm.currentzip.$error" role="alert" class="ng-messages">
+                                                    <div ng-message="required">* Mandatory.</div>
+                                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']" c>
+                                                        enter only 6 digits.
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <md-input-container class="md-block">
+                                                <label>Contact No.</label>
+                                                <input  mask="+99 9999999999" id="currentcontactno" ng-readonly="readOnlyStatus" name="currentcontactno" ng-model="labour.current_contact_number" minlength="8" maxlength="15" required>
+                                                <div ng-messages="newLabourEnrollmentForm.currentcontactno.$error" role="alert" class="ng-messages">
+                                                    <div ng-message="required">*Mandatory.</div>
+                                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                        8 to 15 numbers.
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <h4 style="margin-left: 3.5%;">
+                                        Permanant Address(<label> Same as above</label>
+                                        <input type="checkbox" ng-model="labour_samecurrent" ng-click="checkprop()" />)
+                                    </h4>
+                                </div>
+                                <div class="row" style="margin: auto!important;">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <md-input-container class="md-block">
+                                                <label>Street</label>
+                                                <input id="permanentstreet" ng-readonly="readOnlyStatus" name="permanentstreet" ng-model="labour.permanent_street" minlength="4" maxlength="30" required>
+                                                <div ng-messages="newLabourEnrollmentForm.permanentstreet.$error" role="alert" class="ng-messages">
+                                                    <div ng-message="required">*Mandatory.</div>
+                                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                        4 to 30 chars.
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <md-input-container class="md-block">
+                                                <label>Country</label>
+                                                <md-select name="permanentcountry" ng-readonly="readOnlyStatus" ng-model="labour.permanent_country" ng-change="getCountryStates1(labour.permanent_country)" required>
+                                                    <md-option ng-repeat="country in CountriesList" ng-value="country.id">
+                                                        {{country.country_name}}
+                                                    </md-option>
+                                                </md-select>
+                                                <div ng-messages="newLabourEnrollmentForm.permanentcountry.$error" role="alert">
+                                                    <div ng-message="required">* Mandatory.</div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <md-input-container class="md-block">
+                                                <label>State</label>
+                                                <md-select name="permanentstate" ng-readonly="readOnlyStatus" ng-model="labour.permanent_state" ng-change="getStateCities1(labour.permanent_state)" required>
+                                                    <md-option ng-repeat="state in states1" ng-value="state.id"> {{state.state_name}} </md-option>
+                                                </md-select>
+                                                <div ng-messages="newLabourEnrollmentForm.permanentstate.$error" role="alert">
+                                                    <div ng-message="required">* Mandatory.</div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <md-input-container class="md-block">
+                                                <label>City</label>
+                                                <md-select name="permanentcity" ng-readonly="readOnlyStatus" ng-model="labour.permanent_city" required>
+                                                    <md-option ng-repeat="city in cities1" ng-value="city.id">
+                                                        {{city.city_name}}
+                                                    </md-option>
+                                                </md-select>
+                                                <div ng-messages="newLabourEnrollmentForm.permanentcity.$error" role="alert">
+                                                    <div ng-message="required">* Mandatory.</div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <md-input-container class="md-block">
+                                                <label>ZIP #</label>
+                                                <input type="text" valid-Number ng-readonly="readOnlyStatus" name="permanentzip" ng-model="labour.permanent_zip" ng-keypress="limitKeypress($event,labour.permanent_zip,6)" required>
+                                                <div ng-messages="newLabourEnrollmentForm.permanentzip.$error" role="alert" class="ng-messages">
+                                                    <div ng-message="required">* Mandatory.</div>
+                                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                        6 numbers.
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <md-input-container class="md-block">
+                                                <label>Contact No.</label>
+                                                <input  mask="+99 9999999999"  ng-readonly="readOnlyStatus" id="permanentcontactno" name="permanentcontactno" ng-model="labour.permanent_contact_number" minlength="8" maxlength="15"  required>
+                                                <div ng-messages="newLabourEnrollmentForm.permanentcontactno.$error" role="alert" class="ng-messages">
+                                                    <div ng-message="required">*Mandatory.</div>
+                                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                        8 to 15 numbers.
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin: auto!important;">
+                                    <h4 style="margin-left: 2%;">Contact Person Details</h4>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <md-input-container class="md-block">
+                                                <label>Contact Person Name</label>
+                                                <input id="contactpersonname" valid-Name ng-readonly="readOnlyStatus" name="contactpersonname" ng-model="labour.contact_person_name" minlength="4" maxlength="30" required>
+                                                <div ng-messages="newLabourEnrollmentForm.contactpersonname.$error" role="alert" class="ng-messages">
+                                                    <div ng-message="required">*Mandatory.</div>
+                                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                        4 to 30 chars.
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <md-input-container class="md-block">
+                                                <label>Relation</label>
+                                                <md-select name="relation" ng-readonly="readOnlyStatus" ng-model="labour.contact_person_relationship_id" required>
+                                                    <md-option ng-repeat="ref in Refmaster| filter:{ group_id: 9 }" ng-value="ref.id">
+                                                        {{ref.reference_value}}
+                                                    </md-option>
+                                                </md-select>
+                                                <div ng-messages="newLabourEnrollmentForm.relation.$error" role="alert">
+                                                    <div ng-message="required">* Mandatory.</div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <md-input-container class="md-block">
+                                                <label>Contact No.</label>
+                                                <input mask="+99 9999999999"  ng-readonly="readOnlyStatus" id="contactpersoncontactno" name="contactpersoncontactno" ng-model="labour.contact_person_contact_number" minlength="8" maxlength="15" >
+                                            </md-input-container>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <md-input-container class="md-block">
+                                                <label>Street</label>
+                                                <input id="contactpersonstreet" ng-readonly="readOnlyStatus" name="contactpersonstreet" ng-model="labour.contact_person_street" minlength="4" maxlength="30" required>
+                                                <div ng-messages="newLabourEnrollmentForm.contactpersonstreet.$error" role="alert" class="ng-messages">
+                                                    <div ng-message="required">*Mandatory.</div>
+                                                    <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                        4 to 30 chars.
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <md-input-container class="md-block">
+                                                <label>Country</label>
+                                                <md-select name="contactpersoncountry" ng-readonly="readOnlyStatus" ng-model="labour.contact_person_country" ng-change="getCountryStates2(labour.contact_person_country)" required>
+                                                    <md-option ng-repeat="country in CountriesList" ng-value="country.id">
+                                                        {{country.country_name}}
+                                                    </md-option>
+                                                </md-select>
+                                                <div ng-messages="newLabourEnrollmentForm.contactpersoncountry.$error" role="alert">
+                                                    <div ng-message="required">* Mandatory.</div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <md-input-container class="md-block">
+                                                <label>State</label>
+                                                <md-select name="contactpersonstate" ng-disabled="!states2.length" ng-readonly="readOnlyStatus" ng-model="labour.contact_person_state" ng-change="getStateCities2(labour.contact_person_state)" required>
+                                                    <md-option ng-repeat="state in states2" ng-value="state.id"> {{state.state_name}} </md-option>
+                                                </md-select>
+                                                <div ng-messages="newLabourEnrollmentForm.contactpersonstate.$error" role="alert">
+                                                    <div ng-message="required">* Mandatory.</div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <md-input-container class="md-block">
+                                                <label>City</label>
+                                                <md-select name="contactpersoncity" ng-disabled="!cities2.length" ng-readonly="readOnlyStatus" ng-model="labour.contact_person_city" required>
+                                                    <md-option ng-repeat="city in cities2" ng-value="city.id">
+                                                        {{city.city_name}}
+                                                    </md-option>
+                                                </md-select>
+                                                <div ng-messages="newLabourEnrollmentForm.contactpersoncity.$error" role="alert">
+                                                    <div ng-message="required">* Mandatory.</div>
+                                                </div>
+                                            </md-input-container>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <md-input-container class="md-block">
+                                                <label>ZIP</label>
+                                                <input type="text" valid-Number name="contactpersonzip" ng-readonly="readOnlyStatus" ng-model="labour.contact_person_zip" ng-keypress="limitKeypress($event,labour.contact_person_zip,6)">
+                                            </md-input-container>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 style="margin-left: 2%;">Account Information</h4>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <md-input-container class="md-block">
+                                            <label>Bank Name</label>
+                                            <input id="bankName" valid-Name name="bankName" ng-readonly="field_readOnlyStatus" ng-model="labour.bank_name" minlength="3" maxlength="30" required>
+                                            <div ng-messages="newLabourEnrollmentForm.bankName.$error" role="alert" class="ng-messages">
+                                                <div ng-message="required">*Mandatory.</div>
+                                                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                    3 to 30 numbers.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <md-input-container class="md-block">
+                                            <label>Bank Account Number</label>
+                                            <input id="bankAccNo" type="text" valid-Number ng-readonly="field_readOnlyStatus" name="bankAccNo" ng-model="labour.bank_account_no" ng-keypress="limitKeypress($event,labour.bank_account_no,15)" required>
+                                            <div ng-messages="newLabourEnrollmentForm.bankAccNo.$error" role="alert" class="ng-messages">
+                                                <div ng-message="required">*Mandatory.</div>
+                                                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                  08 to 15numbers.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <md-input-container class="md-block">
+                                            <label>Branch Name</label>
+                                            <input id="branchName" valid-Name ng-readonly="field_readOnlyStatus" name="branchName" ng-model="labour.bank_branch" minlength="3" maxlength="25" required>
+                                            <div ng-messages="newLabourEnrollmentForm.branchName.$error" role="alert" class="ng-messages">
+                                                <div ng-message="required">*Mandatory.</div>
+                                                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                  3 to 25 numbers.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <md-input-container class="md-block">
+                                            <label>IFSC Code</label>
+                                            <input id="ifscCode" type="text" allow-pattern="(\d|[a-z])" ng-readonly="field_readOnlyStatus" name="ifscCode" ng-model="labour.ifsc" minlength="4" maxlength="15" required>
+                                            <div ng-messages="newLabourEnrollmentForm.ifscCode.$error" role="alert" class="ng-messages">
+                                                <div ng-message="required">*Mandatory.</div>
+                                                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                 4 to 20  numbers.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <md-input-container class="md-block">
+                                            <label>PAN Number</label>
+                                            <input id="panNumber" type="text" allow-pattern="(\d|[a-z])" ng-readonly="field_readOnlyStatus" name="panNumber" ng-model="labour.pan" minlength="4" maxlength="12">
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <md-input-container class="md-block">
+                                            <label>Aadhar Number</label>
+                                            <input id="aaadhar" mask="9999 9999 9999" ng-readonly="field_readOnlyStatus" name="aaadhar" ng-model="labour.aadhar" minlength="14" maxlength="14" required>
+                                            <div ng-messages="newLabourEnrollmentForm.aaadhar.$error" role="alert" class="ng-messages">
+                                                <div ng-message="required">*Mandatory.</div>
+                                                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                                    14 numbers.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <md-input-container class="md-block">
+                                            <label>EPF No.</label>
+                                            <input id="epfNo" type="text" allow-pattern="(\d|[a-z])" ng-readonly="field_readOnlyStatus" name="epfNo" ng-model="labour.epf_no" minlength="4" maxlength="12">
+                                        </md-input-container>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <md-input-container class="md-block">
+                                            <label>ESI No.</label>
+                                            <input id="esiNo" type="text" allow-pattern="(\d|[a-z])" ng-readonly="field_readOnlyStatus" name="esiNo" ng-model="labour.esi_no" minlength="4" maxlength="12">
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <h4 style="margin-left: 2%;">Documents</h4>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="margin: 0 0 0 24px;">Aadhar : </label>
+                                        <md-checkbox aria-label="checkbox" ng-disabled="readOnlyStatus" ng-model="labour.check_aadhar"></md-checkbox>
+                                        <md-input-container class="md-block">
+                                            <input type="file" name="a_file" id="a_file" ng-disabled="!labour.check_aadhar" ng-model="aadharfile" base-sixty-four-input style="margin: -20px 0px 0px 111px;">
+                                        </md-input-container>
+                                        <div ng-show="namefile" style="margin: -5px 0 0 0px;">
+                                            <a href="" style="padding: 0px 0px 0px 104px;" ng-click="downLoadImage1()">{{aadharcertificate}}</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label style="margin: 0 0 0 42px;">Bank : </label>
+                                        <md-checkbox aria-label="checkbox" ng-disabled="readOnlyStatus" ng-model="labour.check_bank"></md-checkbox>
+                                        <md-input-container class="md-block">
+                                            <input type="file" name="b_file" id="b_file" ng-disabled="!labour.check_bank" ng-model="bankfile" base-sixty-four-input style="margin:-20px 0px 0px 111px;">
+                                        </md-input-container>
+                                        <div ng-show="namefile" style="margin: -5px 0 0 0px;">
+                                            <a href="" style="padding: 0px 0px 0px 104px;" ng-click="downLoadImage2()">{{bankcertificate}}</a>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label style="margin: 0 0 0 24px;">Medical :</label>
+                                         <md-checkbox aria-label="checkbox" ng-disabled="readOnlyStatus" ng-model="labour.check_medical_certificate"></md-checkbox>
+                                          <md-input-container class="md-block">
+                                          <input type="file" name="m_file" id="m_file" ng-disabled="!labour.check_medical_certificate" ng-model="medicalcertificatefile" base-sixty-four-input style="margin: -20px 0px 0px 111px;">
+                                          </md-input-container>
+                                      <div ng-show="namefile" style="margin: -5px 0 0 0px;">
+                                         <a href="" style="padding: 0px 0px 0px 104px;" ng-click="downLoadImage3()">{{medicalcertificate}}</a>
+                                       </div>
+                                </div>
+                                    <div class="col-md-4" style="width:40%">
+                                        <label style="padding:0 0 0 7px; margin: 0 0 0 42px;">Eye :</label>
+                                        <md-checkbox aria-label="checkbox" ng-disabled="readOnlyStatus" ng-model="labour.check_eye_certificate" style=" padding: 4px 0 0 0px;"></md-checkbox>
+                                        <md-input-container class="md-block" style="padding: 0px 0px 0px 108px; margin: -10px 0px 0px 0px;">
+                                            <input type="file" name="e_file" id="e_file" ng-disabled="!labour.check_eye_certificate" ng-model="eyecertificatefile" base-sixty-four-input tyle="margin:-20px 0px 0px 111px;">
+                                        </md-input-container>
+                                        <div ng-show="namefile" style="margin: -5px 0 0 0px;">
+                                            <a href="" style="padding: 0px 0px 0px 104px;" ng-click="downLoadImage4()">{{eyecertificate}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </md-content>
+                        </div>
+                        <div class="panel-footer" style="height:40px; padding-right: 0px; padding-top:5px">
+                            <div class="col-md-12"style="text-align:right;">
+                            <input type="button" ng-show="clearbtn" class="btn btn-sm btn-info" ng-click="Clearform()" value="Clear" />
+                            <input type="button" ng-show="hidebtn" class="btn btn-sm btn-info" ng-click="hideUserForm()" value="Cancel" />
+                                <button ng-show="addBtn" class="btn btn-sm btn-info" type="submit"><b>Save</b></button>
+                                <input type="button" value="Update" ng-show="updateBtn" class="btn btn-sm btn-info" ng-click="updateLabour()" />
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="panel panel-default" ng-show="LabourswiseList.length != 0">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-lg-10 col-md-10 col-xs-10">
+                        <h3 class="panel-title" style="height: 30px;line-height: 30px;">Labors Information</h3>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-xs-2" style="text-align: right;">
+                        <button ng-show="addlabour" class="btn btn-sm btn-primary" ng-click="showAddform()">Add Labour</button>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body" id="tableDiv">
+                <form>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                            <input type="text" class="form-control" placeholder="Search" ng-model="filterdata">
+                        </div>
+                    </div>
+                </form>
+                <table class="table table-bordered table-striped table-hover table-condensed">
+                    <thead>
+                        <tr style="background:#e3e3e3;color:white;">
+                            <!--<th></th>-->
+                            <th  style="padding: 0px 0px 0px 0px; margin: -7px 0px 0px 0px; width:11% ;">
+                                <select ng-model="search.project_name" class="form-control" ng-options="lbrlist.project_name as lbrlist.project_name  for lbrlist in LabourswiseList|unique:'project_name'" style="font-size: 12px;height: 25px;padding: 4px 12px !important;">
+                                    <option value=''> All</option>
+                                </select>
+                            </th>
+                            <th style="padding: 0px 0px 0px 0px; margin: -7px 0px 0px 0px; width:11% ;">
+                                <select ng-model="search.subcontractor_name" class="form-control" ng-options="lbrlist.subcontractor_name as lbrlist.subcontractor_name for lbrlist in LabourswiseList|unique:'subcontractor_name'" style="font-size: 12px;height: 25px;padding: 4px 12px !important;">
+                                    <option value=''>All</option>
+                                </select>
+                            </th>
+                            <th style="padding: 0px 0px 0px 0px; margin: -7px 0px 0px 0px; width:11% ;">
+                                <select ng-model="search.name" class="form-control" ng-options="lbrlist.name as lbrlist.name for lbrlist in LabourswiseList|unique:'name'" style="font-size: 12px;height: 25px;padding: 4px 12px !important;">
+                                    <option value=''>All</option>
+                                </select>
+                            </th>
+                            <th style="padding: 0px 0px 0px 0px; margin: -7px 0px 0px 0px; width:11% ;">
+                                <select ng-model="search.current_contact_number" class="form-control" ng-options="lbrlist.current_contact_number as lbrlist.current_contact_number for lbrlist in LabourswiseList" style="font-size: 12px;height: 25px;padding: 4px 12px !important;">
+                                    <option value=''>All</option>
+                                </select>
+                            </th>
+                            <th style="padding: 0px 0px 0px 0px; margin: -7px 0px 0px 0px; width:11% ;">
+                                <select ng-model="search.fathers_name" class="form-control" ng-options="lbrlist.fathers_name as lbrlist.fathers_name for lbrlist in LabourswiseList|unique:'fathers_name'" style="font-size: 12px;height: 25px;padding: 4px 12px !important;">
+                                    <option value=''>All</option>
+                                </select>
+                            </th>
+                            <!--<th colspan="3"></th>-->
+                            <th style="padding: 0px 0px 0px 0px; margin: -7px 0px 0px 0px; width:11% ;">
+                                <select ng-model="search.contact_person_name" class="form-control" ng-options="lbrlist.contact_person_name as lbrlist.contact_person_name for lbrlist in LabourswiseList|unique:'contact_person_name'" style="font-size: 12px;height: 25px;padding: 4px 12px !important;">
+                                    <option value=''>All</option>
+                                </select>
+                            </th>
+                            <!--<th></th>-->
+                            <th colspan="1" style="padding: 0px 0px 0px 0px; margin: -7px 0px 0px 0px; width:11% ;">
+                                <select ng-model="search.contact_person_contact_number" class="form-control" ng-options="lbrlist.contact_person_contact_number as lbrlist.contact_person_contact_number for lbrlist in LabourswiseList" style="font-size: 12px;height: 25px;padding: 4px 12px !important;">
+                                    <option value=''>All</option>
+                                </select>
+                            </th>
+                            <th colspan="3" style="padding: 0px 0px 0px 0px; margin: -7px 0px 0px 0px; width:11% ;"></th>
+                        </tr>
+                        <tr  style="background:#808080;color:white;">
+                            <!--<th style="text-align:center;width:2%;">SNo</th>-->
+                            <th style="text-align:center;vertical-align:middle;width:10%;">
+                                <a href="#" class="anchorhover" ng-click="sortType = 'projectname'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    Project
+                                </a>
+                            </th>
+                            <th style="text-align:center;vertical-align:middle;width:6%;">
+                                <a href="#" class="anchorhover" ng-click="sortType = 'subcontractorname'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    SubContractor
+                                </a>
+                            </th>
+                            <th style="text-align:center;vertical-align:middle;width:6%;">
+                                <a href="#" class="anchorhover" ng-click="sortType = 'name'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    Name
+                                </a>
+                            </th>
+                            <th style="text-align:center;vertical-align:middle;width:6%;">Contact Number</th>
+                            <th style="text-align:center;vertical-align:middle;width:6%;">Father Name</th>
+                            <!--<th style="text-align:center;vertical-align:middle;width:6%;">
+                                <a href="#" class="anchorhover" ng-click="sortType = 'mother_tongue'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    Mother Tongue
+                                </a>
+                            </th>
+                            <th style="text-align:center;vertical-align:middle;width:6%;">Current Address</th>
+                            <th style="text-align:center;vertical-align:middle;width:6%;">Permanent Address</th>-->
+                            <th style="text-align:center;vertical-align:middle;width:6%;">Contact Person</th>
+                            <!--<th style="text-align:center;vertical-align:middle;width:6%;">Relation</th>-->
+                            <th style="text-align:center;vertical-align:middle;width:6%;">ContactPerson Number</th>
+                            <th style="text-align:center;vertical-align:middle;width:6%;">
+                                <a href="#" class="anchorhover" ng-click="sortType = 'created_date'; sortReverse = !sortReverse" style="color:cornsilk;">
+                                    Date Created
+                                </a>
+                            </th>
+                            <th style="text-align:center;vertical-align:middle;width:6%;">Modified Date</th>
+                            <th style="text-align:center;vertical-align:middle;width:6%;">Edit</th>
+                        </tr>
+                        <!--<tr>
+                            <th colspan="10" style="text-align:center; background-color: #337ab7;" ng-show="result==false">No records found</th>
+                        </tr>-->
+                    </thead>
+                    <tbody>
+                        <tr dir-paginate="labors in LabourswiseList|filter:filterdata|itemsPerPage:5|orderBy:sortType:sortReverse
+                            |filter:{project_name: search.project_name || undefined,
+                            subcontractor_name: search.subcontractor_name || undefined,
+                            name: search.name || undefined,
+                            current_contact_number: search.current_contact_number || undefined,
+                            fathers_name: search.fathers_name || undefined,
+                            current_street: search.current_street || undefined,
+                            contact_person_name: search.contact_person_name || undefined,
+                            contact_person_contact_number: search.contact_person_contact_number || undefined,}:true">
+                            <!--<td style="text-align:center;vertical-align:middle;width:2%;">{{$index+1}}</td>-->
+                            <td style="text-align:left;vertical-align:middle;width:10%;">{{labors.project_name}}</td>
+                            <td style="text-align:left;vertical-align:middle;width:6%;">{{labors.subcontractor_name}}</td>
+                            <td style="text-align:left;vertical-align:middle;width:6%;">
+                                <a href="#" ng-click="showlabourDetails(labors)" title="Click here to view Labour Details.">{{labors.name}}</a>
+                            </td>
+                            <td style="text-align:left;vertical-align:middle;width:6%;">{{labors.current_contact_number}}</td>
+                            <td style="text-align:left;vertical-align:middle;width:6%;">{{labors.fathers_name}}</td>
+                            <!--<td style="text-align:left;vertical-align:middle;width:6%;">{{labors.mother_tongue}}</td>
+                            <td style="text-align:left;vertical-align:middle;width:6%;">{{labors.current_street}}</td>
+                            <td style="text-align:left;vertical-align:middle;width:6%;">{{labors.permanent_street}}</td>-->
+                            <td style="text-align:left;vertical-align:middle;width:6%;">{{labors.contact_person_name}}</td>
+                            <!--<td style="text-align:left;vertical-align:middle;width:6%;">{{labors.contact_person_relationship_name}}</td>-->
+                            <td style="text-align:left;vertical-align:middle;width:6%;">{{labors.contact_person_contact_number}}</td>
+                            <td style="text-align:left;vertical-align:middle;width:6%;">{{labors.created_date| date :  "MMM d, y"}}</td>
+                            <td style="text-align:left;vertical-align:middle;width:6%;">{{labors.modified_date| date :  "MMM d, y"}}</td>
+                            <td style="text-align:center;vertical-align:middle;width:6%;">
+                                <span ng-click="EditLabours(labors)">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row" ng-show="LabourswiseList.length>5">
+                    <div class="col-lg-10" style="margin-bottom: 0px -35px -13px">
+                        <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true">
+                        </dir-pagination-controls>
+                        <!--<select name="level" ng-model="page.levels" ng-options="obj.value as obj.label for obj in page.levelsArr" style="position: absolute;top: 20px;height: 34px;"></select>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

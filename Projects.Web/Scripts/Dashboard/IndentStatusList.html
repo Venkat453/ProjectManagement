@@ -1,0 +1,32 @@
+﻿<div class="modal-dialog">
+    <div class="modal-content" style="border-radius:3px;">
+        <div class="modal-header" style="padding: 0px 10px 0px 10px;background-color:#808080;background-color: rgba(222, 219, 219, 0.62);">
+            <div class="row">
+                <div class="col-md-11"><h4 style="font-weight: bold;margin-top:14px;">IndentStatus List</h4> </div>
+                <div class="col-md-1"><button data-dismiss="modal" ng-click="closeclientmodal()" type="button" class="close" style="margin: 10px;">x</button></div>
+            </div>
+        </div>
+        <div class="modal-body" style="padding:0px;"> 
+            <table class="table table-responsive table-bordered table-striped table-hover table-condensed" style="margin-bottom:0px;">
+                <tr style="background:#808080;color:white;"> 
+                    <th style="text-align:center;">Indent Number</th> 
+                    <th style="text-align:center;">SubContractor</th>
+                    <th style="text-align:center;">Created Date</th>
+                    <th style="text-align:center;">Required Date</th>
+                    <th style="text-align:center;">Indent Status</th> 
+                </tr>
+                <tr ng-repeat="indent in IndentLists"> 
+                    <td style="text-align:left;">{{indent.indent_no}}</td> 
+                    <td style="text-align:left;">{{indent.Subcontractor_name}}</td>
+                    <td style="text-align:left;">{{indent.date_recieved|date :  "MMM d, y"}}</td>
+                    <td style="text-align:left;">{{indent.date_required|date :  "MMM d, y"}}</td>
+                    <td style="text-align:center;">{{ indent.indentstatus }}</td> 
+                </tr>
+            </table>
+        </div>
+        <div class="panel-footer" style="height:40px; padding-right: 0px; background-color: rgba(222, 219, 219, 0.62);">
+            <div class="col-lg-12" style="text-align:right;">
+            </div>
+        </div>
+    </div>
+</div>
